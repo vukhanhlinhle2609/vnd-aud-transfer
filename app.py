@@ -35,7 +35,8 @@ better_recent = sum(1 for r in recent if r > latest)
 st.write(f"Better than **{better_recent / len(recent) * 100:.0f}%** of the past 90 days.")
 
 st.subheader("Rate history")
-st.line_chart({"VND per AUD": rates})
+chart_data = {"date": dates, "VND per AUD": rates}
+st.line_chart(chart_data, x="date", y="VND per AUD")
 
 st.subheader("What you'd receive")
 
