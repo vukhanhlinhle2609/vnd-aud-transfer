@@ -27,10 +27,13 @@ jobs:
       - name: Collect AUD rate
         run: python src/collect_vcb.py
 
+      - name: Merge into daily life
+        run: python src/merge_data.py
+
       - name: Save updated rate
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/vcb_aud_rates.csv
+          git add data/vcb_aud_rates.csv data/vcb_aud_daily.csv
           git commit -m "Collect latest AUD rate" || exit 0
           git push
