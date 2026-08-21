@@ -27,7 +27,7 @@ jobs:
       - name: Collect AUD rate
         run: python src/collect_vcb.py
 
-      - name: Merge into daily life
+      - name: Merge into daily file
         run: python src/merge_data.py
 
       - name: Save updated rate
