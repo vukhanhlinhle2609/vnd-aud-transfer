@@ -1,0 +1,36 @@
+name: Collect Vietcombank AUD rate
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install requirements
+        run: pip install -r requirements.txt
+
+      - name: Collect AUD rate
+        run: python src/collect_vcb.py
+
+      - name: Save updated rate
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/vcb_aud_rates.csv
+          git commit -m "Collect latest AUD rate" || exit 0
+          git push
