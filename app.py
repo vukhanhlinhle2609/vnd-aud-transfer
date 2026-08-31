@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime
+from datetime import datetime, timedelta
 from math import ceil, floor
 from pathlib import Path
 from statistics import mean
@@ -69,7 +69,7 @@ translations = {
         "set_budget": "Set a maximum VND budget",
         "maximum_budget": "Maximum VND budget",
         "data_caption": "Data source: Vietcombank AUD selling-rate history",
-        "data_error": "At least 31 valid rate records are required.",
+        "data_error": "At least 31 valid daily rates are required.",
         "eyebrow": "Exchange-rate decision dashboard",
         "title": "VND → AUD Transfer Optimiser",
         "subtitle": "Historical context, budget planning and a transparent short-term forecast in one place.",
@@ -79,7 +79,7 @@ translations = {
         "tab_planner": "Transfer planner",
         "tab_forecast": "Analysis & forecast",
         "current_rate": "Current rate",
-        "vs_previous": "vs previous record",
+        "vs_previous": "vs previous day",
         "vs_7": "Vs 7-day average",
         "vs_30": "Vs 30-day average",
         "range_30": "30-day range",
@@ -90,12 +90,15 @@ translations = {
         "expensive_text": "The current rate is above both recent averages. AUD is relatively more expensive than its recent trend.",
         "mixed": "Mixed conditions",
         "mixed_text": "The 7-day and 30-day signals disagree, so the recent trend is not decisive.",
-        "percentile_text": "Today's rate is better than **{all_value:.0f}%** of earlier recorded rates and **{recent_value:.0f}%** of the previous 90 records.",
+        "decision_above": "**Rate is {value:.1f}% above its previous 30-day average.** Waiting hasn't reliably helped — historical testing showed timing strategies performed slightly worse than transferring immediately.",
+        "decision_below": "**Rate is {value:.1f}% below its previous 30-day average.** That is relatively favourable, but historical testing still found no reliable advantage from trying to time the transfer.",
+        "decision_equal": "**Rate is in line with its previous 30-day average.** Historical testing found no reliable advantage from waiting for a better day.",
+        "percentile_text": "Today's rate is better than **{all_value:.0f}%** of earlier days and **{recent_value:.0f}%** of the previous 90 days.",
         "history": "Rate history",
         "history_help": "A falling line is favourable because fewer VND are needed for each AUD.",
         "window": "History window",
-        "window_30": "30 records",
-        "window_90": "90 records",
+        "window_30": "30 days",
+        "window_90": "90 days",
         "window_all": "All data",
         "chart_rate": "VND per AUD",
         "date": "Date",
@@ -123,28 +126,29 @@ translations = {
         "maximum_rate": "Maximum affordable rate",
         "within_budget": "Within budget by **{value:,.0f} VND**.",
         "over_budget": "Over budget by **{value:,.0f} VND**.",
-        "no_budget": "No maximum budget is set. Turn it on in the sidebar to test a spending limit.",
+        "no_budget": "No maximum budget is set. Turn on the option above to test a spending limit.",
         "deadline_warning": "Your deadline is close. Historical testing found no reliable advantage from waiting.",
         "forecast_title": "Short-term rate outlook",
-        "forecast_intro": "The most reliable tested one-step baseline is the latest observed rate. The range below applies historical one-record movements to that baseline.",
-        "point_forecast": "Next-record estimate",
+        "forecast_intro": "The most reliable tested next-day baseline is the latest observed daily rate. The range below applies historical daily movements to that baseline.",
+        "point_forecast": "Next-day estimate",
         "forecast_cost": "Estimated transfer cost",
         "historical_range": "80% historical range",
         "historical_coverage": "Backtested interval coverage",
         "baseline_mae": "Baseline MAE",
         "tolerance_accuracy": "Within ±0.5%",
-        "range_caption": "Forecast interval: **{low:,.2f}–{high:,.2f} VND/AUD**. Its radius is the 80th percentile of the latest {count} absolute one-record movements.",
-        "accuracy_caption": "Across historical one-record tests, the point forecast was within ±0.5% of the actual rate **{tolerance:.1f}%** of the time. The rolling 80% interval contained the actual next rate **{coverage:.1f}%** of the time. These are backtested hit rates, not guaranteed future accuracy.",
+        "range_caption": "Forecast interval: **{low:,.2f}–{high:,.2f} VND/AUD**. Its radius is the 80th percentile of the latest {count} absolute daily movements.",
+        "accuracy_caption": "Across historical next-day tests, the point forecast was within ±0.5% of the actual rate **{tolerance:.1f}%** of the time. The rolling 80% interval contained the actual next daily rate **{coverage:.1f}%** of the time. These are backtested hit rates, not guaranteed future accuracy.",
         "direction_title": "Recent direction profile",
         "lower_next": "Lower",
         "unchanged_next": "Unchanged",
         "higher_next": "Higher",
-        "direction_caption": "Share of the latest {count} recorded changes. Lower is favourable for buying AUD.",
+        "direction_caption": "Share of the latest {count} day-to-day changes. Lower is favourable for buying AUD.",
+        "direction_verdict": "Movements are close to a coin flip, which is why tested timing strategies did not beat transferring immediately.",
         "trend_title": "Trend and risk indicators",
         "average_move": "Average daily move (30)",
         "best_30": "Best rate (30)",
         "worst_30": "Worst rate (30)",
-        "spread_30": "30-record spread",
+        "spread_30": "30-day spread",
         "factors_title": "External factors to monitor",
         "factors_intro": "These drivers can affect AUD/VND, but they are not included in the numerical forecast until aligned historical data passes walk-forward testing.",
         "interest_title": "Interest-rate differentials",
@@ -158,7 +162,7 @@ translations = {
         "factors_source": "Background: [Reserve Bank of Australia — Drivers of the AUD exchange rate](https://www.rba.gov.au/education/resources/explainers/drivers-of-the-aud-exchange-rate.html).",
         "forecast_note": "Forecasts are uncertain. This baseline previously achieved a mean absolute error of about {mae:,.2f} VND/AUD, while more complex regression and timing models performed worse and were discarded.",
         "evaluation": "Model evaluation details",
-        "naive_result": "Naive one-step forecast MAE: **{mae:,.2f} VND/AUD** across {count} historical predictions.",
+        "naive_result": "Naive next-day forecast MAE: **{mae:,.2f} VND/AUD** across {count} historical daily predictions.",
         "regression_result": "Walk-forward regression MAE: **56.51 VND**, compared with **53.06 VND** for its baseline test. The regression model was discarded.",
         "strategy_result": "The tested 14-day timing strategy was **5.79 VND/AUD worse** than transferring immediately on average, so it was discarded.",
         "disclaimer": "Educational decision support only — not financial advice or a guaranteed forecast. Transfer fees and provider spreads are not included.",
@@ -170,7 +174,7 @@ translations = {
         "set_budget": "Đặt ngân sách VND tối đa",
         "maximum_budget": "Ngân sách VND tối đa",
         "data_caption": "Nguồn dữ liệu: lịch sử tỷ giá bán AUD của Vietcombank",
-        "data_error": "Cần ít nhất 31 bản ghi tỷ giá hợp lệ.",
+        "data_error": "Cần ít nhất 31 tỷ giá theo ngày hợp lệ.",
         "eyebrow": "Bảng hỗ trợ quyết định tỷ giá",
         "title": "Công cụ tối ưu chuyển tiền VND → AUD",
         "subtitle": "Bối cảnh lịch sử, lập ngân sách và dự báo ngắn hạn minh bạch trong cùng một nơi.",
@@ -180,7 +184,7 @@ translations = {
         "tab_planner": "Lập kế hoạch",
         "tab_forecast": "Phân tích & dự báo",
         "current_rate": "Tỷ giá hiện tại",
-        "vs_previous": "so với bản ghi trước",
+        "vs_previous": "so với ngày trước",
         "vs_7": "So với TB 7 ngày",
         "vs_30": "So với TB 30 ngày",
         "range_30": "Khoảng 30 ngày",
@@ -191,12 +195,15 @@ translations = {
         "expensive_text": "Tỷ giá hiện tại cao hơn cả hai mức trung bình gần đây. AUD đang tương đối đắt hơn xu hướng gần đây.",
         "mixed": "Tín hiệu trái chiều",
         "mixed_text": "Tín hiệu 7 ngày và 30 ngày không đồng thuận, vì vậy xu hướng gần đây chưa rõ ràng.",
-        "percentile_text": "Tỷ giá hôm nay tốt hơn **{all_value:.0f}%** các tỷ giá đã ghi nhận trước đây và **{recent_value:.0f}%** trong 90 bản ghi gần nhất.",
+        "decision_above": "**Tỷ giá cao hơn {value:.1f}% so với mức trung bình 30 ngày trước.** Việc chờ đợi chưa cho thấy lợi ích đáng tin cậy — kiểm định lịch sử cho thấy các chiến lược chọn thời điểm hơi kém hơn so với chuyển ngay.",
+        "decision_below": "**Tỷ giá thấp hơn {value:.1f}% so với mức trung bình 30 ngày trước.** Đây là mức tương đối thuận lợi, nhưng kiểm định lịch sử vẫn không cho thấy lợi ích đáng tin cậy từ việc cố chọn thời điểm.",
+        "decision_equal": "**Tỷ giá đang gần bằng mức trung bình 30 ngày trước.** Kiểm định lịch sử không cho thấy lợi ích đáng tin cậy từ việc chờ một ngày tốt hơn.",
+        "percentile_text": "Tỷ giá hôm nay tốt hơn **{all_value:.0f}%** các ngày trước đây và **{recent_value:.0f}%** trong 90 ngày gần nhất.",
         "history": "Lịch sử tỷ giá",
         "history_help": "Đường đi xuống là thuận lợi vì cần ít VND hơn cho mỗi AUD.",
         "window": "Khoảng thời gian",
-        "window_30": "30 bản ghi",
-        "window_90": "90 bản ghi",
+        "window_30": "30 ngày",
+        "window_90": "90 ngày",
         "window_all": "Toàn bộ dữ liệu",
         "chart_rate": "VND trên mỗi AUD",
         "date": "Ngày",
@@ -224,28 +231,29 @@ translations = {
         "maximum_rate": "Tỷ giá tối đa có thể chi trả",
         "within_budget": "Thấp hơn ngân sách **{value:,.0f} VND**.",
         "over_budget": "Vượt ngân sách **{value:,.0f} VND**.",
-        "no_budget": "Chưa đặt ngân sách tối đa. Bật tùy chọn trong thanh bên để kiểm tra giới hạn chi tiêu.",
+        "no_budget": "Chưa đặt ngân sách tối đa. Bật tùy chọn phía trên để kiểm tra giới hạn chi tiêu.",
         "deadline_warning": "Thời hạn chuyển tiền đã gần. Kiểm tra lịch sử không cho thấy chờ đợi mang lại lợi thế đáng tin cậy.",
         "forecast_title": "Triển vọng tỷ giá ngắn hạn",
-        "forecast_intro": "Mô hình cơ sở một bước đáng tin cậy nhất đã kiểm tra dùng tỷ giá mới nhất. Khoảng dưới đây áp dụng biến động lịch sử của một bản ghi vào mức cơ sở đó.",
-        "point_forecast": "Ước tính bản ghi tiếp theo",
+        "forecast_intro": "Mô hình cơ sở cho ngày tiếp theo đáng tin cậy nhất đã kiểm tra dùng tỷ giá ngày mới nhất. Khoảng dưới đây áp dụng biến động hằng ngày trong lịch sử vào mức cơ sở đó.",
+        "point_forecast": "Ước tính ngày tiếp theo",
         "forecast_cost": "Chi phí chuyển ước tính",
         "historical_range": "Khoảng lịch sử 80%",
         "historical_coverage": "Độ bao phủ khi kiểm định",
         "baseline_mae": "MAE mô hình cơ sở",
         "tolerance_accuracy": "Nằm trong ±0,5%",
-        "range_caption": "Khoảng dự báo: **{low:,.2f}–{high:,.2f} VND/AUD**. Bán kính khoảng bằng phân vị thứ 80 của {count} biến động tuyệt đối gần nhất.",
-        "accuracy_caption": "Trong các kiểm định lịch sử từng bước, dự báo điểm nằm trong ±0,5% so với tỷ giá thực tế **{tolerance:.1f}%** số lần. Khoảng dự báo cuốn chiếu 80% chứa tỷ giá tiếp theo thực tế **{coverage:.1f}%** số lần. Đây là tỷ lệ đạt trong kiểm định quá khứ, không bảo đảm độ chính xác tương lai.",
+        "range_caption": "Khoảng dự báo: **{low:,.2f}–{high:,.2f} VND/AUD**. Bán kính khoảng bằng phân vị thứ 80 của {count} biến động tuyệt đối hằng ngày gần nhất.",
+        "accuracy_caption": "Trong các kiểm định lịch sử cho ngày tiếp theo, dự báo điểm nằm trong ±0,5% so với tỷ giá thực tế **{tolerance:.1f}%** số lần. Khoảng dự báo cuốn chiếu 80% chứa tỷ giá thực tế của ngày tiếp theo **{coverage:.1f}%** số lần. Đây là tỷ lệ đạt trong kiểm định quá khứ, không bảo đảm độ chính xác tương lai.",
         "direction_title": "Phân bố hướng biến động gần đây",
         "lower_next": "Giảm",
         "unchanged_next": "Không đổi",
         "higher_next": "Tăng",
-        "direction_caption": "Tỷ trọng trong {count} thay đổi gần nhất. Giảm là có lợi khi mua AUD.",
+        "direction_caption": "Tỷ trọng trong {count} thay đổi giữa các ngày gần nhất. Giảm là có lợi khi mua AUD.",
+        "direction_verdict": "Biến động gần giống tung đồng xu, vì vậy các chiến lược chọn thời điểm đã kiểm tra không tốt hơn việc chuyển ngay.",
         "trend_title": "Chỉ báo xu hướng và rủi ro",
         "average_move": "Biến động TB mỗi ngày (30)",
         "best_30": "Tỷ giá tốt nhất (30)",
         "worst_30": "Tỷ giá xấu nhất (30)",
-        "spread_30": "Biên độ 30 bản ghi",
+        "spread_30": "Biên độ 30 ngày",
         "factors_title": "Các yếu tố bên ngoài cần theo dõi",
         "factors_intro": "Các yếu tố này có thể ảnh hưởng AUD/VND, nhưng chưa được đưa vào dự báo số cho đến khi dữ liệu lịch sử đồng bộ vượt qua kiểm định cuốn chiếu.",
         "interest_title": "Chênh lệch lãi suất",
@@ -259,7 +267,7 @@ translations = {
         "factors_source": "Thông tin nền: [Ngân hàng Dự trữ Úc — Các yếu tố chi phối tỷ giá AUD](https://www.rba.gov.au/education/resources/explainers/drivers-of-the-aud-exchange-rate.html).",
         "forecast_note": "Dự báo luôn có độ bất định. Mô hình cơ sở này trước đây có sai số tuyệt đối trung bình khoảng {mae:,.2f} VND/AUD; các mô hình hồi quy và chọn thời điểm phức tạp hơn cho kết quả kém hơn nên đã bị loại.",
         "evaluation": "Chi tiết đánh giá mô hình",
-        "naive_result": "MAE dự báo một bước đơn giản: **{mae:,.2f} VND/AUD** trên {count} dự báo lịch sử.",
+        "naive_result": "MAE dự báo đơn giản cho ngày tiếp theo: **{mae:,.2f} VND/AUD** trên {count} dự báo lịch sử theo ngày.",
         "regression_result": "MAE hồi quy cuốn chiếu là **56.51 VND**, so với **53.06 VND** của mô hình cơ sở trong cùng bài kiểm tra. Mô hình hồi quy đã bị loại.",
         "strategy_result": "Chiến lược chọn thời điểm trong 14 ngày tệ hơn trung bình **5.79 VND/AUD** so với chuyển ngay, nên đã bị loại.",
         "disclaimer": "Chỉ nhằm hỗ trợ quyết định và mục đích giáo dục — không phải tư vấn tài chính hay dự báo được bảo đảm. Chưa bao gồm phí chuyển và chênh lệch giá của nhà cung cấp.",
@@ -279,6 +287,17 @@ def percentile(values, fraction):
     )
 
 
+def compact_vnd(value):
+    absolute_value = abs(value)
+    if absolute_value >= 1_000_000_000:
+        return f"{value / 1_000_000_000:.1f}B VND"
+    if absolute_value >= 1_000_000:
+        return f"{value / 1_000_000:.1f}M VND"
+    if absolute_value >= 1_000:
+        return f"{value / 1_000:.1f}K VND"
+    return f"{value:,.0f} VND"
+
+
 language = st.sidebar.selectbox(
     "Language / Ngôn ngữ",
     ("English", "Tiếng Việt"),
@@ -286,43 +305,25 @@ language = st.sidebar.selectbox(
 )
 t = translations[language]
 
-st.sidebar.markdown(f"### {t['sidebar_settings']}")
-aud_amount = st.sidebar.number_input(
-    t["aud_amount"],
-    min_value=1.0,
-    value=3000.0,
-    step=100.0,
-    key="aud_amount",
-)
-days_remaining = st.sidebar.number_input(
-    t["deadline"],
-    min_value=0,
-    value=14,
-    step=1,
-    key="days_remaining",
-)
-use_budget = st.sidebar.checkbox(t["set_budget"], key="use_budget")
-maximum_budget_vnd = None
-if use_budget:
-    maximum_budget_vnd = st.sidebar.number_input(
-        t["maximum_budget"],
-        min_value=1_000_000,
-        value=57_000_000,
-        step=100_000,
-        key="maximum_budget_vnd",
-    )
 st.sidebar.divider()
 st.sidebar.caption(t["data_caption"])
 
 data_file = Path(__file__).parent / "data" / "vcb_aud_daily.csv"
 with data_file.open(newline="", encoding="utf-8") as file:
-    rows = [
+    valid_rows = [
         row
         for row in csv.DictReader(file)
         if row.get("date") and row.get("sell")
     ]
 
-rows.sort(key=lambda row: row["date"])
+daily_rows = {}
+for row in valid_rows:
+    date_key = row["date"][:10]
+    daily_rows[date_key] = {
+        "date": date_key,
+        "sell": row["sell"],
+    }
+rows = [daily_rows[date_key] for date_key in sorted(daily_rows)]
 if len(rows) < 31:
     st.error(t["data_error"])
     st.stop()
@@ -384,11 +385,6 @@ unchanged_count = sum(change == 0 for change in recent_change_window)
 higher_count = sum(change > 0 for change in recent_change_window)
 direction_count = len(recent_change_window)
 
-current_cost = aud_amount * latest
-average_30_cost = aud_amount * average_30
-average_cost_difference = average_30_cost - current_cost
-forecast_cost = aud_amount * latest
-
 st.markdown(
     f"""
     <div class="hero">
@@ -401,6 +397,22 @@ st.markdown(
 )
 st.caption(f"{t['updated']}: {date_labels[-1]} · {t['lower_better']}")
 
+average_30_difference_pct = (latest / average_30 - 1) * 100
+if average_30_difference_pct > 0.05:
+    st.warning(
+        t["decision_above"].format(
+            value=abs(average_30_difference_pct)
+        )
+    )
+elif average_30_difference_pct < -0.05:
+    st.success(
+        t["decision_below"].format(
+            value=abs(average_30_difference_pct)
+        )
+    )
+else:
+    st.info(t["decision_equal"])
+
 overview_tab, planner_tab, forecast_tab = st.tabs(
     [
         f"📊 {t['tab_overview']}",
@@ -410,43 +422,29 @@ overview_tab, planner_tab, forecast_tab = st.tabs(
 )
 
 with overview_tab:
-    metric_1, metric_2, metric_3, metric_4 = st.columns(4)
+    metric_1, metric_2, metric_3 = st.columns(3)
     metric_1.metric(
         t["current_rate"],
-        f"{latest:,.2f}",
+        f"{latest:,.0f} VND/AUD",
         delta=f"{latest - previous:+,.2f} {t['vs_previous']}",
         delta_color="inverse",
         border=True,
     )
     metric_2.metric(
-        t["vs_7"],
-        f"{latest - average_7:+,.2f}",
-        delta=f"{(latest / average_7 - 1) * 100:+.2f}%",
-        delta_color="inverse",
-        border=True,
-    )
-    metric_3.metric(
         t["vs_30"],
-        f"{latest - average_30:+,.2f}",
+        f"{latest - average_30:+,.0f} VND",
         delta=f"{(latest / average_30 - 1) * 100:+.2f}%",
         delta_color="inverse",
         border=True,
     )
-    metric_4.metric(
+    metric_3.metric(
         t["range_30"],
-        f"{min(latest_30):,.0f}–{max(latest_30):,.0f}",
+        f"{min(latest_30) / 1_000:.1f}K–{max(latest_30) / 1_000:.1f}K",
         delta=f"{max(latest_30) - min(latest_30):,.0f} VND",
         delta_color="off",
         border=True,
     )
 
-    st.subheader(t["market_read"])
-    if latest < average_7 and latest < average_30:
-        st.success(f"**{t['favourable']}** — {t['favourable_text']}")
-    elif latest > average_7 and latest > average_30:
-        st.warning(f"**{t['expensive']}** — {t['expensive_text']}")
-    else:
-        st.info(f"**{t['mixed']}** — {t['mixed_text']}")
     st.write(
         t["percentile_text"].format(
             all_value=all_percentile,
@@ -484,12 +482,22 @@ with overview_tab:
         if start_index < 0
         else start_index
     )
+    target_date = dates[-1] - timedelta(days=30)
+    meaningful_indices = [
+        index
+        for index in range(start_position, len(rates))
+        if index > 0 and rates[index] != rates[index - 1]
+    ]
+    default_selected_index = min(
+        meaningful_indices or range(start_position, len(rates)),
+        key=lambda index: abs(dates[index] - target_date),
+    )
     selected_index = st.select_slider(
         t["explore_date"],
         options=list(range(start_position, len(rates))),
-        value=len(rates) - 1,
+        value=default_selected_index,
         format_func=lambda index: date_labels[index],
-        key=f"selected_date_{history_window}",
+        key=f"selected_day_{history_window}",
     )
     selected_change = (
         rates[selected_index] - rates[selected_index - 1]
@@ -651,7 +659,7 @@ with overview_tab:
     )
     st.caption(t["interactive_tip"])
 
-    detail_1, detail_2, detail_3, detail_4 = st.columns(4)
+    detail_1, detail_2 = st.columns(2)
     detail_1.metric(
         t["selected_date"],
         date_labels[selected_index],
@@ -662,6 +670,7 @@ with overview_tab:
         f"{rates[selected_index]:,.2f}",
         border=True,
     )
+    detail_3, detail_4 = st.columns(2)
     detail_3.metric(
         t["change"],
         f"{selected_change:+,.2f} VND",
@@ -678,26 +687,54 @@ with planner_tab:
     st.subheader(t["planner_title"])
     st.write(t["planner_intro"])
 
-    plan_1, plan_2, plan_3, plan_4 = st.columns(4)
+    input_1, input_2 = st.columns(2)
+    with input_1:
+        aud_amount = st.number_input(
+            t["aud_amount"],
+            min_value=1.0,
+            value=3000.0,
+            step=100.0,
+            key="aud_amount",
+        )
+    with input_2:
+        days_remaining = st.number_input(
+            t["deadline"],
+            min_value=0,
+            value=14,
+            step=1,
+            key="days_remaining",
+        )
+
+    use_budget = st.checkbox(t["set_budget"], key="use_budget")
+    maximum_budget_vnd = None
+    if use_budget:
+        maximum_budget_vnd = st.number_input(
+            t["maximum_budget"],
+            min_value=1_000_000,
+            value=57_000_000,
+            step=100_000,
+            key="maximum_budget_vnd",
+        )
+
+    current_cost = aud_amount * latest
+    average_30_cost = aud_amount * average_30
+    average_cost_difference = average_30_cost - current_cost
+
+    plan_1, plan_2, plan_3 = st.columns(3)
     plan_1.metric(
         t["current_cost"],
-        f"{current_cost:,.0f} VND",
+        compact_vnd(current_cost),
         border=True,
     )
     plan_2.metric(
-        t["aud_received"],
-        f"AUD {aud_amount:,.2f}",
+        t["average_cost"],
+        compact_vnd(average_30_cost),
         border=True,
     )
     plan_3.metric(
-        t["average_cost"],
-        f"{average_30_cost:,.0f} VND",
-        border=True,
-    )
-    plan_4.metric(
         t["difference"],
-        f"{abs(average_cost_difference):,.0f} VND",
-        delta=f"{average_cost_difference:+,.0f} VND",
+        compact_vnd(abs(average_cost_difference)),
+        delta=compact_vnd(average_cost_difference),
         delta_color="normal",
         border=True,
     )
@@ -754,7 +791,8 @@ with forecast_tab:
     st.subheader(t["forecast_title"])
     st.write(t["forecast_intro"])
 
-    forecast_1, forecast_2, forecast_3, forecast_4 = st.columns(4)
+    forecast_cost = aud_amount * latest
+    forecast_1, forecast_2 = st.columns(2)
     forecast_1.metric(
         t["point_forecast"],
         f"{latest:,.2f} VND/AUD",
@@ -762,12 +800,13 @@ with forecast_tab:
     )
     forecast_2.metric(
         t["forecast_cost"],
-        f"{forecast_cost:,.0f} VND",
+        compact_vnd(forecast_cost),
         border=True,
     )
+    forecast_3, forecast_4 = st.columns(2)
     forecast_3.metric(
         t["historical_range"],
-        f"{range_low:,.0f}–{range_high:,.0f}",
+        f"{range_low / 1_000:.1f}K–{range_high / 1_000:.1f}K",
         border=True,
     )
     forecast_4.metric(
@@ -819,9 +858,10 @@ with forecast_tab:
         border=True,
     )
     st.caption(t["direction_caption"].format(count=direction_count))
+    st.info(t["direction_verdict"])
 
     st.subheader(t["trend_title"])
-    trend_1, trend_2, trend_3, trend_4 = st.columns(4)
+    trend_1, trend_2 = st.columns(2)
     trend_1.metric(
         t["average_move"],
         f"{average_move_30:,.2f} VND",
@@ -832,6 +872,7 @@ with forecast_tab:
         f"{min(latest_30):,.2f}",
         border=True,
     )
+    trend_3, trend_4 = st.columns(2)
     trend_3.metric(
         t["worst_30"],
         f"{max(latest_30):,.2f}",
