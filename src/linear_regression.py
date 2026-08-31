@@ -39,3 +39,21 @@ print("Test days:", len(y_test))
 print("Baseline MAE:", round(baseline_mae, 2), "VND")
 print("Regression MAE:", round(model_mae, 2), "VND")
 print("Improvement:", round(baseline_mae - model_mae, 2), "VND")
+minimum_training_size = 100
+walk_model_predictions = []
+walk_baseline_predictions = []
+walk_actual = []
+for test_index in range(minimum_training_size, len(features)):
+    walk_model = LinearRegression()
+    walk_model.fit(features[:test_index], targets[:test_index])
+    prediction = walk_model.predict([features[test_index]])[0]
+    walk_model_predictions.append(prediction)
+    walk_baseline_predictions.append(baseline_predictions[test_index])
+    walk_actual.append(targets[test_index])
+walk_model_mae = mean_absolute_error(walk_actual, walk_model_predictions)
+walk_baseline_mae = mean_absolute_error(walk_actual, walk_baseline_predictions)
+print("\nWalk-forward validation")
+print("Test days:", len(walk_actual))
+print("Baseline MAE:", round(walk_baseline_mae, 2), "VND")
+print("Regression MAE:", round(walk_model_mae, 2), "VND")
+print("Improvement:", round(walk_baseline_mae - walk_model_mae, 2), "VND")
