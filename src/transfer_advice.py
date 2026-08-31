@@ -61,20 +61,11 @@ baseline_forecast = latest_rate
 if days_remaining <= 2:
     recommendation = "TRANSFER NOW"
     reason = "Your deadline is too close to justify waiting."
-
-elif latest_rate <= cheap_cutoff:
-    recommendation = "TRANSFER NOW"
-    reason = "The current rate is in the cheapest quarter of the past 30 days."
-
-elif latest_rate >= expensive_cutoff and days_remaining >= 8:
-    recommendation = "WAIT AND REVIEW DAILY"
-    reason = "The current rate is expensive relative to the past 30 days."
-
 else:
-    recommendation = "SPLIT THE TRANSFER"
+    recommendation = "NO VALIDATED TIMING EDGE"
     reason = (
-        "Transfer half now and review the remaining half daily "
-        "to reduce timing risk."
+        "Historical backtesting did not show that waiting "
+        "beats transferring immediately on average."
     )
 
 print()
