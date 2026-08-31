@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+from math import ceil, floor
 from pathlib import Path
 from statistics import mean
 
@@ -97,6 +98,7 @@ translations = {
         "window_90": "90 records",
         "window_all": "All data",
         "chart_rate": "VND per AUD",
+        "date": "Date",
         "planner_title": "Plan your transfer",
         "planner_intro": "Use the current rate to estimate cost, compare it with recent history and test an optional budget.",
         "current_cost": "Current transfer cost",
@@ -173,6 +175,7 @@ translations = {
         "window_90": "90 bản ghi",
         "window_all": "Toàn bộ dữ liệu",
         "chart_rate": "VND trên mỗi AUD",
+        "date": "Ngày",
         "planner_title": "Lập kế hoạch chuyển tiền",
         "planner_intro": "Dùng tỷ giá hiện tại để ước tính chi phí, so sánh với lịch sử gần đây và kiểm tra ngân sách tùy chọn.",
         "current_cost": "Chi phí chuyển hiện tại",
@@ -402,15 +405,67 @@ with overview_tab:
         start_index = 0
 
     chart_rate_label = t["chart_rate"]
-    chart_data = {
-        "date": dates[start_index:],
-        chart_rate_label: rates[start_index:],
+    selected_dates = dates[start_index:]
+    selected_rates = rates[start_index:]
+    y_axis_min = min(
+        15_000,
+        floor(min(selected_rates) / 1_000) * 1_000,
+    )
+    y_axis_max = max(
+        25_000,
+        ceil(max(selected_rates) / 1_000) * 1_000,
+    )
+    chart_data = [
+        {
+            "date": date.isoformat(),
+            "rate": rate,
+        }
+        for date, rate in zip(selected_dates, selected_rates)
+    ]
+    chart_spec = {
+        "mark": {
+            "type": "line",
+            "color": "#14b8a6",
+            "strokeWidth": 3,
+        },
+        "encoding": {
+            "x": {
+                "field": "date",
+                "type": "temporal",
+                "title": t["date"],
+                "axis": {"grid": False},
+            },
+            "y": {
+                "field": "rate",
+                "type": "quantitative",
+                "title": chart_rate_label,
+                "scale": {
+                    "domain": [y_axis_min, y_axis_max],
+                    "nice": False,
+                },
+                "axis": {"format": ",.0f"},
+            },
+            "tooltip": [
+                {
+                    "field": "date",
+                    "type": "temporal",
+                    "title": t["date"],
+                    "format": "%Y-%m-%d",
+                },
+                {
+                    "field": "rate",
+                    "type": "quantitative",
+                    "title": chart_rate_label,
+                    "format": ",.2f",
+                },
+            ],
+        },
     }
-    st.line_chart(
+    st.vega_lite_chart(
         chart_data,
-        x="date",
-        y=chart_rate_label,
+        chart_spec,
         height=400,
+        width="stretch",
     )
 
 with planner_tab:
