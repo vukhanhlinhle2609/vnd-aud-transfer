@@ -95,7 +95,7 @@ translations = {
         "decision_equal": "**Rate is in line with its previous 30-day average.** Historical testing found no reliable advantage from waiting for a better day.",
         "percentile_text": "Today's rate is better than **{all_value:.0f}%** of earlier days and **{recent_value:.0f}%** of the previous 90 days.",
         "history": "Rate history",
-        "history_help": "A falling line is favourable because fewer VND are needed for each AUD.",
+        "history_help": "The teal line is the daily rate; the dashed gold line is its 7-day average. A falling trend is favourable because fewer VND are needed for each AUD.",
         "window": "History window",
         "window_30": "30 days",
         "window_90": "90 days",
@@ -112,6 +112,7 @@ translations = {
         "higher_direction": "Higher",
         "unchanged_direction": "Unchanged",
         "interactive_tip": "On a phone, move the date slider to explore the trend. On a laptop, you can also hover anywhere along the line for the date, rate, movement and percentage change.",
+        "seven_day_average": "7-day average",
         "planner_title": "Plan your transfer",
         "planner_intro": "Use the current rate to estimate cost, compare it with recent history and test an optional budget.",
         "current_cost": "Current transfer cost",
@@ -129,15 +130,32 @@ translations = {
         "no_budget": "No maximum budget is set. Turn on the option above to test a spending limit.",
         "deadline_warning": "Your deadline is close. Historical testing found no reliable advantage from waiting.",
         "forecast_title": "Short-term rate outlook",
-        "forecast_intro": "The most reliable tested next-day baseline is the latest observed daily rate. The range below applies historical daily movements to that baseline.",
+        "forecast_intro": "The best tested baseline keeps the latest daily rate as the central estimate. Historical movements create an uncertainty range that widens across the next seven days.",
         "point_forecast": "Next-day estimate",
+        "seven_day_forecast": "7-day estimate",
         "forecast_cost": "Estimated transfer cost",
         "historical_range": "80% historical range",
+        "next_day_summary": "Tomorrow",
+        "seven_day_summary": "In 7 days",
+        "forecast_chart_title": "Next seven days",
+        "forecast_chart_help": "The dashed line is the tested central estimate. The shaded area is an 80% historical movement range, not a promise of where the rate will land.",
+        "actual_rate": "Observed rate",
+        "forecast_rate": "Central estimate",
+        "forecast_band": "80% range",
+        "forecast_table": "Daily estimate details",
+        "forecast_day": "Day",
+        "forecast_range": "Historical 80% range",
+        "series": "Series",
+        "lower_bound": "Lower bound",
+        "upper_bound": "Upper bound",
+        "flat_forecast_note": "The central line is flat by design: more complex trend and regression models performed worse in walk-forward testing. The widening band represents increasing uncertainty over time.",
         "historical_coverage": "Backtested interval coverage",
         "baseline_mae": "Baseline MAE",
+        "seven_day_mae": "7-day MAE",
         "tolerance_accuracy": "Within ±0.5%",
         "range_caption": "Forecast interval: **{low:,.2f}–{high:,.2f} VND/AUD**. Its radius is the 80th percentile of the latest {count} absolute daily movements.",
         "accuracy_caption": "Across historical next-day tests, the point forecast was within ±0.5% of the actual rate **{tolerance:.1f}%** of the time. The rolling 80% interval contained the actual next daily rate **{coverage:.1f}%** of the time. These are backtested hit rates, not guaranteed future accuracy.",
+        "mae_explanation": "**What MAE means:** MAE is Mean Absolute Error—the average size of past forecast misses, regardless of whether the estimate was too high or too low. A next-day MAE of **{day_mae:,.2f} VND/AUD** means the estimate missed by about that amount per AUD on average; for {amount:,.0f} AUD, that is roughly **{day_cost:,.0f} VND**. The 7-day MAE was **{week_mae:,.2f} VND/AUD**. Lower is better, and past MAE does not guarantee future accuracy.",
         "direction_title": "Recent direction profile",
         "lower_next": "Lower",
         "unchanged_next": "Unchanged",
@@ -166,6 +184,7 @@ translations = {
         "regression_result": "Walk-forward regression MAE: **56.51 VND**, compared with **53.06 VND** for its baseline test. The regression model was discarded.",
         "strategy_result": "The tested 14-day timing strategy was **5.79 VND/AUD worse** than transferring immediately on average, so it was discarded.",
         "disclaimer": "Educational decision support only — not financial advice or a guaranteed forecast. Transfer fees and provider spreads are not included.",
+        "automatic_updates": "Automatic updates: Vietcombank is checked every 6 hours, one daily rate is retained, and the dashboard recalculates without manual action.",
     },
     "Tiếng Việt": {
         "sidebar_settings": "Thiết lập chuyển tiền",
@@ -200,7 +219,7 @@ translations = {
         "decision_equal": "**Tỷ giá đang gần bằng mức trung bình 30 ngày trước.** Kiểm định lịch sử không cho thấy lợi ích đáng tin cậy từ việc chờ một ngày tốt hơn.",
         "percentile_text": "Tỷ giá hôm nay tốt hơn **{all_value:.0f}%** các ngày trước đây và **{recent_value:.0f}%** trong 90 ngày gần nhất.",
         "history": "Lịch sử tỷ giá",
-        "history_help": "Đường đi xuống là thuận lợi vì cần ít VND hơn cho mỗi AUD.",
+        "history_help": "Đường xanh là tỷ giá hằng ngày; đường vàng nét đứt là trung bình 7 ngày. Xu hướng đi xuống là thuận lợi vì cần ít VND hơn cho mỗi AUD.",
         "window": "Khoảng thời gian",
         "window_30": "30 ngày",
         "window_90": "90 ngày",
@@ -217,6 +236,7 @@ translations = {
         "higher_direction": "Tăng",
         "unchanged_direction": "Không đổi",
         "interactive_tip": "Trên điện thoại, kéo thanh ngày để xem xu hướng. Trên máy tính, bạn cũng có thể di chuột dọc theo đường biểu đồ để xem ngày, tỷ giá, mức thay đổi và phần trăm thay đổi.",
+        "seven_day_average": "Trung bình 7 ngày",
         "planner_title": "Lập kế hoạch chuyển tiền",
         "planner_intro": "Dùng tỷ giá hiện tại để ước tính chi phí, so sánh với lịch sử gần đây và kiểm tra ngân sách tùy chọn.",
         "current_cost": "Chi phí chuyển hiện tại",
@@ -234,15 +254,32 @@ translations = {
         "no_budget": "Chưa đặt ngân sách tối đa. Bật tùy chọn phía trên để kiểm tra giới hạn chi tiêu.",
         "deadline_warning": "Thời hạn chuyển tiền đã gần. Kiểm tra lịch sử không cho thấy chờ đợi mang lại lợi thế đáng tin cậy.",
         "forecast_title": "Triển vọng tỷ giá ngắn hạn",
-        "forecast_intro": "Mô hình cơ sở cho ngày tiếp theo đáng tin cậy nhất đã kiểm tra dùng tỷ giá ngày mới nhất. Khoảng dưới đây áp dụng biến động hằng ngày trong lịch sử vào mức cơ sở đó.",
+        "forecast_intro": "Mô hình cơ sở tốt nhất đã kiểm tra dùng tỷ giá ngày mới nhất làm ước tính trung tâm. Biến động lịch sử tạo ra khoảng bất định mở rộng dần trong bảy ngày tiếp theo.",
         "point_forecast": "Ước tính ngày tiếp theo",
+        "seven_day_forecast": "Ước tính sau 7 ngày",
         "forecast_cost": "Chi phí chuyển ước tính",
         "historical_range": "Khoảng lịch sử 80%",
+        "next_day_summary": "Ngày mai",
+        "seven_day_summary": "Sau 7 ngày",
+        "forecast_chart_title": "Bảy ngày tiếp theo",
+        "forecast_chart_help": "Đường nét đứt là ước tính trung tâm đã được kiểm định. Vùng tô màu là khoảng biến động lịch sử 80%, không phải cam kết về tỷ giá tương lai.",
+        "actual_rate": "Tỷ giá đã ghi nhận",
+        "forecast_rate": "Ước tính trung tâm",
+        "forecast_band": "Khoảng 80%",
+        "forecast_table": "Chi tiết ước tính theo ngày",
+        "forecast_day": "Ngày thứ",
+        "forecast_range": "Khoảng lịch sử 80%",
+        "series": "Loại dữ liệu",
+        "lower_bound": "Cận dưới",
+        "upper_bound": "Cận trên",
+        "flat_forecast_note": "Đường ước tính trung tâm nằm ngang là có chủ ý: các mô hình xu hướng và hồi quy phức tạp hơn cho kết quả kém hơn trong kiểm định cuốn chiếu. Vùng mở rộng thể hiện độ bất định tăng dần theo thời gian.",
         "historical_coverage": "Độ bao phủ khi kiểm định",
         "baseline_mae": "MAE mô hình cơ sở",
+        "seven_day_mae": "MAE sau 7 ngày",
         "tolerance_accuracy": "Nằm trong ±0,5%",
         "range_caption": "Khoảng dự báo: **{low:,.2f}–{high:,.2f} VND/AUD**. Bán kính khoảng bằng phân vị thứ 80 của {count} biến động tuyệt đối hằng ngày gần nhất.",
         "accuracy_caption": "Trong các kiểm định lịch sử cho ngày tiếp theo, dự báo điểm nằm trong ±0,5% so với tỷ giá thực tế **{tolerance:.1f}%** số lần. Khoảng dự báo cuốn chiếu 80% chứa tỷ giá thực tế của ngày tiếp theo **{coverage:.1f}%** số lần. Đây là tỷ lệ đạt trong kiểm định quá khứ, không bảo đảm độ chính xác tương lai.",
+        "mae_explanation": "**MAE là gì:** MAE là sai số tuyệt đối trung bình—mức chênh lệch trung bình của các dự báo trong quá khứ, bất kể dự báo cao hay thấp hơn thực tế. MAE ngày tiếp theo là **{day_mae:,.2f} VND/AUD**, nghĩa là ước tính lệch khoảng mức đó cho mỗi AUD; với {amount:,.0f} AUD, tương đương khoảng **{day_cost:,.0f} VND**. MAE sau 7 ngày là **{week_mae:,.2f} VND/AUD**. MAE càng thấp càng tốt và kết quả quá khứ không bảo đảm độ chính xác tương lai.",
         "direction_title": "Phân bố hướng biến động gần đây",
         "lower_next": "Giảm",
         "unchanged_next": "Không đổi",
@@ -271,6 +308,7 @@ translations = {
         "regression_result": "MAE hồi quy cuốn chiếu là **56.51 VND**, so với **53.06 VND** của mô hình cơ sở trong cùng bài kiểm tra. Mô hình hồi quy đã bị loại.",
         "strategy_result": "Chiến lược chọn thời điểm trong 14 ngày tệ hơn trung bình **5.79 VND/AUD** so với chuyển ngay, nên đã bị loại.",
         "disclaimer": "Chỉ nhằm hỗ trợ quyết định và mục đích giáo dục — không phải tư vấn tài chính hay dự báo được bảo đảm. Chưa bao gồm phí chuyển và chênh lệch giá của nhà cung cấp.",
+        "automatic_updates": "Cập nhật tự động: hệ thống kiểm tra Vietcombank mỗi 6 giờ, giữ một tỷ giá mỗi ngày và tự tính lại bảng điều khiển—không cần thao tác thủ công.",
     },
 }
 
@@ -343,12 +381,33 @@ daily_changes = [
 ]
 baseline_mae = mean(abs(change) for change in daily_changes)
 recent_change_window = daily_changes[-180:]
-forecast_radius = percentile(
-    [abs(change) for change in recent_change_window],
-    0.80,
-)
-range_low = latest - forecast_radius
-range_high = latest + forecast_radius
+forecast_horizons = []
+for horizon in range(1, 8):
+    horizon_changes = [
+        rates[index] - rates[index - horizon]
+        for index in range(horizon, len(rates))
+    ]
+    recent_horizon_changes = horizon_changes[-180:]
+    horizon_radius = percentile(
+        [abs(change) for change in recent_horizon_changes],
+        0.80,
+    )
+    forecast_horizons.append(
+        {
+            "horizon": horizon,
+            "date": dates[-1] + timedelta(days=horizon),
+            "estimate": latest,
+            "low": latest - horizon_radius,
+            "high": latest + horizon_radius,
+            "mae": mean(abs(change) for change in horizon_changes),
+        }
+    )
+
+next_day_forecast = forecast_horizons[0]
+seven_day_forecast = forecast_horizons[-1]
+range_low = next_day_forecast["low"]
+range_high = next_day_forecast["high"]
+seven_day_mae = seven_day_forecast["mae"]
 average_move_30 = mean(abs(change) for change in daily_changes[-30:])
 
 tolerance_hits = sum(
@@ -517,18 +576,21 @@ with overview_tab:
         selected_direction = t["unchanged_direction"]
 
     selected_rates = rates[start_position:]
-    y_axis_min = min(
-        15_000,
-        floor(min(selected_rates) / 1_000) * 1_000,
-    )
-    y_axis_max = max(
-        25_000,
-        ceil(max(selected_rates) / 1_000) * 1_000,
-    )
+    selected_span = max(selected_rates) - min(selected_rates)
+    y_axis_padding = max(150, selected_span * 0.15)
+    y_axis_min = floor(
+        (min(selected_rates) - y_axis_padding) / 100
+    ) * 100
+    y_axis_max = ceil(
+        (max(selected_rates) + y_axis_padding) / 100
+    ) * 100
     chart_data = [
         {
             "date": dates[index].isoformat(),
             "rate": rates[index],
+            "average_7": mean(
+                rates[max(0, index - 6):index + 1]
+            ),
             "change": (
                 rates[index] - rates[index - 1]
                 if index > 0
@@ -550,6 +612,16 @@ with overview_tab:
         }
         for index in range(start_position, len(rates))
     ]
+    chart_y_encoding = {
+        "field": "rate",
+        "type": "quantitative",
+        "title": chart_rate_label,
+        "scale": {
+            "domain": [y_axis_min, y_axis_max],
+            "nice": False,
+        },
+        "axis": {"format": ",.0f", "tickCount": 5},
+    }
     chart_spec = {
         "encoding": {
             "x": {
@@ -564,24 +636,41 @@ with overview_tab:
                     "tickCount": 6,
                 },
             },
-            "y": {
-                "field": "rate",
-                "type": "quantitative",
-                "title": chart_rate_label,
-                "scale": {
-                    "domain": [y_axis_min, y_axis_max],
-                    "nice": False,
-                },
-                "axis": {"format": ",.0f"},
-            },
         },
         "layer": [
             {
                 "mark": {
+                    "type": "area",
+                    "color": "#14b8a6",
+                    "opacity": 0.08,
+                },
+                "encoding": {
+                    "y": chart_y_encoding,
+                    "y2": {"datum": y_axis_min},
+                },
+            },
+            {
+                "mark": {
                     "type": "line",
                     "color": "#14b8a6",
-                    "strokeWidth": 2.5,
-                }
+                    "strokeWidth": 3,
+                },
+                "encoding": {"y": chart_y_encoding},
+            },
+            {
+                "mark": {
+                    "type": "line",
+                    "color": "#f59e0b",
+                    "strokeWidth": 2,
+                    "strokeDash": [7, 5],
+                },
+                "encoding": {
+                    "y": {
+                        **chart_y_encoding,
+                        "field": "average_7",
+                        "title": t["seven_day_average"],
+                    }
+                },
             },
             {
                 "transform": [{"filter": "datum.selected"}],
@@ -611,6 +700,7 @@ with overview_tab:
                         },
                         "legend": None,
                     },
+                    "y": chart_y_encoding,
                 },
             },
             {
@@ -621,6 +711,7 @@ with overview_tab:
                     "opacity": 0,
                 },
                 "encoding": {
+                    "y": chart_y_encoding,
                     "tooltip": [
                         {
                             "field": "date",
@@ -632,6 +723,12 @@ with overview_tab:
                             "field": "rate",
                             "type": "quantitative",
                             "title": chart_rate_label,
+                            "format": ",.2f",
+                        },
+                        {
+                            "field": "average_7",
+                            "type": "quantitative",
+                            "title": t["seven_day_average"],
                             "format": ",.2f",
                         },
                         {
@@ -793,50 +890,255 @@ with forecast_tab:
 
     forecast_cost = aud_amount * latest
     forecast_1, forecast_2 = st.columns(2)
-    forecast_1.metric(
-        t["point_forecast"],
-        f"{latest:,.2f} VND/AUD",
-        border=True,
-    )
-    forecast_2.metric(
-        t["forecast_cost"],
-        compact_vnd(forecast_cost),
-        border=True,
-    )
-    forecast_3, forecast_4 = st.columns(2)
-    forecast_3.metric(
-        t["historical_range"],
-        f"{range_low / 1_000:.1f}K–{range_high / 1_000:.1f}K",
-        border=True,
-    )
-    forecast_4.metric(
-        t["historical_coverage"],
-        f"{interval_coverage:.1f}%",
-        border=True,
-    )
-    st.caption(
-        t["range_caption"].format(
-            low=range_low,
-            high=range_high,
-            count=len(recent_change_window),
+    with forecast_1:
+        with st.container(border=True):
+            st.markdown(f"### {t['next_day_summary']}")
+            st.metric(
+                t["point_forecast"],
+                f"{next_day_forecast['estimate']:,.2f} VND/AUD",
+            )
+            st.caption(
+                f"{t['historical_range']}: "
+                f"**{next_day_forecast['low']:,.2f}–"
+                f"{next_day_forecast['high']:,.2f}**"
+            )
+            st.caption(
+                f"{t['forecast_cost']}: **{compact_vnd(forecast_cost)}**"
+            )
+    with forecast_2:
+        with st.container(border=True):
+            st.markdown(f"### {t['seven_day_summary']}")
+            st.metric(
+                t["seven_day_forecast"],
+                f"{seven_day_forecast['estimate']:,.2f} VND/AUD",
+            )
+            st.caption(
+                f"{t['historical_range']}: "
+                f"**{seven_day_forecast['low']:,.2f}–"
+                f"{seven_day_forecast['high']:,.2f}**"
+            )
+            st.caption(
+                f"{t['forecast_cost']}: **{compact_vnd(forecast_cost)}**"
+            )
+
+    st.subheader(t["forecast_chart_title"])
+    st.caption(t["forecast_chart_help"])
+    forecast_chart_data = []
+    forecast_history_start = max(0, len(rates) - 31)
+    for index in range(forecast_history_start, len(rates)):
+        forecast_chart_data.append(
+            {
+                "date": dates[index].isoformat(),
+                "actual": rates[index],
+                "estimate": latest if index == len(rates) - 1 else None,
+                "low": latest if index == len(rates) - 1 else None,
+                "high": latest if index == len(rates) - 1 else None,
+                "display_rate": rates[index],
+                "phase": t["actual_rate"],
+            }
         )
+    for forecast in forecast_horizons:
+        forecast_chart_data.append(
+            {
+                "date": forecast["date"].isoformat(),
+                "actual": None,
+                "estimate": forecast["estimate"],
+                "low": forecast["low"],
+                "high": forecast["high"],
+                "display_rate": forecast["estimate"],
+                "phase": t["forecast_rate"],
+            }
+        )
+
+    forecast_values = rates[forecast_history_start:] + [
+        forecast[bound]
+        for forecast in forecast_horizons
+        for bound in ("low", "high")
+    ]
+    forecast_span = max(forecast_values) - min(forecast_values)
+    forecast_padding = max(150, forecast_span * 0.12)
+    forecast_y_min = floor(
+        (min(forecast_values) - forecast_padding) / 100
+    ) * 100
+    forecast_y_max = ceil(
+        (max(forecast_values) + forecast_padding) / 100
+    ) * 100
+    forecast_y_scale = {
+        "domain": [forecast_y_min, forecast_y_max],
+        "nice": False,
+    }
+    forecast_chart_spec = {
+        "encoding": {
+            "x": {
+                "field": "date",
+                "type": "temporal",
+                "title": t["date"],
+                "axis": {
+                    "format": "%d %b",
+                    "grid": False,
+                    "labelAngle": -30,
+                    "labelOverlap": "greedy",
+                    "tickCount": 6,
+                },
+            }
+        },
+        "layer": [
+            {
+                "mark": {
+                    "type": "area",
+                    "color": "#38bdf8",
+                    "opacity": 0.22,
+                },
+                "encoding": {
+                    "y": {
+                        "field": "low",
+                        "type": "quantitative",
+                        "title": t["chart_rate"],
+                        "scale": forecast_y_scale,
+                        "axis": {"format": ",.0f", "tickCount": 5},
+                    },
+                    "y2": {"field": "high"},
+                },
+            },
+            {
+                "mark": {
+                    "type": "line",
+                    "color": "#14b8a6",
+                    "strokeWidth": 3,
+                },
+                "encoding": {
+                    "y": {
+                        "field": "actual",
+                        "type": "quantitative",
+                        "title": t["chart_rate"],
+                        "scale": forecast_y_scale,
+                    }
+                },
+            },
+            {
+                "mark": {
+                    "type": "line",
+                    "color": "#0284c7",
+                    "strokeWidth": 3,
+                    "strokeDash": [8, 5],
+                },
+                "encoding": {
+                    "y": {
+                        "field": "estimate",
+                        "type": "quantitative",
+                        "title": t["forecast_rate"],
+                        "scale": forecast_y_scale,
+                    }
+                },
+            },
+            {
+                "mark": {
+                    "type": "point",
+                    "filled": True,
+                    "size": 260,
+                    "opacity": 0,
+                },
+                "encoding": {
+                    "y": {
+                        "field": "display_rate",
+                        "type": "quantitative",
+                        "scale": forecast_y_scale,
+                    },
+                    "tooltip": [
+                        {
+                            "field": "date",
+                            "type": "temporal",
+                            "title": t["date"],
+                            "format": "%Y-%m-%d",
+                        },
+                        {
+                            "field": "phase",
+                            "type": "nominal",
+                            "title": t["series"],
+                        },
+                        {
+                            "field": "display_rate",
+                            "type": "quantitative",
+                            "title": t["chart_rate"],
+                            "format": ",.2f",
+                        },
+                        {
+                            "field": "low",
+                            "type": "quantitative",
+                            "title": t["lower_bound"],
+                            "format": ",.2f",
+                        },
+                        {
+                            "field": "high",
+                            "type": "quantitative",
+                            "title": t["upper_bound"],
+                            "format": ",.2f",
+                        },
+                    ],
+                },
+            },
+        ],
+    }
+    st.vega_lite_chart(
+        forecast_chart_data,
+        forecast_chart_spec,
+        height=420,
+        width="stretch",
     )
+    st.info(t["flat_forecast_note"])
+
+    forecast_table_rows = [
+        {
+            t["forecast_day"]: forecast["horizon"],
+            t["date"]: forecast["date"].strftime("%Y-%m-%d"),
+            t["forecast_rate"]: f"{forecast['estimate']:,.2f}",
+            t["forecast_range"]: (
+                f"{forecast['low']:,.2f}–{forecast['high']:,.2f}"
+            ),
+        }
+        for forecast in forecast_horizons
+    ]
+    with st.expander(t["forecast_table"]):
+        st.dataframe(
+            forecast_table_rows,
+            hide_index=True,
+            width="stretch",
+        )
 
     quality_1, quality_2 = st.columns(2)
     quality_1.metric(
+        t["baseline_mae"],
+        f"{baseline_mae:,.2f} VND/AUD",
+        border=True,
+    )
+    quality_2.metric(
+        t["seven_day_mae"],
+        f"{seven_day_mae:,.2f} VND/AUD",
+        border=True,
+    )
+    quality_3, quality_4 = st.columns(2)
+    quality_3.metric(
         t["tolerance_accuracy"],
         f"{tolerance_accuracy:.1f}%",
         border=True,
     )
-    quality_2.metric(
-        t["baseline_mae"],
-        f"{baseline_mae:,.2f} VND/AUD",
+    quality_4.metric(
+        t["historical_coverage"],
+        f"{interval_coverage:.1f}%",
         border=True,
     )
     st.caption(
         t["accuracy_caption"].format(
             tolerance=tolerance_accuracy,
             coverage=interval_coverage,
+        )
+    )
+    st.info(
+        t["mae_explanation"].format(
+            day_mae=baseline_mae,
+            amount=aud_amount,
+            day_cost=baseline_mae * aud_amount,
+            week_mae=seven_day_mae,
         )
     )
 
@@ -915,4 +1217,5 @@ with forecast_tab:
         st.write(t["strategy_result"])
 
 st.divider()
+st.caption(f"🔄 {t['automatic_updates']}")
 st.caption(t["disclaimer"])
