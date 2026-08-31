@@ -101,7 +101,14 @@ translations = {
         "date": "Date",
         "change": "Change",
         "change_pct": "Change (%)",
-        "interactive_tip": "Hover over any dot to see its date, rate, movement and percentage change. Green means a lower (better) rate; red means a higher rate.",
+        "explore_date": "Explore a date",
+        "selected_date": "Selected date",
+        "selected_rate": "Selected rate",
+        "selected_direction": "Direction",
+        "lower_direction": "Lower (better)",
+        "higher_direction": "Higher",
+        "unchanged_direction": "Unchanged",
+        "interactive_tip": "On a phone, move the date slider to explore the trend. On a laptop, you can also hover anywhere along the line for the date, rate, movement and percentage change.",
         "planner_title": "Plan your transfer",
         "planner_intro": "Use the current rate to estimate cost, compare it with recent history and test an optional budget.",
         "current_cost": "Current transfer cost",
@@ -195,7 +202,14 @@ translations = {
         "date": "Ngày",
         "change": "Mức thay đổi",
         "change_pct": "Thay đổi (%)",
-        "interactive_tip": "Di chuột lên từng chấm để xem ngày, tỷ giá, mức thay đổi và phần trăm thay đổi. Màu xanh là tỷ giá giảm (tốt hơn); màu đỏ là tỷ giá tăng.",
+        "explore_date": "Chọn ngày để xem chi tiết",
+        "selected_date": "Ngày đã chọn",
+        "selected_rate": "Tỷ giá đã chọn",
+        "selected_direction": "Hướng biến động",
+        "lower_direction": "Giảm (tốt hơn)",
+        "higher_direction": "Tăng",
+        "unchanged_direction": "Không đổi",
+        "interactive_tip": "Trên điện thoại, kéo thanh ngày để xem xu hướng. Trên máy tính, bạn cũng có thể di chuột dọc theo đường biểu đồ để xem ngày, tỷ giá, mức thay đổi và phần trăm thay đổi.",
         "planner_title": "Lập kế hoạch chuyển tiền",
         "planner_intro": "Dùng tỷ giá hiện tại để ước tính chi phí, so sánh với lịch sử gần đây và kiểm tra ngân sách tùy chọn.",
         "current_cost": "Chi phí chuyển hiện tại",
@@ -448,7 +462,7 @@ with overview_tab:
         history_window = st.selectbox(
             t["window"],
             (30, 90, 0),
-            index=1,
+            index=0,
             format_func=lambda value: {
                 30: t["window_30"],
                 90: t["window_90"],
@@ -470,6 +484,30 @@ with overview_tab:
         if start_index < 0
         else start_index
     )
+    selected_index = st.select_slider(
+        t["explore_date"],
+        options=list(range(start_position, len(rates))),
+        value=len(rates) - 1,
+        format_func=lambda index: date_labels[index],
+        key=f"selected_date_{history_window}",
+    )
+    selected_change = (
+        rates[selected_index] - rates[selected_index - 1]
+        if selected_index > 0
+        else 0
+    )
+    selected_change_pct = (
+        (rates[selected_index] / rates[selected_index - 1] - 1) * 100
+        if selected_index > 0
+        else 0
+    )
+    if selected_change < 0:
+        selected_direction = t["lower_direction"]
+    elif selected_change > 0:
+        selected_direction = t["higher_direction"]
+    else:
+        selected_direction = t["unchanged_direction"]
+
     selected_rates = rates[start_position:]
     y_axis_min = min(
         15_000,
@@ -500,6 +538,7 @@ with overview_tab:
                 if index > 0 and rates[index] > rates[index - 1]
                 else "Unchanged"
             ),
+            "selected": index == selected_index,
         }
         for index in range(start_position, len(rates))
     ]
@@ -509,7 +548,13 @@ with overview_tab:
                 "field": "date",
                 "type": "temporal",
                 "title": t["date"],
-                "axis": {"grid": False},
+                "axis": {
+                    "grid": False,
+                    "format": "%d %b",
+                    "labelAngle": -30,
+                    "labelOverlap": "greedy",
+                    "tickCount": 6,
+                },
             },
             "y": {
                 "field": "rate",
@@ -531,13 +576,14 @@ with overview_tab:
                 }
             },
             {
+                "transform": [{"filter": "datum.selected"}],
                 "mark": {
                     "type": "point",
                     "filled": True,
-                    "size": 48,
-                    "opacity": 0.85,
+                    "size": 150,
+                    "opacity": 1,
                     "stroke": "white",
-                    "strokeWidth": 0.7,
+                    "strokeWidth": 2,
                 },
                 "encoding": {
                     "color": {
@@ -557,6 +603,16 @@ with overview_tab:
                         },
                         "legend": None,
                     },
+                },
+            },
+            {
+                "mark": {
+                    "type": "point",
+                    "filled": True,
+                    "size": 280,
+                    "opacity": 0,
+                },
+                "encoding": {
                     "tooltip": [
                         {
                             "field": "date",
@@ -594,6 +650,29 @@ with overview_tab:
         width="stretch",
     )
     st.caption(t["interactive_tip"])
+
+    detail_1, detail_2, detail_3, detail_4 = st.columns(4)
+    detail_1.metric(
+        t["selected_date"],
+        date_labels[selected_index],
+        border=True,
+    )
+    detail_2.metric(
+        t["selected_rate"],
+        f"{rates[selected_index]:,.2f}",
+        border=True,
+    )
+    detail_3.metric(
+        t["change"],
+        f"{selected_change:+,.2f} VND",
+        border=True,
+    )
+    detail_4.metric(
+        t["change_pct"],
+        f"{selected_change_pct:+.2f}%",
+        border=True,
+    )
+    st.caption(f"{t['selected_direction']}: **{selected_direction}**")
 
 with planner_tab:
     st.subheader(t["planner_title"])
