@@ -99,6 +99,9 @@ translations = {
         "window_all": "All data",
         "chart_rate": "VND per AUD",
         "date": "Date",
+        "change": "Change",
+        "change_pct": "Change (%)",
+        "interactive_tip": "Hover over any dot to see its date, rate, movement and percentage change. Green means a lower (better) rate; red means a higher rate.",
         "planner_title": "Plan your transfer",
         "planner_intro": "Use the current rate to estimate cost, compare it with recent history and test an optional budget.",
         "current_cost": "Current transfer cost",
@@ -120,8 +123,11 @@ translations = {
         "point_forecast": "Next-record estimate",
         "forecast_cost": "Estimated transfer cost",
         "historical_range": "80% historical range",
+        "historical_coverage": "Backtested interval coverage",
         "baseline_mae": "Baseline MAE",
-        "range_caption": "Historical movement range: **{low:,.2f}–{high:,.2f} VND/AUD**, based on the middle 80% of the latest {count} one-record changes.",
+        "tolerance_accuracy": "Within ±0.5%",
+        "range_caption": "Forecast interval: **{low:,.2f}–{high:,.2f} VND/AUD**. Its radius is the 80th percentile of the latest {count} absolute one-record movements.",
+        "accuracy_caption": "Across historical one-record tests, the point forecast was within ±0.5% of the actual rate **{tolerance:.1f}%** of the time. The rolling 80% interval contained the actual next rate **{coverage:.1f}%** of the time. These are backtested hit rates, not guaranteed future accuracy.",
         "direction_title": "Recent direction profile",
         "lower_next": "Lower",
         "unchanged_next": "Unchanged",
@@ -132,6 +138,17 @@ translations = {
         "best_30": "Best rate (30)",
         "worst_30": "Worst rate (30)",
         "spread_30": "30-record spread",
+        "factors_title": "External factors to monitor",
+        "factors_intro": "These drivers can affect AUD/VND, but they are not included in the numerical forecast until aligned historical data passes walk-forward testing.",
+        "interest_title": "Interest-rate differentials",
+        "interest_text": "RBA policy relative to the US and other major economies can change demand for AUD-denominated assets.",
+        "commodity_title": "Commodities and China",
+        "commodity_text": "Iron ore, energy prices and Chinese demand affect Australia's terms of trade and often the AUD.",
+        "risk_title": "Global risk sentiment",
+        "risk_text": "Equity-market stress and risk aversion can weaken demand for AUD over short horizons.",
+        "vietnam_title": "Vietnam-side pricing",
+        "vietnam_text": "USD/VND conditions, domestic policy and Vietcombank's customer spread affect the final VND/AUD selling rate.",
+        "factors_source": "Background: [Reserve Bank of Australia — Drivers of the AUD exchange rate](https://www.rba.gov.au/education/resources/explainers/drivers-of-the-aud-exchange-rate.html).",
         "forecast_note": "Forecasts are uncertain. This baseline previously achieved a mean absolute error of about {mae:,.2f} VND/AUD, while more complex regression and timing models performed worse and were discarded.",
         "evaluation": "Model evaluation details",
         "naive_result": "Naive one-step forecast MAE: **{mae:,.2f} VND/AUD** across {count} historical predictions.",
@@ -176,6 +193,9 @@ translations = {
         "window_all": "Toàn bộ dữ liệu",
         "chart_rate": "VND trên mỗi AUD",
         "date": "Ngày",
+        "change": "Mức thay đổi",
+        "change_pct": "Thay đổi (%)",
+        "interactive_tip": "Di chuột lên từng chấm để xem ngày, tỷ giá, mức thay đổi và phần trăm thay đổi. Màu xanh là tỷ giá giảm (tốt hơn); màu đỏ là tỷ giá tăng.",
         "planner_title": "Lập kế hoạch chuyển tiền",
         "planner_intro": "Dùng tỷ giá hiện tại để ước tính chi phí, so sánh với lịch sử gần đây và kiểm tra ngân sách tùy chọn.",
         "current_cost": "Chi phí chuyển hiện tại",
@@ -197,8 +217,11 @@ translations = {
         "point_forecast": "Ước tính bản ghi tiếp theo",
         "forecast_cost": "Chi phí chuyển ước tính",
         "historical_range": "Khoảng lịch sử 80%",
+        "historical_coverage": "Độ bao phủ khi kiểm định",
         "baseline_mae": "MAE mô hình cơ sở",
-        "range_caption": "Khoảng biến động lịch sử: **{low:,.2f}–{high:,.2f} VND/AUD**, dựa trên 80% biến động trung tâm của {count} thay đổi gần nhất.",
+        "tolerance_accuracy": "Nằm trong ±0,5%",
+        "range_caption": "Khoảng dự báo: **{low:,.2f}–{high:,.2f} VND/AUD**. Bán kính khoảng bằng phân vị thứ 80 của {count} biến động tuyệt đối gần nhất.",
+        "accuracy_caption": "Trong các kiểm định lịch sử từng bước, dự báo điểm nằm trong ±0,5% so với tỷ giá thực tế **{tolerance:.1f}%** số lần. Khoảng dự báo cuốn chiếu 80% chứa tỷ giá tiếp theo thực tế **{coverage:.1f}%** số lần. Đây là tỷ lệ đạt trong kiểm định quá khứ, không bảo đảm độ chính xác tương lai.",
         "direction_title": "Phân bố hướng biến động gần đây",
         "lower_next": "Giảm",
         "unchanged_next": "Không đổi",
@@ -209,6 +232,17 @@ translations = {
         "best_30": "Tỷ giá tốt nhất (30)",
         "worst_30": "Tỷ giá xấu nhất (30)",
         "spread_30": "Biên độ 30 bản ghi",
+        "factors_title": "Các yếu tố bên ngoài cần theo dõi",
+        "factors_intro": "Các yếu tố này có thể ảnh hưởng AUD/VND, nhưng chưa được đưa vào dự báo số cho đến khi dữ liệu lịch sử đồng bộ vượt qua kiểm định cuốn chiếu.",
+        "interest_title": "Chênh lệch lãi suất",
+        "interest_text": "Chính sách RBA so với Mỹ và các nền kinh tế lớn có thể thay đổi nhu cầu đối với tài sản định giá bằng AUD.",
+        "commodity_title": "Hàng hóa và Trung Quốc",
+        "commodity_text": "Giá quặng sắt, năng lượng và nhu cầu từ Trung Quốc ảnh hưởng điều kiện thương mại của Úc và thường tác động đến AUD.",
+        "risk_title": "Tâm lý rủi ro toàn cầu",
+        "risk_text": "Căng thẳng trên thị trường cổ phiếu và tâm lý né tránh rủi ro có thể làm giảm nhu cầu AUD trong ngắn hạn.",
+        "vietnam_title": "Định giá phía Việt Nam",
+        "vietnam_text": "Điều kiện USD/VND, chính sách trong nước và biên giá khách hàng của Vietcombank ảnh hưởng tỷ giá bán VND/AUD cuối cùng.",
+        "factors_source": "Thông tin nền: [Ngân hàng Dự trữ Úc — Các yếu tố chi phối tỷ giá AUD](https://www.rba.gov.au/education/resources/explainers/drivers-of-the-aud-exchange-rate.html).",
         "forecast_note": "Dự báo luôn có độ bất định. Mô hình cơ sở này trước đây có sai số tuyệt đối trung bình khoảng {mae:,.2f} VND/AUD; các mô hình hồi quy và chọn thời điểm phức tạp hơn cho kết quả kém hơn nên đã bị loại.",
         "evaluation": "Chi tiết đánh giá mô hình",
         "naive_result": "MAE dự báo một bước đơn giản: **{mae:,.2f} VND/AUD** trên {count} dự báo lịch sử.",
@@ -294,9 +328,35 @@ daily_changes = [
 ]
 baseline_mae = mean(abs(change) for change in daily_changes)
 recent_change_window = daily_changes[-180:]
-range_low = latest + percentile(recent_change_window, 0.10)
-range_high = latest + percentile(recent_change_window, 0.90)
+forecast_radius = percentile(
+    [abs(change) for change in recent_change_window],
+    0.80,
+)
+range_low = latest - forecast_radius
+range_high = latest + forecast_radius
 average_move_30 = mean(abs(change) for change in daily_changes[-30:])
+
+tolerance_hits = sum(
+    abs(current - prior) / prior <= 0.005
+    for prior, current in zip(rates, rates[1:])
+)
+tolerance_accuracy = tolerance_hits / len(daily_changes) * 100
+
+coverage_hits = 0
+coverage_count = 0
+for target_index in range(61, len(rates)):
+    prior_errors = [
+        abs(change)
+        for change in daily_changes[
+            max(0, target_index - 181):target_index - 1
+        ]
+    ]
+    interval_radius = percentile(prior_errors, 0.80)
+    actual_error = abs(daily_changes[target_index - 1])
+    coverage_hits += actual_error <= interval_radius
+    coverage_count += 1
+
+interval_coverage = coverage_hits / coverage_count * 100
 
 historical_rates = rates[:-1]
 better_than = sum(rate > latest for rate in historical_rates)
@@ -405,8 +465,12 @@ with overview_tab:
         start_index = 0
 
     chart_rate_label = t["chart_rate"]
-    selected_dates = dates[start_index:]
-    selected_rates = rates[start_index:]
+    start_position = (
+        len(rates) + start_index
+        if start_index < 0
+        else start_index
+    )
+    selected_rates = rates[start_position:]
     y_axis_min = min(
         15_000,
         floor(min(selected_rates) / 1_000) * 1_000,
@@ -417,17 +481,29 @@ with overview_tab:
     )
     chart_data = [
         {
-            "date": date.isoformat(),
-            "rate": rate,
+            "date": dates[index].isoformat(),
+            "rate": rates[index],
+            "change": (
+                rates[index] - rates[index - 1]
+                if index > 0
+                else 0
+            ),
+            "change_pct": (
+                (rates[index] / rates[index - 1] - 1) * 100
+                if index > 0
+                else 0
+            ),
+            "direction": (
+                "Decrease"
+                if index > 0 and rates[index] < rates[index - 1]
+                else "Increase"
+                if index > 0 and rates[index] > rates[index - 1]
+                else "Unchanged"
+            ),
         }
-        for date, rate in zip(selected_dates, selected_rates)
+        for index in range(start_position, len(rates))
     ]
     chart_spec = {
-        "mark": {
-            "type": "line",
-            "color": "#14b8a6",
-            "strokeWidth": 3,
-        },
         "encoding": {
             "x": {
                 "field": "date",
@@ -445,21 +521,71 @@ with overview_tab:
                 },
                 "axis": {"format": ",.0f"},
             },
-            "tooltip": [
-                {
-                    "field": "date",
-                    "type": "temporal",
-                    "title": t["date"],
-                    "format": "%Y-%m-%d",
-                },
-                {
-                    "field": "rate",
-                    "type": "quantitative",
-                    "title": chart_rate_label,
-                    "format": ",.2f",
-                },
-            ],
         },
+        "layer": [
+            {
+                "mark": {
+                    "type": "line",
+                    "color": "#14b8a6",
+                    "strokeWidth": 2.5,
+                }
+            },
+            {
+                "mark": {
+                    "type": "point",
+                    "filled": True,
+                    "size": 48,
+                    "opacity": 0.85,
+                    "stroke": "white",
+                    "strokeWidth": 0.7,
+                },
+                "encoding": {
+                    "color": {
+                        "field": "direction",
+                        "type": "nominal",
+                        "scale": {
+                            "domain": [
+                                "Decrease",
+                                "Unchanged",
+                                "Increase",
+                            ],
+                            "range": [
+                                "#16a34a",
+                                "#94a3b8",
+                                "#dc2626",
+                            ],
+                        },
+                        "legend": None,
+                    },
+                    "tooltip": [
+                        {
+                            "field": "date",
+                            "type": "temporal",
+                            "title": t["date"],
+                            "format": "%Y-%m-%d",
+                        },
+                        {
+                            "field": "rate",
+                            "type": "quantitative",
+                            "title": chart_rate_label,
+                            "format": ",.2f",
+                        },
+                        {
+                            "field": "change",
+                            "type": "quantitative",
+                            "title": t["change"],
+                            "format": "+,.2f",
+                        },
+                        {
+                            "field": "change_pct",
+                            "type": "quantitative",
+                            "title": t["change_pct"],
+                            "format": "+.2f",
+                        },
+                    ],
+                },
+            },
+        ],
     }
     st.vega_lite_chart(
         chart_data,
@@ -467,6 +593,7 @@ with overview_tab:
         height=400,
         width="stretch",
     )
+    st.caption(t["interactive_tip"])
 
 with planner_tab:
     st.subheader(t["planner_title"])
@@ -565,8 +692,8 @@ with forecast_tab:
         border=True,
     )
     forecast_4.metric(
-        t["baseline_mae"],
-        f"{baseline_mae:,.2f} VND/AUD",
+        t["historical_coverage"],
+        f"{interval_coverage:.1f}%",
         border=True,
     )
     st.caption(
@@ -574,6 +701,24 @@ with forecast_tab:
             low=range_low,
             high=range_high,
             count=len(recent_change_window),
+        )
+    )
+
+    quality_1, quality_2 = st.columns(2)
+    quality_1.metric(
+        t["tolerance_accuracy"],
+        f"{tolerance_accuracy:.1f}%",
+        border=True,
+    )
+    quality_2.metric(
+        t["baseline_mae"],
+        f"{baseline_mae:,.2f} VND/AUD",
+        border=True,
+    )
+    st.caption(
+        t["accuracy_caption"].format(
+            tolerance=tolerance_accuracy,
+            coverage=interval_coverage,
         )
     )
 
@@ -618,6 +763,25 @@ with forecast_tab:
         f"{max(latest_30) - min(latest_30):,.2f}",
         border=True,
     )
+
+    st.subheader(t["factors_title"])
+    st.write(t["factors_intro"])
+    factor_1, factor_2 = st.columns(2)
+    with factor_1:
+        with st.container(border=True):
+            st.markdown(f"**{t['interest_title']}**")
+            st.write(t["interest_text"])
+        with st.container(border=True):
+            st.markdown(f"**{t['risk_title']}**")
+            st.write(t["risk_text"])
+    with factor_2:
+        with st.container(border=True):
+            st.markdown(f"**{t['commodity_title']}**")
+            st.write(t["commodity_text"])
+        with st.container(border=True):
+            st.markdown(f"**{t['vietnam_title']}**")
+            st.write(t["vietnam_text"])
+    st.caption(t["factors_source"])
 
     st.info(t["forecast_note"].format(mae=baseline_mae))
     with st.expander(t["evaluation"]):
