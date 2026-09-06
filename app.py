@@ -1,4 +1,5 @@
 import csv
+import json
 from datetime import datetime, timedelta
 from math import ceil, floor
 from pathlib import Path
@@ -130,32 +131,51 @@ translations = {
         "no_budget": "No maximum budget is set. Turn on the option above to test a spending limit.",
         "deadline_warning": "Your deadline is close. Historical testing found no reliable advantage from waiting.",
         "forecast_title": "Short-term rate outlook",
-        "forecast_intro": "The best tested baseline keeps the latest daily rate as the central estimate. Historical movements create an uncertainty range that widens across the next seven days.",
+        "forecast_intro": "A direct multi-horizon model combines Vietcombank history with official RBA reference rates, AUD cross-rates, yield differentials, US-dollar strength, China, commodities and global risk signals. Each horizon is tested separately on later unseen dates.",
         "point_forecast": "Next-day estimate",
         "seven_day_forecast": "7-day estimate",
         "forecast_cost": "Estimated transfer cost",
-        "historical_range": "80% historical range",
+        "historical_range": "Validated 80% interval",
         "next_day_summary": "Tomorrow",
         "seven_day_summary": "In 7 days",
         "forecast_chart_title": "Next seven days",
-        "forecast_chart_help": "The dashed line is the tested central estimate. The shaded area is an 80% historical movement range, not a promise of where the rate will land.",
+        "forecast_chart_help": "The dashed line is the factor-informed central estimate. The shaded area is an 80% interval calibrated from recent walk-forward errors. Hover on a laptop; tap near the line on a phone.",
         "actual_rate": "Observed rate",
         "forecast_rate": "Central estimate",
         "forecast_band": "80% range",
         "forecast_table": "Daily estimate details",
         "forecast_day": "Day",
-        "forecast_range": "Historical 80% range",
+        "forecast_range": "Validated 80% interval",
         "series": "Series",
         "lower_bound": "Lower bound",
         "upper_bound": "Upper bound",
-        "flat_forecast_note": "The central line is flat by design: more complex trend and regression models performed worse in walk-forward testing. The widening band represents increasing uncertainty over time.",
+        "flat_forecast_note": "The path is generated separately for each horizon, so it can move rather than simply repeat today's rate. Small changes mean the tested evidence is weak—not that the future rate is certain.",
         "historical_coverage": "Backtested interval coverage",
+        "model_mae": "Multi-factor MAE",
         "baseline_mae": "Baseline MAE",
         "seven_day_mae": "7-day MAE",
+        "baseline_improvement": "Vs repeat-current baseline",
+        "expected_change": "Expected change",
+        "probability_lower": "Estimated chance of a lower rate",
+        "best_estimated_day": "Lowest central estimate",
+        "model_used": "Selected model",
+        "validated_edge": "This horizon beat the repeat-current baseline by **{value:.1f}%** in the recent walk-forward test.",
+        "no_validated_edge": "This horizon did **not** beat the repeat-current baseline in the recent walk-forward test ({value:.1f}% worse). Treat its direction as weak evidence, not a timing signal.",
         "tolerance_accuracy": "Within ±0.5%",
         "range_caption": "Forecast interval: **{low:,.2f}–{high:,.2f} VND/AUD**. Its radius is the 80th percentile of the latest {count} absolute daily movements.",
-        "accuracy_caption": "Across historical next-day tests, the point forecast was within ±0.5% of the actual rate **{tolerance:.1f}%** of the time. The rolling 80% interval contained the actual next daily rate **{coverage:.1f}%** of the time. These are backtested hit rates, not guaranteed future accuracy.",
-        "mae_explanation": "**What MAE means:** MAE is Mean Absolute Error—the average size of past forecast misses, regardless of whether the estimate was too high or too low. A next-day MAE of **{day_mae:,.2f} VND/AUD** means the estimate missed by about that amount per AUD on average; for {amount:,.0f} AUD, that is roughly **{day_cost:,.0f} VND**. The 7-day MAE was **{week_mae:,.2f} VND/AUD**. Lower is better, and past MAE does not guarantee future accuracy.",
+        "accuracy_caption": "Across {count} recent walk-forward tests, the point forecast was within ±0.5% of the actual rate **{tolerance:.1f}%** of the time. The calibrated 80% interval contained the actual rate **{coverage:.1f}%** of the time. These are historical hit rates, not guaranteed future accuracy.",
+        "mae_explanation": "**What MAE means:** Mean Absolute Error is the average size of a forecast miss, whether too high or too low. A next-day MAE of **{day_mae:,.2f} VND/AUD** means an average miss of roughly **{day_cost:,.0f} VND** on {amount:,.0f} AUD. The comparable repeat-current baseline MAE was **{baseline_mae:,.2f} VND/AUD**; lower is better. The 7-day model MAE was **{week_mae:,.2f} VND/AUD**.",
+        "drivers_title": "What is moving the model",
+        "drivers_intro": "Largest local influences on the 7-day estimate. Positive raises VND per AUD (unfavourable); negative lowers it (favourable). These are model contributions, not proof of causation.",
+        "push_higher": "toward a higher rate",
+        "push_lower": "toward a lower rate",
+        "factor_snapshot_title": "Market inputs now used",
+        "factor_snapshot_intro": "Latest available official and market observations. The model uses publication-aware lags so future information cannot leak into its historical tests.",
+        "model_sources": "Model data: [RBA statistical tables F11.1, F1 and F2](https://www.rba.gov.au/statistics/tables/) and [Federal Reserve series via FRED](https://fred.stlouisfed.org/).",
+        "five_day_change": "5-observation change",
+        "factor_value": "Latest value",
+        "method_title": "How the forecast is chosen",
+        "method_text": "For each of days 1–7, the system compares regularised linear, boosted-tree, non-linear ensemble and RBA fair-value models. It tunes on older time splits, then reports an expanding walk-forward test on the latest {count} forecast origins. The final model is refitted automatically after new data arrives.",
         "direction_title": "Recent direction profile",
         "lower_next": "Lower",
         "unchanged_next": "Unchanged",
@@ -168,7 +188,7 @@ translations = {
         "worst_30": "Worst rate (30)",
         "spread_30": "30-day spread",
         "factors_title": "External factors to monitor",
-        "factors_intro": "These drivers can affect AUD/VND, but they are not included in the numerical forecast until aligned historical data passes walk-forward testing.",
+        "factors_intro": "These drivers are now aligned and included as numerical candidates. Regularisation, feature selection and walk-forward testing limit overfitting; weak models are exposed against the repeat-current benchmark.",
         "interest_title": "Interest-rate differentials",
         "interest_text": "RBA policy relative to the US and other major economies can change demand for AUD-denominated assets.",
         "commodity_title": "Commodities and China",
@@ -178,13 +198,13 @@ translations = {
         "vietnam_title": "Vietnam-side pricing",
         "vietnam_text": "USD/VND conditions, domestic policy and Vietcombank's customer spread affect the final VND/AUD selling rate.",
         "factors_source": "Background: [Reserve Bank of Australia — Drivers of the AUD exchange rate](https://www.rba.gov.au/education/resources/explainers/drivers-of-the-aud-exchange-rate.html).",
-        "forecast_note": "Forecasts are uncertain. This baseline previously achieved a mean absolute error of about {mae:,.2f} VND/AUD, while more complex regression and timing models performed worse and were discarded.",
+        "forecast_note": "Forecasts remain uncertain. More inputs do not guarantee more accuracy, so the dashboard shows both the multi-factor result and the hard-to-beat repeat-current benchmark.",
         "evaluation": "Model evaluation details",
         "naive_result": "Naive next-day forecast MAE: **{mae:,.2f} VND/AUD** across {count} historical daily predictions.",
         "regression_result": "Walk-forward regression MAE: **56.51 VND**, compared with **53.06 VND** for its baseline test. The regression model was discarded.",
         "strategy_result": "The tested 14-day timing strategy was **5.79 VND/AUD worse** than transferring immediately on average, so it was discarded.",
         "disclaimer": "Educational decision support only — not financial advice or a guaranteed forecast. Transfer fees and provider spreads are not included.",
-        "automatic_updates": "Automatic updates: Vietcombank is checked every 6 hours, one daily rate is retained, and the dashboard recalculates without manual action.",
+        "automatic_updates": "Automatic updates: Vietcombank and 15 external market series are refreshed every 6 hours; the models are revalidated and the dashboard updates without manual action.",
     },
     "Tiếng Việt": {
         "sidebar_settings": "Thiết lập chuyển tiền",
@@ -254,32 +274,51 @@ translations = {
         "no_budget": "Chưa đặt ngân sách tối đa. Bật tùy chọn phía trên để kiểm tra giới hạn chi tiêu.",
         "deadline_warning": "Thời hạn chuyển tiền đã gần. Kiểm tra lịch sử không cho thấy chờ đợi mang lại lợi thế đáng tin cậy.",
         "forecast_title": "Triển vọng tỷ giá ngắn hạn",
-        "forecast_intro": "Mô hình cơ sở tốt nhất đã kiểm tra dùng tỷ giá ngày mới nhất làm ước tính trung tâm. Biến động lịch sử tạo ra khoảng bất định mở rộng dần trong bảy ngày tiếp theo.",
+        "forecast_intro": "Mô hình trực tiếp cho từng kỳ hạn kết hợp lịch sử Vietcombank với tỷ giá tham chiếu RBA, các tỷ giá chéo AUD, chênh lệch lợi suất, sức mạnh USD, Trung Quốc, hàng hóa và tín hiệu rủi ro toàn cầu. Mỗi kỳ hạn được kiểm tra riêng trên các ngày tương lai chưa dùng để huấn luyện.",
         "point_forecast": "Ước tính ngày tiếp theo",
         "seven_day_forecast": "Ước tính sau 7 ngày",
         "forecast_cost": "Chi phí chuyển ước tính",
-        "historical_range": "Khoảng lịch sử 80%",
+        "historical_range": "Khoảng kiểm định 80%",
         "next_day_summary": "Ngày mai",
         "seven_day_summary": "Sau 7 ngày",
         "forecast_chart_title": "Bảy ngày tiếp theo",
-        "forecast_chart_help": "Đường nét đứt là ước tính trung tâm đã được kiểm định. Vùng tô màu là khoảng biến động lịch sử 80%, không phải cam kết về tỷ giá tương lai.",
+        "forecast_chart_help": "Đường nét đứt là ước tính trung tâm có xét các yếu tố thị trường. Vùng tô màu là khoảng 80% được hiệu chỉnh từ sai số kiểm định cuốn chiếu gần đây. Rê chuột trên máy tính hoặc chạm gần đường trên điện thoại.",
         "actual_rate": "Tỷ giá đã ghi nhận",
         "forecast_rate": "Ước tính trung tâm",
         "forecast_band": "Khoảng 80%",
         "forecast_table": "Chi tiết ước tính theo ngày",
         "forecast_day": "Ngày thứ",
-        "forecast_range": "Khoảng lịch sử 80%",
+        "forecast_range": "Khoảng kiểm định 80%",
         "series": "Loại dữ liệu",
         "lower_bound": "Cận dưới",
         "upper_bound": "Cận trên",
-        "flat_forecast_note": "Đường ước tính trung tâm nằm ngang là có chủ ý: các mô hình xu hướng và hồi quy phức tạp hơn cho kết quả kém hơn trong kiểm định cuốn chiếu. Vùng mở rộng thể hiện độ bất định tăng dần theo thời gian.",
+        "flat_forecast_note": "Mỗi kỳ hạn được dự báo riêng nên đường trung tâm có thể thay đổi thay vì chỉ lặp lại tỷ giá hôm nay. Mức thay đổi nhỏ nghĩa là bằng chứng còn yếu, không có nghĩa tỷ giá tương lai chắc chắn.",
         "historical_coverage": "Độ bao phủ khi kiểm định",
+        "model_mae": "MAE đa yếu tố",
         "baseline_mae": "MAE mô hình cơ sở",
         "seven_day_mae": "MAE sau 7 ngày",
+        "baseline_improvement": "So với lặp lại tỷ giá hiện tại",
+        "expected_change": "Thay đổi kỳ vọng",
+        "probability_lower": "Xác suất ước tính tỷ giá thấp hơn",
+        "best_estimated_day": "Ước tính trung tâm thấp nhất",
+        "model_used": "Mô hình được chọn",
+        "validated_edge": "Kỳ hạn này tốt hơn mô hình lặp lại tỷ giá hiện tại **{value:.1f}%** trong kiểm định cuốn chiếu gần đây.",
+        "no_validated_edge": "Kỳ hạn này **không** tốt hơn mô hình lặp lại tỷ giá hiện tại trong kiểm định cuốn chiếu gần đây (tệ hơn {value:.1f}%). Chỉ xem hướng dự báo là bằng chứng yếu, không phải tín hiệu chọn thời điểm.",
         "tolerance_accuracy": "Nằm trong ±0,5%",
         "range_caption": "Khoảng dự báo: **{low:,.2f}–{high:,.2f} VND/AUD**. Bán kính khoảng bằng phân vị thứ 80 của {count} biến động tuyệt đối hằng ngày gần nhất.",
-        "accuracy_caption": "Trong các kiểm định lịch sử cho ngày tiếp theo, dự báo điểm nằm trong ±0,5% so với tỷ giá thực tế **{tolerance:.1f}%** số lần. Khoảng dự báo cuốn chiếu 80% chứa tỷ giá thực tế của ngày tiếp theo **{coverage:.1f}%** số lần. Đây là tỷ lệ đạt trong kiểm định quá khứ, không bảo đảm độ chính xác tương lai.",
-        "mae_explanation": "**MAE là gì:** MAE là sai số tuyệt đối trung bình—mức chênh lệch trung bình của các dự báo trong quá khứ, bất kể dự báo cao hay thấp hơn thực tế. MAE ngày tiếp theo là **{day_mae:,.2f} VND/AUD**, nghĩa là ước tính lệch khoảng mức đó cho mỗi AUD; với {amount:,.0f} AUD, tương đương khoảng **{day_cost:,.0f} VND**. MAE sau 7 ngày là **{week_mae:,.2f} VND/AUD**. MAE càng thấp càng tốt và kết quả quá khứ không bảo đảm độ chính xác tương lai.",
+        "accuracy_caption": "Trong {count} kiểm định cuốn chiếu gần đây, dự báo điểm nằm trong ±0,5% so với tỷ giá thực tế **{tolerance:.1f}%** số lần. Khoảng 80% đã hiệu chỉnh chứa tỷ giá thực tế **{coverage:.1f}%** số lần. Đây là tỷ lệ lịch sử, không bảo đảm độ chính xác tương lai.",
+        "mae_explanation": "**MAE là gì:** Sai số tuyệt đối trung bình là độ lệch trung bình của dự báo, bất kể cao hay thấp hơn thực tế. MAE ngày tiếp theo **{day_mae:,.2f} VND/AUD** tương đương sai số trung bình khoảng **{day_cost:,.0f} VND** cho {amount:,.0f} AUD. MAE của mô hình lặp lại tỷ giá hiện tại là **{baseline_mae:,.2f} VND/AUD**; càng thấp càng tốt. MAE mô hình sau 7 ngày là **{week_mae:,.2f} VND/AUD**.",
+        "drivers_title": "Yếu tố đang tác động mô hình",
+        "drivers_intro": "Các ảnh hưởng cục bộ lớn nhất lên ước tính 7 ngày. Số dương đẩy VND/AUD tăng (bất lợi); số âm đẩy giảm (có lợi). Đây là đóng góp trong mô hình, không chứng minh quan hệ nhân quả.",
+        "push_higher": "đẩy tỷ giá cao hơn",
+        "push_lower": "đẩy tỷ giá thấp hơn",
+        "factor_snapshot_title": "Dữ liệu thị trường đang được sử dụng",
+        "factor_snapshot_intro": "Quan sát chính thức và thị trường mới nhất hiện có. Mô hình dùng độ trễ theo thời điểm công bố để tránh rò rỉ dữ liệu tương lai vào kiểm định lịch sử.",
+        "model_sources": "Dữ liệu mô hình: [các bảng thống kê RBA F11.1, F1 và F2](https://www.rba.gov.au/statistics/tables/) và [các chuỗi của Cục Dự trữ Liên bang qua FRED](https://fred.stlouisfed.org/).",
+        "five_day_change": "Thay đổi 5 quan sát",
+        "factor_value": "Giá trị mới nhất",
+        "method_title": "Cách chọn dự báo",
+        "method_text": "Cho từng ngày từ 1–7, hệ thống so sánh mô hình tuyến tính có điều chuẩn, cây tăng cường, tổ hợp phi tuyến và hội tụ giá trị hợp lý RBA. Mô hình được tinh chỉnh trên các lát thời gian cũ rồi báo cáo kiểm định cuốn chiếu mở rộng trên {count} thời điểm dự báo gần nhất. Mô hình cuối được huấn luyện lại tự động khi có dữ liệu mới.",
         "direction_title": "Phân bố hướng biến động gần đây",
         "lower_next": "Giảm",
         "unchanged_next": "Không đổi",
@@ -292,7 +331,7 @@ translations = {
         "worst_30": "Tỷ giá xấu nhất (30)",
         "spread_30": "Biên độ 30 ngày",
         "factors_title": "Các yếu tố bên ngoài cần theo dõi",
-        "factors_intro": "Các yếu tố này có thể ảnh hưởng AUD/VND, nhưng chưa được đưa vào dự báo số cho đến khi dữ liệu lịch sử đồng bộ vượt qua kiểm định cuốn chiếu.",
+        "factors_intro": "Các yếu tố này hiện đã được đồng bộ và đưa vào các mô hình dự báo. Điều chuẩn, chọn đặc trưng và kiểm định cuốn chiếu giúp hạn chế quá khớp; mô hình yếu được so sánh rõ với chuẩn lặp lại tỷ giá hiện tại.",
         "interest_title": "Chênh lệch lãi suất",
         "interest_text": "Chính sách RBA so với Mỹ và các nền kinh tế lớn có thể thay đổi nhu cầu đối với tài sản định giá bằng AUD.",
         "commodity_title": "Hàng hóa và Trung Quốc",
@@ -302,13 +341,13 @@ translations = {
         "vietnam_title": "Định giá phía Việt Nam",
         "vietnam_text": "Điều kiện USD/VND, chính sách trong nước và biên giá khách hàng của Vietcombank ảnh hưởng tỷ giá bán VND/AUD cuối cùng.",
         "factors_source": "Thông tin nền: [Ngân hàng Dự trữ Úc — Các yếu tố chi phối tỷ giá AUD](https://www.rba.gov.au/education/resources/explainers/drivers-of-the-aud-exchange-rate.html).",
-        "forecast_note": "Dự báo luôn có độ bất định. Mô hình cơ sở này trước đây có sai số tuyệt đối trung bình khoảng {mae:,.2f} VND/AUD; các mô hình hồi quy và chọn thời điểm phức tạp hơn cho kết quả kém hơn nên đã bị loại.",
+        "forecast_note": "Dự báo luôn có độ bất định. Nhiều dữ liệu hơn không bảo đảm chính xác hơn, vì vậy bảng hiển thị cả kết quả đa yếu tố và chuẩn lặp lại tỷ giá hiện tại vốn rất khó vượt qua.",
         "evaluation": "Chi tiết đánh giá mô hình",
         "naive_result": "MAE dự báo đơn giản cho ngày tiếp theo: **{mae:,.2f} VND/AUD** trên {count} dự báo lịch sử theo ngày.",
         "regression_result": "MAE hồi quy cuốn chiếu là **56.51 VND**, so với **53.06 VND** của mô hình cơ sở trong cùng bài kiểm tra. Mô hình hồi quy đã bị loại.",
         "strategy_result": "Chiến lược chọn thời điểm trong 14 ngày tệ hơn trung bình **5.79 VND/AUD** so với chuyển ngay, nên đã bị loại.",
         "disclaimer": "Chỉ nhằm hỗ trợ quyết định và mục đích giáo dục — không phải tư vấn tài chính hay dự báo được bảo đảm. Chưa bao gồm phí chuyển và chênh lệch giá của nhà cung cấp.",
-        "automatic_updates": "Cập nhật tự động: hệ thống kiểm tra Vietcombank mỗi 6 giờ, giữ một tỷ giá mỗi ngày và tự tính lại bảng điều khiển—không cần thao tác thủ công.",
+        "automatic_updates": "Cập nhật tự động: Vietcombank và 15 chuỗi thị trường bên ngoài được làm mới mỗi 6 giờ; mô hình được kiểm định lại và bảng tự cập nhật—không cần thao tác thủ công.",
     },
 }
 
@@ -379,58 +418,63 @@ daily_changes = [
     current - prior
     for prior, current in zip(rates, rates[1:])
 ]
-baseline_mae = mean(abs(change) for change in daily_changes)
+historical_naive_mae = mean(abs(change) for change in daily_changes)
 recent_change_window = daily_changes[-180:]
-forecast_horizons = []
-for horizon in range(1, 8):
-    horizon_changes = [
-        rates[index] - rates[index - horizon]
-        for index in range(horizon, len(rates))
-    ]
-    recent_horizon_changes = horizon_changes[-180:]
-    horizon_radius = percentile(
-        [abs(change) for change in recent_horizon_changes],
-        0.80,
-    )
-    forecast_horizons.append(
-        {
-            "horizon": horizon,
-            "date": dates[-1] + timedelta(days=horizon),
-            "estimate": latest,
-            "low": latest - horizon_radius,
-            "high": latest + horizon_radius,
-            "mae": mean(abs(change) for change in horizon_changes),
-        }
-    )
+
+forecast_file = Path(__file__).parent / "data" / "forecast_output.json"
+forecast_engine_ready = False
+forecast_result = {}
+if forecast_file.exists():
+    try:
+        forecast_result = json.loads(forecast_file.read_text(encoding="utf-8"))
+        forecast_engine_ready = (
+            forecast_result.get("latest_date") == dates[-1].date().isoformat()
+            and len(forecast_result.get("forecasts", [])) == 7
+        )
+    except (json.JSONDecodeError, OSError, TypeError):
+        forecast_engine_ready = False
+
+if forecast_engine_ready:
+    forecast_horizons = forecast_result["forecasts"]
+    for forecast in forecast_horizons:
+        forecast["date"] = datetime.fromisoformat(forecast["date"])
+else:
+    forecast_horizons = []
+    for horizon in range(1, 8):
+        horizon_changes = [
+            rates[index] - rates[index - horizon]
+            for index in range(horizon, len(rates))
+        ]
+        radius = percentile([abs(value) for value in horizon_changes[-180:]], 0.80)
+        forecast_horizons.append(
+            {
+                "horizon": horizon,
+                "date": dates[-1] + timedelta(days=horizon),
+                "estimate": latest,
+                "change": 0.0,
+                "change_pct": 0.0,
+                "low": latest - radius,
+                "high": latest + radius,
+                "mae": mean(abs(value) for value in horizon_changes),
+                "baseline_mae": mean(abs(value) for value in horizon_changes),
+                "improvement_pct": 0.0,
+                "interval_coverage": 80.0,
+                "tolerance_accuracy": 0.0,
+                "backtest_count": len(horizon_changes),
+                "model_name": "Repeat-current fallback",
+                "beats_baseline": False,
+                "probability_lower": 50.0,
+                "probability_higher": 50.0,
+            }
+        )
 
 next_day_forecast = forecast_horizons[0]
 seven_day_forecast = forecast_horizons[-1]
-range_low = next_day_forecast["low"]
-range_high = next_day_forecast["high"]
 seven_day_mae = seven_day_forecast["mae"]
+baseline_mae = next_day_forecast["baseline_mae"]
+tolerance_accuracy = next_day_forecast["tolerance_accuracy"]
+interval_coverage = next_day_forecast["interval_coverage"]
 average_move_30 = mean(abs(change) for change in daily_changes[-30:])
-
-tolerance_hits = sum(
-    abs(current - prior) / prior <= 0.005
-    for prior, current in zip(rates, rates[1:])
-)
-tolerance_accuracy = tolerance_hits / len(daily_changes) * 100
-
-coverage_hits = 0
-coverage_count = 0
-for target_index in range(61, len(rates)):
-    prior_errors = [
-        abs(change)
-        for change in daily_changes[
-            max(0, target_index - 181):target_index - 1
-        ]
-    ]
-    interval_radius = percentile(prior_errors, 0.80)
-    actual_error = abs(daily_changes[target_index - 1])
-    coverage_hits += actual_error <= interval_radius
-    coverage_count += 1
-
-interval_coverage = coverage_hits / coverage_count * 100
 
 historical_rates = rates[:-1]
 better_than = sum(rate > latest for rate in historical_rates)
@@ -888,7 +932,8 @@ with forecast_tab:
     st.subheader(t["forecast_title"])
     st.write(t["forecast_intro"])
 
-    forecast_cost = aud_amount * latest
+    next_day_cost = aud_amount * next_day_forecast["estimate"]
+    seven_day_cost = aud_amount * seven_day_forecast["estimate"]
     forecast_1, forecast_2 = st.columns(2)
     with forecast_1:
         with st.container(border=True):
@@ -896,6 +941,11 @@ with forecast_tab:
             st.metric(
                 t["point_forecast"],
                 f"{next_day_forecast['estimate']:,.2f} VND/AUD",
+                delta=(
+                    f"{next_day_forecast['change']:+,.2f} "
+                    f"({next_day_forecast['change_pct']:+.2f}%)"
+                ),
+                delta_color="inverse",
             )
             st.caption(
                 f"{t['historical_range']}: "
@@ -903,7 +953,7 @@ with forecast_tab:
                 f"{next_day_forecast['high']:,.2f}**"
             )
             st.caption(
-                f"{t['forecast_cost']}: **{compact_vnd(forecast_cost)}**"
+                f"{t['forecast_cost']}: **{compact_vnd(next_day_cost)}**"
             )
     with forecast_2:
         with st.container(border=True):
@@ -911,6 +961,11 @@ with forecast_tab:
             st.metric(
                 t["seven_day_forecast"],
                 f"{seven_day_forecast['estimate']:,.2f} VND/AUD",
+                delta=(
+                    f"{seven_day_forecast['change']:+,.2f} "
+                    f"({seven_day_forecast['change_pct']:+.2f}%)"
+                ),
+                delta_color="inverse",
             )
             st.caption(
                 f"{t['historical_range']}: "
@@ -918,8 +973,31 @@ with forecast_tab:
                 f"{seven_day_forecast['high']:,.2f}**"
             )
             st.caption(
-                f"{t['forecast_cost']}: **{compact_vnd(forecast_cost)}**"
+                f"{t['forecast_cost']}: **{compact_vnd(seven_day_cost)}**"
             )
+
+    outlook_1, outlook_2, outlook_3 = st.columns(3)
+    outlook_1.metric(
+        t["probability_lower"],
+        f"{seven_day_forecast['probability_lower']:.0f}%",
+        border=True,
+    )
+    lowest_forecast = min(forecast_horizons, key=lambda item: item["estimate"])
+    outlook_2.metric(
+        t["best_estimated_day"],
+        lowest_forecast["date"].strftime("%d %b"),
+        f"{lowest_forecast['estimate'] - latest:+,.2f} VND/AUD",
+        delta_color="inverse",
+        border=True,
+    )
+    outlook_3.metric(
+        t["expected_change"],
+        f"{seven_day_forecast['change']:+,.2f} VND/AUD",
+        border=True,
+    )
+    st.caption(
+        f"{t['model_used']}: **{seven_day_forecast['model_name']}**"
+    )
 
     st.subheader(t["forecast_chart_title"])
     st.caption(t["forecast_chart_help"])
@@ -935,6 +1013,14 @@ with forecast_tab:
                 "high": latest if index == len(rates) - 1 else None,
                 "display_rate": rates[index],
                 "phase": t["actual_rate"],
+                "change": (
+                    rates[index] - rates[index - 1]
+                    if index > 0 else 0.0
+                ),
+                "change_pct": (
+                    (rates[index] / rates[index - 1] - 1) * 100
+                    if index > 0 and rates[index - 1] else 0.0
+                ),
             }
         )
     for forecast in forecast_horizons:
@@ -947,6 +1033,8 @@ with forecast_tab:
                 "high": forecast["high"],
                 "display_rate": forecast["estimate"],
                 "phase": t["forecast_rate"],
+                "change": forecast["change"],
+                "change_pct": forecast["change_pct"],
             }
         )
 
@@ -1063,6 +1151,18 @@ with forecast_tab:
                             "format": ",.2f",
                         },
                         {
+                            "field": "change",
+                            "type": "quantitative",
+                            "title": t["change"],
+                            "format": "+,.2f",
+                        },
+                        {
+                            "field": "change_pct",
+                            "type": "quantitative",
+                            "title": t["change_pct"],
+                            "format": "+.2f",
+                        },
+                        {
                             "field": "low",
                             "type": "quantitative",
                             "title": t["lower_bound"],
@@ -1086,6 +1186,24 @@ with forecast_tab:
         width="stretch",
     )
     st.info(t["flat_forecast_note"])
+    for horizon_label, forecast in (
+        (t["next_day_summary"], next_day_forecast),
+        (t["seven_day_summary"], seven_day_forecast),
+    ):
+        if forecast["beats_baseline"]:
+            st.success(
+                f"**{horizon_label}:** "
+                + t["validated_edge"].format(
+                    value=forecast["improvement_pct"]
+                )
+            )
+        else:
+            st.warning(
+                f"**{horizon_label}:** "
+                + t["no_validated_edge"].format(
+                    value=abs(forecast["improvement_pct"])
+                )
+            )
 
     forecast_table_rows = [
         {
@@ -1107,37 +1225,39 @@ with forecast_tab:
 
     quality_1, quality_2 = st.columns(2)
     quality_1.metric(
+        t["model_mae"],
+        f"{next_day_forecast['mae']:,.2f} VND/AUD",
+        border=True,
+    )
+    quality_2.metric(
         t["baseline_mae"],
         f"{baseline_mae:,.2f} VND/AUD",
         border=True,
     )
-    quality_2.metric(
+    quality_3, quality_4 = st.columns(2)
+    quality_3.metric(
         t["seven_day_mae"],
         f"{seven_day_mae:,.2f} VND/AUD",
         border=True,
     )
-    quality_3, quality_4 = st.columns(2)
-    quality_3.metric(
+    quality_4.metric(
         t["tolerance_accuracy"],
         f"{tolerance_accuracy:.1f}%",
-        border=True,
-    )
-    quality_4.metric(
-        t["historical_coverage"],
-        f"{interval_coverage:.1f}%",
         border=True,
     )
     st.caption(
         t["accuracy_caption"].format(
             tolerance=tolerance_accuracy,
             coverage=interval_coverage,
+            count=next_day_forecast["backtest_count"],
         )
     )
     st.info(
         t["mae_explanation"].format(
-            day_mae=baseline_mae,
+            day_mae=next_day_forecast["mae"],
             amount=aud_amount,
-            day_cost=baseline_mae * aud_amount,
+            day_cost=next_day_forecast["mae"] * aud_amount,
+            baseline_mae=baseline_mae,
             week_mae=seven_day_mae,
         )
     )
@@ -1186,6 +1306,53 @@ with forecast_tab:
         border=True,
     )
 
+    if forecast_engine_ready:
+        st.subheader(t["drivers_title"])
+        st.write(t["drivers_intro"])
+        drivers = forecast_result.get("drivers", {}).get("7", [])
+        if drivers:
+            for start in range(0, len(drivers), 2):
+                driver_columns = st.columns(2)
+                for column, driver in zip(
+                    driver_columns, drivers[start:start + 2]
+                ):
+                    impact = float(driver["impact"])
+                    direction = (
+                        t["push_higher"] if impact >= 0 else t["push_lower"]
+                    )
+                    column.metric(
+                        driver["label"],
+                        f"{impact:+,.2f} VND/AUD",
+                        direction,
+                        delta_color="inverse",
+                        border=True,
+                    )
+
+        st.subheader(t["factor_snapshot_title"])
+        st.write(t["factor_snapshot_intro"])
+        factor_rows = []
+        for factor in forecast_result.get("factor_snapshot", []):
+            factor_rows.append(
+                {
+                    t["series"]: factor["label"],
+                    t["date"]: factor["date"],
+                    t["factor_value"]: f"{float(factor['value']):,.4f}",
+                    t["five_day_change"]: (
+                        f"{float(factor['change_5d']):+.2f}%"
+                    ),
+                }
+            )
+        with st.expander(t["factor_snapshot_title"]):
+            st.dataframe(factor_rows, hide_index=True, width="stretch")
+        st.caption(t["model_sources"])
+
+        with st.expander(t["method_title"]):
+            st.write(
+                t["method_text"].format(
+                    count=next_day_forecast["backtest_count"]
+                )
+            )
+
     st.subheader(t["factors_title"])
     st.write(t["factors_intro"])
     factor_1, factor_2 = st.columns(2)
@@ -1205,15 +1372,21 @@ with forecast_tab:
             st.write(t["vietnam_text"])
     st.caption(t["factors_source"])
 
-    st.info(t["forecast_note"].format(mae=baseline_mae))
+    st.info(t["forecast_note"])
     with st.expander(t["evaluation"]):
-        st.write(
-            t["naive_result"].format(
-                mae=baseline_mae,
-                count=len(daily_changes),
-            )
-        )
-        st.write(t["regression_result"])
+        evaluation_rows = [
+            {
+                t["forecast_day"]: forecast["horizon"],
+                t["model_used"]: forecast["model_name"],
+                t["model_mae"]: f"{forecast['mae']:,.2f}",
+                t["baseline_mae"]: f"{forecast['baseline_mae']:,.2f}",
+                t["baseline_improvement"]: (
+                    f"{forecast['improvement_pct']:+.2f}%"
+                ),
+            }
+            for forecast in forecast_horizons
+        ]
+        st.dataframe(evaluation_rows, hide_index=True, width="stretch")
         st.write(t["strategy_result"])
 
 st.divider()
