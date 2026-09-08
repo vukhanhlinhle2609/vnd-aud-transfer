@@ -5,14 +5,14 @@
     {
       "horizon": 1,
       "date": "2026-09-09",
-      "estimate": 19033.522934825745,
-      "change": 8.372934825743616,
-      "change_pct": 0.04400982292251896,
-      "low": 18971.803511105572,
-      "high": 19095.24235854592,
-      "mae": 38.47423273000517,
+      "estimate": 19027.041343387147,
+      "change": 1.8913433871454366,
+      "change_pct": 0.009941279764655924,
+      "low": 18965.321919666974,
+      "high": 19088.76076710732,
+      "mae": 38.446568194403525,
       "baseline_mae": 37.4259999999999,
-      "improvement_pct": -2.8008142200750017,
+      "improvement_pct": -2.726896260363452,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 88.33333333333333,
       "backtest_count": 60,
@@ -21,8 +21,8 @@
       "scale": 0.25,
       "tuning_mae": 53.02547130504172,
       "training_window": 180,
-      "probability_lower": 28.333333333333332,
-      "probability_higher": 71.66666666666667,
+      "probability_lower": 30.0,
+      "probability_higher": 70.0,
       "beats_baseline": false
     },
     {
@@ -98,8 +98,8 @@
       "horizon": 5,
       "date": "2026-09-13",
       "estimate": 19023.83072258365,
-      "change": -1.3192774163519871,
-      "change_pct": -0.006934386411418501,
+      "change": -1.3192774163519863,
+      "change_pct": -0.006934386411418497,
       "low": 18923.571943184998,
       "high": 19124.089501982304,
       "mae": 64.84062818524737,
@@ -121,8 +121,8 @@
       "horizon": 6,
       "date": "2026-09-14",
       "estimate": 19025.522012045873,
-      "change": 0.37201204587284087,
-      "change_pct": 0.001955369843984625,
+      "change": 0.3720120458728413,
+      "change_pct": 0.001955369843984627,
       "low": 18897.89853798996,
       "high": 19153.145486101785,
       "mae": 77.12026919325082,
@@ -169,32 +169,32 @@
       {
         "feature": "rba_aud_vnd_change_10d",
         "label": "RBA AUD/VND reference rate",
-        "impact": -4.588639658081592
+        "impact": -4.362175467913409
       },
       {
-        "feature": "rba_aud_jpy_change_1d",
-        "label": "RBA AUD/JPY reference rate",
-        "impact": 2.319715633449066
+        "feature": "vix_change_5d",
+        "label": "Global market volatility (VIX)",
+        "impact": -3.666085422070437
       },
       {
         "feature": "rate_change_30d",
         "label": "Vietcombank rate trend",
-        "impact": -1.9496048245612165
+        "impact": -2.2511742589263344
+      },
+      {
+        "feature": "rba_aud_jpy_change_1d",
+        "label": "RBA AUD/JPY reference rate",
+        "impact": 1.4863235847014418
       },
       {
         "feature": "rba_aud_usd_change_5d",
         "label": "RBA AUD/USD reference rate",
-        "impact": 1.5718191530232914
+        "impact": 1.1556387623742734
       },
       {
-        "feature": "rba_fair_value_gap_60d",
-        "label": "RBA AUD/VND fair-value gap",
-        "impact": 0.3429305820753292
-      },
-      {
-        "feature": "rba_aud_eur_change_5d",
-        "label": "RBA AUD/EUR reference rate",
-        "impact": -0.17274544709829343
+        "feature": "rba_aud_cny_zscore_20d",
+        "label": "RBA AUD/CNY reference rate",
+        "impact": -0.39257061201120846
       }
     ],
     "7": [
@@ -230,9 +230,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 14.32,
-      "change_5d": -1.3094417643004785,
-      "date": "2026-09-03"
+      "value": 15.3,
+      "change_5d": 2.5469168900804418,
+      "date": "2026-09-07"
     },
     {
       "key": "brent_oil",
