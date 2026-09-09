@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-09-10",
-      "estimate": 19033.684745474715,
-      "change": 1.8947454747153387,
-      "change_pct": 0.009955687167183636,
-      "low": 18967.750549006425,
-      "high": 19099.618941943005,
+      "estimate": 19033.54746546193,
+      "change": 1.7574654619267511,
+      "change_pct": 0.009234367665504669,
+      "low": 18967.61326899364,
+      "high": 19099.48166193022,
       "mae": 38.18223000842315,
       "baseline_mae": 37.04516666666653,
       "improvement_pct": -3.06939729003771,
@@ -21,18 +21,18 @@
       "scale": 0.25,
       "tuning_mae": 52.664344289514574,
       "training_window": 180,
-      "probability_lower": 31.666666666666664,
-      "probability_higher": 68.33333333333333,
+      "probability_lower": 35.0,
+      "probability_higher": 65.0,
       "beats_baseline": false
     },
     {
       "horizon": 2,
       "date": "2026-09-11",
-      "estimate": 19037.58566662465,
-      "change": 5.7956666246505755,
-      "change_pct": 0.030452556615276728,
-      "low": 18946.340180045576,
-      "high": 19128.831153203726,
+      "estimate": 19037.830884273244,
+      "change": 6.040884273243924,
+      "change_pct": 0.03174102001568913,
+      "low": 18946.58539769417,
+      "high": 19129.07637085232,
       "mae": 55.27729780007296,
       "baseline_mae": 54.36316666666638,
       "improvement_pct": -1.6815266465466796,
@@ -169,32 +169,32 @@
       {
         "feature": "rba_fair_value_gap_20d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 1.1373624102783624
-      },
-      {
-        "feature": "sp500_change_3d",
-        "label": "Global equities (S&P 500)",
-        "impact": 0.4850362699284321
+        "impact": 1.0018254283559642
       },
       {
         "feature": "rba_aud_eur_level",
         "label": "RBA AUD/EUR reference rate",
-        "impact": -0.46414035992961167
+        "impact": -0.562208498008165
+      },
+      {
+        "feature": "sp500_change_3d",
+        "label": "Global equities (S&P 500)",
+        "impact": 0.48503626992843163
       },
       {
         "feature": "rate_range_position_7d",
         "label": "Vietcombank rate trend",
-        "impact": 0.37338130952766235
+        "impact": 0.3733813095276626
       },
       {
         "feature": "rba_aud_vnd_change_1d",
         "label": "RBA AUD/VND reference rate",
-        "impact": -0.32628622159090814
+        "impact": -0.32628622159090837
       },
       {
         "feature": "rba_aud_jpy_change_5d",
         "label": "RBA AUD/JPY reference rate",
-        "impact": -0.26393166906395993
+        "impact": -0.2639316690639606
       }
     ],
     "7": [
@@ -230,9 +230,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 15.3,
-      "change_5d": 2.5469168900804418,
-      "date": "2026-09-07"
+      "value": 15.72,
+      "change_5d": -3.794369645042839,
+      "date": "2026-09-08"
     },
     {
       "key": "brent_oil",
