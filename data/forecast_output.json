@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-09-18",
-      "estimate": 18802.21556567349,
-      "change": 0.45556567349036814,
-      "change_pct": 0.002422994833943036,
-      "low": 18735.07144540908,
-      "high": 18869.3596859379,
+      "estimate": 18800.2527206459,
+      "change": -1.5072793540952656,
+      "change_pct": -0.008016692873939812,
+      "low": 18733.108600381493,
+      "high": 18867.39684091031,
       "mae": 38.93585005245181,
       "baseline_mae": 37.729499999999945,
       "improvement_pct": -3.1973655957589395,
@@ -21,18 +21,18 @@
       "scale": 0.25,
       "tuning_mae": 50.36446645946626,
       "training_window": 180,
-      "probability_lower": 33.33333333333333,
-      "probability_higher": 66.66666666666666,
+      "probability_lower": 60.0,
+      "probability_higher": 40.0,
       "beats_baseline": false
     },
     {
       "horizon": 2,
       "date": "2026-09-19",
-      "estimate": 18800.47989627586,
-      "change": -1.2801037241362638,
-      "change_pct": -0.006808424977960914,
-      "low": 18707.028312645038,
-      "high": 18893.931479906685,
+      "estimate": 18797.53997373571,
+      "change": -4.22002626428622,
+      "change_pct": -0.022444846994569768,
+      "low": 18704.088390104887,
+      "high": 18890.991557366535,
       "mae": 54.43646130177584,
       "baseline_mae": 53.354499999999824,
       "improvement_pct": -2.027872628880455,
@@ -44,21 +44,21 @@
       "scale": 0.25,
       "tuning_mae": 72.53869641610244,
       "training_window": null,
-      "probability_lower": 53.333333333333336,
-      "probability_higher": 46.666666666666664,
+      "probability_lower": 58.333333333333336,
+      "probability_higher": 41.66666666666667,
       "beats_baseline": false
     },
     {
       "horizon": 3,
       "date": "2026-09-20",
-      "estimate": 18797.164276611496,
-      "change": -4.595723388503048,
-      "change_pct": -0.02444304888746079,
-      "low": 18697.517353808147,
-      "high": 18896.811199414846,
-      "mae": 65.39583813822428,
+      "estimate": 18794.502318880266,
+      "change": -7.257681119733622,
+      "change_pct": -0.03860107308961301,
+      "low": 18694.855396076917,
+      "high": 18894.149241683615,
+      "mae": 65.39583813822426,
       "baseline_mae": 64.03366666666673,
-      "improvement_pct": -2.1272738896063172,
+      "improvement_pct": -2.127273889606295,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 75.0,
       "backtest_count": 60,
@@ -67,41 +67,41 @@
       "scale": 0.25,
       "tuning_mae": 94.67112842053591,
       "training_window": null,
-      "probability_lower": 50.0,
-      "probability_higher": 50.0,
+      "probability_lower": 51.66666666666667,
+      "probability_higher": 48.333333333333336,
       "beats_baseline": false
     },
     {
       "horizon": 4,
       "date": "2026-09-21",
-      "estimate": 18799.854080414174,
-      "change": -1.9059195858259554,
-      "change_pct": -0.010136921149009218,
-      "low": 18690.734609730556,
-      "high": 18908.97355109779,
-      "mae": 68.51283318531712,
+      "estimate": 18794.78007441942,
+      "change": -6.979925580578723,
+      "change_pct": -0.03712378830800267,
+      "low": 18685.660603735803,
+      "high": 18903.89954510304,
+      "mae": 68.5128331853171,
       "baseline_mae": 67.70633333333329,
-      "improvement_pct": -1.191173428360464,
+      "improvement_pct": -1.191173428360443,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 71.66666666666667,
       "backtest_count": 60,
       "model_id": "ridge",
       "model_name": "Regularised multi-factor trend",
       "scale": 0.25,
-      "tuning_mae": 113.10144770180973,
+      "tuning_mae": 113.10144770180975,
       "training_window": 180,
-      "probability_lower": 45.0,
-      "probability_higher": 55.00000000000001,
+      "probability_lower": 50.0,
+      "probability_higher": 50.0,
       "beats_baseline": false
     },
     {
       "horizon": 5,
       "date": "2026-09-22",
-      "estimate": 18799.220132667306,
-      "change": -2.5398673326919807,
-      "change_pct": -0.013508667979444377,
-      "low": 18664.749092332604,
-      "high": 18933.691173002007,
+      "estimate": 18796.442105120266,
+      "change": -5.3178948797334105,
+      "change_pct": -0.028284027025839126,
+      "low": 18661.971064785565,
+      "high": 18930.913145454968,
       "mae": 76.52503525809894,
       "baseline_mae": 74.57883333333332,
       "improvement_pct": -2.609590198423973,
@@ -113,18 +113,18 @@
       "scale": 0.25,
       "tuning_mae": 128.34670738250185,
       "training_window": null,
-      "probability_lower": 38.333333333333336,
-      "probability_higher": 61.66666666666667,
+      "probability_lower": 45.0,
+      "probability_higher": 55.00000000000001,
       "beats_baseline": false
     },
     {
       "horizon": 6,
       "date": "2026-09-23",
-      "estimate": 18796.1409038634,
-      "change": -5.619096136596201,
-      "change_pct": -0.02988601139784893,
-      "low": 18640.48631886748,
-      "high": 18951.795488859323,
+      "estimate": 18795.93330736268,
+      "change": -5.826692637317702,
+      "change_pct": -0.030990144738139953,
+      "low": 18640.27872236676,
+      "high": 18951.587892358602,
       "mae": 92.91649923627735,
       "baseline_mae": 89.8856666666666,
       "improvement_pct": -3.371875274453199,
@@ -143,11 +143,11 @@
     {
       "horizon": 7,
       "date": "2026-09-24",
-      "estimate": 18789.418426895678,
-      "change": -12.341573104318908,
-      "change_pct": -0.06564052037851195,
-      "low": 18598.663511770974,
-      "high": 18980.173342020382,
+      "estimate": 18788.837697797426,
+      "change": -12.922302202574052,
+      "change_pct": -0.06872921578923491,
+      "low": 18598.08278267272,
+      "high": 18979.59261292213,
       "mae": 105.6194096016723,
       "baseline_mae": 102.21549999999995,
       "improvement_pct": -3.330130559134725,
@@ -157,10 +157,10 @@
       "model_id": "extra_trees",
       "model_name": "Non-linear factor ensemble",
       "scale": 0.25,
-      "tuning_mae": 159.31897216602073,
+      "tuning_mae": 159.3189721660207,
       "training_window": 180,
-      "probability_lower": 38.333333333333336,
-      "probability_higher": 61.66666666666667,
+      "probability_lower": 40.0,
+      "probability_higher": 60.0,
       "beats_baseline": false
     }
   ],
@@ -169,44 +169,44 @@
       {
         "feature": "rba_aud_usd_change_5d",
         "label": "RBA AUD/USD reference rate",
-        "impact": -2.5511361600144644
+        "impact": -2.5511361600144657
       },
       {
         "feature": "rate_change_1d",
         "label": "Vietcombank rate trend",
-        "impact": 1.610963488703088
+        "impact": 1.6109634887030864
       },
       {
         "feature": "sp500_change_3d",
         "label": "Global equities (S&P 500)",
-        "impact": 1.2565024456656482
+        "impact": 1.4456509929695058
       },
       {
         "feature": "rba_aud_eur_change_3d",
         "label": "RBA AUD/EUR reference rate",
-        "impact": -1.249986081845107
+        "impact": -1.2499860818451094
       },
       {
         "feature": "rba_fair_value_gap_20d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 1.237117474879991
+        "impact": 1.2371174748799905
       },
       {
-        "feature": "rba_aud_vnd_change_10d",
-        "label": "RBA AUD/VND reference rate",
-        "impact": -0.8137291441434216
+        "feature": "vix_change_5d",
+        "label": "Global market volatility (VIX)",
+        "impact": -1.2198859208683723
       }
     ],
     "7": [
       {
         "feature": "rba_aud_eur_level",
         "label": "RBA AUD/EUR reference rate",
-        "impact": -12.283664570094498
+        "impact": -12.682553806205613
       },
       {
         "feature": "rba_aud_vnd_change_20d",
         "label": "RBA AUD/VND reference rate",
-        "impact": -1.4987866035767325
+        "impact": -1.4987866035767379
       },
       {
         "feature": "rba_aud_jpy_level",
@@ -216,17 +216,17 @@
       {
         "feature": "sp500_change_20d",
         "label": "Global equities (S&P 500)",
-        "impact": -1.390247277038938
+        "impact": -1.237386744631534
       },
       {
         "feature": "rba_aud_cny_change_20d",
         "label": "RBA AUD/CNY reference rate",
-        "impact": -1.2326381076424138
+        "impact": -1.2326381076424155
       },
       {
         "feature": "rba_aud_twi_level",
         "label": "RBA AUD trade-weighted index",
-        "impact": -1.0513740440704886
+        "impact": -0.9029824495538961
       }
     ]
   },
@@ -255,9 +255,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 17.2,
-      "change_5d": 9.414758269720092,
-      "date": "2026-09-15"
+      "value": 17.71,
+      "change_5d": 7.594167679222363,
+      "date": "2026-09-16"
     },
     {
       "key": "brent_oil",
