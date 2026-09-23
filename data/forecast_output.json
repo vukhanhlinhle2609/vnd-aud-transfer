@@ -5,16 +5,16 @@
     {
       "horizon": 1,
       "date": "2026-09-24",
-      "estimate": 18706.038889227293,
-      "change": 2.2688892272938976,
-      "change_pct": 0.012130651880844865,
-      "low": 18638.894768962884,
-      "high": 18773.183009491702,
-      "mae": 38.960634173058565,
+      "estimate": 18705.64347225165,
+      "change": 1.8734722516502775,
+      "change_pct": 0.010016548811551241,
+      "low": 18638.49935198724,
+      "high": 18772.78759251606,
+      "mae": 38.881914779881456,
       "baseline_mae": 37.47699999999998,
-      "improvement_pct": -3.958785850144311,
+      "improvement_pct": -3.748738639382751,
       "interval_coverage": 80.0,
-      "tolerance_accuracy": 86.66666666666667,
+      "tolerance_accuracy": 88.33333333333333,
       "backtest_count": 60,
       "model_id": "hist_gradient",
       "model_name": "Robust boosted factor model",
@@ -28,14 +28,14 @@
     {
       "horizon": 2,
       "date": "2026-09-25",
-      "estimate": 18714.278575288827,
-      "change": 10.508575288824849,
-      "change_pct": 0.056184262792072656,
-      "low": 18617.13184970518,
-      "high": 18811.425300872474,
-      "mae": 54.63972875322113,
+      "estimate": 18715.015606867393,
+      "change": 11.245606867392805,
+      "change_pct": 0.06012481370008723,
+      "low": 18617.868881283746,
+      "high": 18812.16233245104,
+      "mae": 54.54948150634036,
       "baseline_mae": 52.89533333333329,
-      "improvement_pct": -3.297824798446943,
+      "improvement_pct": -3.127210036815612,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 78.33333333333333,
       "backtest_count": 60,
@@ -44,21 +44,21 @@
       "scale": 0.25,
       "tuning_mae": 69.07176391382188,
       "training_window": 180,
-      "probability_lower": 41.66666666666667,
-      "probability_higher": 58.333333333333336,
+      "probability_lower": 38.333333333333336,
+      "probability_higher": 61.66666666666667,
       "beats_baseline": false
     },
     {
       "horizon": 3,
       "date": "2026-09-26",
-      "estimate": 18708.608629416292,
-      "change": 4.838629416293184,
-      "change_pct": 0.02586980815254456,
-      "low": 18609.003439238906,
-      "high": 18808.21381959368,
-      "mae": 64.7163860824289,
+      "estimate": 18719.035070998932,
+      "change": 15.265070998932986,
+      "change_pct": 0.08161494179479852,
+      "low": 18619.429880821546,
+      "high": 18818.64026117632,
+      "mae": 64.75690337241731,
       "baseline_mae": 63.2760000000002,
-      "improvement_pct": -2.2763545142371364,
+      "improvement_pct": -2.3403871490250734,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 73.33333333333333,
       "backtest_count": 60,
@@ -67,8 +67,8 @@
       "scale": 0.25,
       "tuning_mae": 91.56118290860408,
       "training_window": 180,
-      "probability_lower": 46.666666666666664,
-      "probability_higher": 53.333333333333336,
+      "probability_lower": 41.66666666666667,
+      "probability_higher": 58.333333333333336,
       "beats_baseline": false
     },
     {
@@ -143,11 +143,11 @@
     {
       "horizon": 7,
       "date": "2026-09-30",
-      "estimate": 18701.954165462186,
-      "change": -1.8158345378147809,
-      "change_pct": -0.00970838786947648,
-      "low": 18523.416323851157,
-      "high": 18880.492007073215,
+      "estimate": 18702.190769336215,
+      "change": -1.5792306637836946,
+      "change_pct": -0.008443381541708943,
+      "low": 18523.652927725187,
+      "high": 18880.728610947244,
       "mae": 95.87114492580267,
       "baseline_mae": 96.20933333333329,
       "improvement_pct": 0.3515130973404763,
@@ -167,46 +167,51 @@
   "drivers": {
     "1": [
       {
+        "feature": "brent_oil_change_3d",
+        "label": "Brent oil",
+        "impact": -2.9321253728382444
+      },
+      {
         "feature": "vix_change_5d",
         "label": "Global market volatility (VIX)",
-        "impact": -2.9951789473210524
+        "impact": -2.7058575787767603
       },
       {
         "feature": "rba_aud_usd_change_10d",
         "label": "RBA AUD/USD reference rate",
-        "impact": -2.3603097523124865
+        "impact": -2.2497821545033294
       },
       {
-        "feature": "rba_aud_eur_level",
-        "label": "RBA AUD/EUR reference rate",
-        "impact": -0.8940363875776622
+        "feature": "us_10y_change_10d",
+        "label": "US 10-year yield",
+        "impact": 1.7641892829043564
       },
       {
-        "feature": "rate_vs_ma_7d",
-        "label": "Vietcombank rate trend",
-        "impact": -0.7470556824481687
+        "feature": "rba_fair_value_gap_20d",
+        "label": "RBA AUD/VND fair-value gap",
+        "impact": 1.0736545189496414
       },
       {
         "feature": "rba_aud_vnd_change_10d",
         "label": "RBA AUD/VND reference rate",
-        "impact": -0.6639171356637528
-      },
-      {
-        "feature": "rba_aud_jpy_change_1d",
-        "label": "RBA AUD/JPY reference rate",
-        "impact": 0.6416054014527441
+        "impact": -0.8690167091459782
       }
     ],
     "7": [
       {
         "feature": "rba_aud_eur_level",
         "label": "RBA AUD/EUR reference rate",
-        "impact": -3.280672173837729
+        "impact": -3.2806721738377296
       },
       {
         "feature": "rate_volatility_30d",
         "label": "Vietcombank rate trend",
         "impact": -1.6430943735098098
+      },
+      {
+        "feature": "us_10y_change_3d",
+        "label": "US 10-year yield",
+        "impact": 0.8410794671564572
       },
       {
         "feature": "rba_aud_vnd_level",
@@ -222,11 +227,6 @@
         "feature": "rba_aud_cny_level",
         "label": "RBA AUD/CNY reference rate",
         "impact": 0.36411500195930646
-      },
-      {
-        "feature": "rba_aud_twi_level",
-        "label": "RBA AUD trade-weighted index",
-        "impact": -0.21497290487560683
       }
     ]
   },
@@ -262,16 +262,16 @@
     {
       "key": "brent_oil",
       "label": "Brent oil",
-      "value": 130.8,
-      "change_5d": 23.256690539012446,
-      "date": "2026-09-15"
+      "value": 114.89,
+      "change_5d": -12.163608562691142,
+      "date": "2026-09-22"
     },
     {
       "key": "us_10y",
       "label": "US 10-year yield",
       "value": 4.96,
-      "change_5d": -0.2012072434607548,
-      "date": "2026-09-21"
+      "change_5d": -0.8000000000000007,
+      "date": "2026-09-22"
     },
     {
       "key": "sp500",
