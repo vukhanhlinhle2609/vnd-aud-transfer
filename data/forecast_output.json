@@ -5,14 +5,14 @@
     {
       "horizon": 1,
       "date": "2026-09-29",
-      "estimate": 18503.963865432208,
-      "change": -4.136134567792086,
-      "change_pct": -0.022347699481805733,
-      "low": 18437.433694012743,
-      "high": 18570.494036851673,
-      "mae": 38.98367583852545,
+      "estimate": 18504.32569254086,
+      "change": -3.774307459137645,
+      "change_pct": -0.020392733231059078,
+      "low": 18437.795521121396,
+      "high": 18570.855863960325,
+      "mae": 39.320128362934135,
       "baseline_mae": 37.35199999999998,
-      "improvement_pct": -4.368376093717788,
+      "improvement_pct": -5.269137831800581,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 90.0,
       "backtest_count": 60,
@@ -21,21 +21,21 @@
       "scale": 0.25,
       "tuning_mae": 46.225909204395975,
       "training_window": 180,
-      "probability_lower": 61.66666666666667,
-      "probability_higher": 38.333333333333336,
+      "probability_lower": 58.333333333333336,
+      "probability_higher": 41.66666666666667,
       "beats_baseline": false
     },
     {
       "horizon": 2,
       "date": "2026-09-30",
-      "estimate": 18506.557822492865,
-      "change": -1.5421775071350114,
-      "change_pct": -0.008332446372858434,
-      "low": 18407.546453167666,
-      "high": 18605.569191818064,
-      "mae": 57.317442850507454,
+      "estimate": 18514.227030926704,
+      "change": 6.127030926706549,
+      "change_pct": 0.033104591647476235,
+      "low": 18415.215661601505,
+      "high": 18613.238400251903,
+      "mae": 57.207801224645294,
       "baseline_mae": 55.37433333333326,
-      "improvement_pct": -3.509043631238652,
+      "improvement_pct": -3.311042826060272,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 76.66666666666667,
       "backtest_count": 60,
@@ -44,8 +44,8 @@
       "scale": 0.25,
       "tuning_mae": 65.82780655538625,
       "training_window": 180,
-      "probability_lower": 50.0,
-      "probability_higher": 50.0,
+      "probability_lower": 45.0,
+      "probability_higher": 55.00000000000001,
       "beats_baseline": false
     },
     {
@@ -169,27 +169,32 @@
       {
         "feature": "rba_aud_vnd_change_5d",
         "label": "RBA AUD/VND reference rate",
-        "impact": -2.1986839345817324
+        "impact": -2.056892433181563
       },
       {
-        "feature": "rate_vs_ma_7d",
-        "label": "Vietcombank rate trend",
-        "impact": -1.3844296717355582
+        "feature": "broad_usd_change_10d",
+        "label": "Broad US dollar",
+        "impact": -1.3510919413540092
       },
       {
         "feature": "rba_aud_jpy_change_5d",
         "label": "RBA AUD/JPY reference rate",
-        "impact": -1.3088347308091555
+        "impact": -1.0738781155893466
       },
       {
-        "feature": "rba_aud_usd_change_5d",
-        "label": "RBA AUD/USD reference rate",
-        "impact": -0.369722144839165
+        "feature": "rate_vs_ma_7d",
+        "label": "Vietcombank rate trend",
+        "impact": -0.9260877273892376
       },
       {
         "feature": "rba_fair_value_gap_20d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 0.08742136540633005
+        "impact": 0.317829174626858
+      },
+      {
+        "feature": "us_10y_change_3d",
+        "label": "US 10-year yield",
+        "impact": 0.267460240198925
       }
     ],
     "7": [
@@ -204,23 +209,23 @@
     {
       "key": "aud_usd",
       "label": "AUD/USD market rate",
-      "value": 0.7111,
-      "change_5d": -0.8781711736827513,
-      "date": "2026-09-18"
+      "value": 0.7033,
+      "change_5d": -1.0968921389396646,
+      "date": "2026-09-25"
     },
     {
       "key": "broad_usd",
       "label": "Broad US dollar",
-      "value": 119.5133,
-      "change_5d": 1.1003057203716082,
-      "date": "2026-09-18"
+      "value": 120.33,
+      "change_5d": 0.6833549069434008,
+      "date": "2026-09-25"
     },
     {
       "key": "usd_cny",
       "label": "USD/CNY (China proxy)",
-      "value": 6.6975,
-      "change_5d": -0.15652951699464124,
-      "date": "2026-09-18"
+      "value": 6.711,
+      "change_5d": 0.20156774916013642,
+      "date": "2026-09-25"
     },
     {
       "key": "vix",
@@ -239,9 +244,9 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 5.18,
-      "change_5d": 4.85829959514168,
-      "date": "2026-09-24"
+      "value": 5.17,
+      "change_5d": 3.1936127744510934,
+      "date": "2026-09-25"
     },
     {
       "key": "sp500",
