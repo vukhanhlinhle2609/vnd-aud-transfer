@@ -42,6 +42,15 @@ FACTOR_LABELS = {
     "rba_aud_vnd": "RBA AUD/VND reference rate",
     "rba_aud_jpy": "RBA AUD/JPY reference rate",
     "rba_aud_eur": "RBA AUD/EUR reference rate",
+    "au_gdp_yoy": "Australian real GDP growth",
+    "au_inflation_yoy": "Australian inflation",
+    "vn_gdp_growth": "Vietnamese GDP growth",
+    "vn_inflation_yoy": "Vietnamese inflation",
+    "au_10y_monthly": "Australian long-term interest rate",
+    "us_10y_monthly": "US long-term interest rate",
+    "macro_growth_gap": "Australia–Vietnam GDP growth gap",
+    "macro_inflation_gap": "Australia–Vietnam inflation gap",
+    "long_yield_gap": "Australia–US long-term rate gap",
 }
 
 MODEL_LABELS = {
@@ -52,6 +61,25 @@ MODEL_LABELS = {
     "extra_trees": "Non-linear factor ensemble",
     "fair_value": "RBA fair-value convergence model",
 }
+
+ACCURACY_TOLERANCE_PCT = 0.5
+TRACKING_FIELDS = [
+    "origin_date",
+    "target_date",
+    "horizon",
+    "origin_rate",
+    "predicted_rate",
+    "predicted_change",
+    "model_name",
+    "actual_rate",
+    "difference",
+    "error_pct",
+    "absolute_error",
+    "absolute_error_pct",
+    "accurate",
+    "direction_correct",
+    "status",
+]
 
 
 def _load_rates(path: Path) -> pd.Series:
@@ -68,7 +96,65 @@ def _load_rates(path: Path) -> pd.Series:
 def _load_factors(path: Path, dates: pd.DatetimeIndex) -> pd.DataFrame:
     factors = pd.read_csv(path, parse_dates=["date"]).set_index("date")
     factors = factors.apply(pd.to_numeric, errors="coerce").sort_index()
-    aligned_raw = factors.reindex(dates, method="ffill")
+
+    # Turn the quarterly real-GDP level into year-over-year growth before
+    # alignment.  Calculating it after daily forward filling would be wrong.
+    if "au_real_gdp" in factors:
+        quarterly_gdp = factors["au_real_gdp"].dropna()
+        factors["au_gdp_yoy"] = quarterly_gdp.pct_change(4) * 100
+        factors = factors.drop(columns=["au_real_gdp"])
+
+    macro_columns = [
+        "au_gdp_yoy",
+        "au_inflation_yoy",
+        "vn_gdp_growth",
+        "vn_inflation_yoy",
+        "au_10y_monthly",
+        "us_10y_monthly",
+    ]
+    # The expanding z-score is calculated on the full long-run observation
+    # history before alignment.  This is how the older macro data contributes
+    # useful regime context without pretending it creates extra VCB targets.
+    for column in macro_columns:
+        if column not in factors:
+            continue
+        observed = factors[column].dropna()
+        expanding_mean = observed.expanding(min_periods=8).mean()
+        expanding_std = observed.expanding(min_periods=8).std()
+        factors[f"{column}_longrun_z"] = (
+            (observed - expanding_mean) / expanding_std.replace(0, np.nan)
+        )
+
+    # Approximate publication delays conservatively.  This prevents a GDP or
+    # CPI value from appearing in a historical forecast before it was public.
+    release_lags = {
+        "au_gdp_yoy": 90,
+        "au_inflation_yoy": 60,
+        "vn_gdp_growth": 550,
+        "vn_inflation_yoy": 550,
+        "au_10y_monthly": 31,
+        "us_10y_monthly": 31,
+    }
+    release_lags.update(
+        {
+            f"{column}_longrun_z": lag
+            for column, lag in list(release_lags.items())
+        }
+    )
+    for column, lag_days in release_lags.items():
+        if column not in factors:
+            continue
+        released = factors[column].dropna().copy()
+        released.index = released.index + pd.to_timedelta(lag_days, unit="D")
+        factors[column] = np.nan
+        factors = factors.combine_first(released.rename(column).to_frame())
+
+    aligned_raw = (
+        factors.reindex(factors.index.union(dates))
+        .sort_index()
+        .ffill()
+        .reindex(dates)
+    )
     aligned = pd.DataFrame(index=dates)
     for column in aligned_raw:
         if column.startswith("rba_aud_") or column == "rba_cash_rate":
@@ -82,6 +168,18 @@ def _load_factors(path: Path, dates: pd.DatetimeIndex) -> pd.DataFrame:
             # U.S. and FRED markets close after Vietcombank's daytime quote.
             aligned[column] = aligned_raw[column].shift(1)
     aligned["yield_spread"] = aligned["au_10y"] - aligned["us_10y"]
+    if {"au_gdp_yoy", "vn_gdp_growth"} <= set(aligned):
+        aligned["macro_growth_gap"] = (
+            aligned["au_gdp_yoy"] - aligned["vn_gdp_growth"]
+        )
+    if {"au_inflation_yoy", "vn_inflation_yoy"} <= set(aligned):
+        aligned["macro_inflation_gap"] = (
+            aligned["au_inflation_yoy"] - aligned["vn_inflation_yoy"]
+        )
+    if {"au_10y_monthly", "us_10y_monthly"} <= set(aligned):
+        aligned["long_yield_gap"] = (
+            aligned["au_10y_monthly"] - aligned["us_10y_monthly"]
+        )
     return aligned
 
 
@@ -127,9 +225,25 @@ def _build_features(rates: pd.Series, factors: pd.DataFrame) -> pd.DataFrame:
     features["is_weekend"] = (day_of_week >= 5).astype(float)
 
     factor_features: dict[str, pd.Series] = {}
+    slow_factor_roots = {
+        "au_gdp_yoy",
+        "au_inflation_yoy",
+        "vn_gdp_growth",
+        "vn_inflation_yoy",
+        "au_10y_monthly",
+        "us_10y_monthly",
+        "macro_growth_gap",
+        "macro_inflation_gap",
+        "long_yield_gap",
+    }
     for factor_name in factors.columns:
         factor = factors[factor_name]
         factor_features[f"{factor_name}_level"] = factor
+        if (
+            factor_name in slow_factor_roots
+            or factor_name.endswith("_longrun_z")
+        ):
+            continue
         for lag in (1, 3, 5, 10, 20):
             factor_features[f"{factor_name}_change_{lag}d"] = factor.pct_change(
                 lag, fill_method=None
@@ -422,6 +536,9 @@ def _local_drivers(
 def _factor_snapshot(path: Path) -> list[dict[str, float | str]]:
     factors = pd.read_csv(path, parse_dates=["date"]).set_index("date")
     factors = factors.apply(pd.to_numeric, errors="coerce").sort_index()
+    if "au_real_gdp" in factors:
+        quarterly_gdp = factors["au_real_gdp"].dropna()
+        factors["au_gdp_yoy"] = quarterly_gdp.pct_change(4) * 100
     snapshots: list[dict[str, float | str]] = []
     for name in FACTOR_LABELS:
         if name not in factors:
@@ -448,6 +565,193 @@ def _factor_snapshot(path: Path) -> list[dict[str, float | str]]:
     return snapshots
 
 
+def _evaluation_record(
+    origin_date: pd.Timestamp,
+    target_date: pd.Timestamp,
+    horizon: int,
+    origin_rate: float,
+    predicted_delta: float,
+    actual_delta: float,
+    interval_radius: float,
+) -> dict[str, object]:
+    predicted_rate = origin_rate + predicted_delta
+    actual_rate = origin_rate + actual_delta
+    difference = predicted_rate - actual_rate
+    error_pct = difference / actual_rate * 100 if actual_rate else 0.0
+    accurate = abs(error_pct) <= ACCURACY_TOLERANCE_PCT
+    return {
+        "origin_date": origin_date.date().isoformat(),
+        "target_date": target_date.date().isoformat(),
+        "horizon": horizon,
+        "predicted_rate": float(predicted_rate),
+        "actual_rate": float(actual_rate),
+        "difference": float(difference),
+        "error_pct": float(error_pct),
+        "absolute_error": float(abs(difference)),
+        "absolute_error_pct": float(abs(error_pct)),
+        "accurate": bool(accurate),
+        "direction_correct": bool(
+            np.sign(predicted_delta) == np.sign(actual_delta)
+        ),
+        "inside_interval": bool(abs(difference) <= interval_radius),
+    }
+
+
+def _summarise_records(records: list[dict[str, object]]) -> dict[str, object]:
+    completed = [
+        record
+        for record in records
+        if record.get("status", "completed") == "completed"
+        and record.get("actual_rate") not in (None, "")
+    ]
+    accurate_count = sum(bool(record.get("accurate")) for record in completed)
+    direction_count = sum(
+        bool(record.get("direction_correct")) for record in completed
+    )
+    count = len(completed)
+    return {
+        "completed": count,
+        "accurate": accurate_count,
+        "inaccurate": count - accurate_count,
+        "accuracy_pct": accurate_count / count * 100 if count else 0.0,
+        "direction_accuracy_pct": direction_count / count * 100 if count else 0.0,
+        "mae": float(
+            np.mean([float(record["absolute_error"]) for record in completed])
+        ) if count else 0.0,
+        "mape": float(
+            np.mean(
+                [float(record["absolute_error_pct"]) for record in completed]
+            )
+        ) if count else 0.0,
+    }
+
+
+def update_live_forecast_history(
+    path: Path,
+    rates: pd.Series,
+    forecasts: list[dict[str, object]],
+) -> dict[str, object]:
+    """Score past published forecasts, then record today's forecasts once."""
+    records: list[dict[str, object]] = []
+    if path.exists():
+        with path.open(newline="", encoding="utf-8") as file:
+            records = list(csv.DictReader(file))
+
+    latest_date = rates.index[-1].date().isoformat()
+    actual_by_date = {
+        index.date().isoformat(): float(value)
+        for index, value in rates.items()
+    }
+
+    for record in records:
+        if record.get("status") == "completed":
+            continue
+        actual_rate = actual_by_date.get(record.get("target_date", ""))
+        if actual_rate is None:
+            record["status"] = "pending"
+            continue
+        origin_rate = float(record["origin_rate"])
+        predicted_rate = float(record["predicted_rate"])
+        predicted_change = float(record["predicted_change"])
+        actual_change = actual_rate - origin_rate
+        difference = predicted_rate - actual_rate
+        error_pct = difference / actual_rate * 100 if actual_rate else 0.0
+        record.update(
+            {
+                "actual_rate": f"{actual_rate:.8f}",
+                "difference": f"{difference:.8f}",
+                "error_pct": f"{error_pct:.8f}",
+                "absolute_error": f"{abs(difference):.8f}",
+                "absolute_error_pct": f"{abs(error_pct):.8f}",
+                "accurate": str(
+                    abs(error_pct) <= ACCURACY_TOLERANCE_PCT
+                ).lower(),
+                "direction_correct": str(
+                    np.sign(predicted_change) == np.sign(actual_change)
+                ).lower(),
+                "status": "completed",
+            }
+        )
+
+    existing_keys = {
+        (record.get("origin_date"), int(record.get("horizon", 0)))
+        for record in records
+    }
+    for forecast in forecasts:
+        horizon = int(forecast["horizon"])
+        key = (latest_date, horizon)
+        if key in existing_keys:
+            continue
+        records.append(
+            {
+                "origin_date": latest_date,
+                "target_date": str(forecast["date"]),
+                "horizon": horizon,
+                "origin_rate": f"{float(rates.iloc[-1]):.8f}",
+                "predicted_rate": f"{float(forecast['estimate']):.8f}",
+                "predicted_change": f"{float(forecast['change']):.8f}",
+                "model_name": forecast["model_name"],
+                "actual_rate": "",
+                "difference": "",
+                "error_pct": "",
+                "absolute_error": "",
+                "absolute_error_pct": "",
+                "accurate": "",
+                "direction_correct": "",
+                "status": "pending",
+            }
+        )
+
+    records.sort(
+        key=lambda record: (
+            record.get("origin_date", ""),
+            int(record.get("horizon", 0)),
+        )
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(
+            file,
+            fieldnames=TRACKING_FIELDS,
+            lineterminator="\n",
+        )
+        writer.writeheader()
+        writer.writerows(records)
+
+    completed = [
+        {
+            **record,
+            "horizon": int(record["horizon"]),
+            "origin_rate": float(record["origin_rate"]),
+            "predicted_rate": float(record["predicted_rate"]),
+            "predicted_change": float(record["predicted_change"]),
+            "actual_rate": float(record["actual_rate"]),
+            "difference": float(record["difference"]),
+            "error_pct": float(record["error_pct"]),
+            "absolute_error": float(record["absolute_error"]),
+            "absolute_error_pct": float(record["absolute_error_pct"]),
+            "accurate": record["accurate"] == "true",
+            "direction_correct": record["direction_correct"] == "true",
+        }
+        for record in records
+        if record.get("status") == "completed"
+        and record.get("actual_rate") not in (None, "")
+    ]
+    pending_count = sum(record.get("status") == "pending" for record in records)
+    return {
+        "definition": f"absolute percentage error <= {ACCURACY_TOLERANCE_PCT}%",
+        "summary_all": _summarise_records(completed),
+        "summary_1d": _summarise_records(
+            [record for record in completed if record["horizon"] == 1]
+        ),
+        "summary_7d": _summarise_records(
+            [record for record in completed if record["horizon"] == 7]
+        ),
+        "pending": pending_count,
+        "recent_completed": completed[-60:],
+    }
+
+
 def build_forecast(
     rate_path: Path,
     factor_path: Path,
@@ -458,6 +762,7 @@ def build_forecast(
     features = _build_features(rates, factors)
     forecasts: list[dict[str, object]] = []
     drivers_by_horizon: dict[int, list[dict[str, float | str]]] = {}
+    backtest_history: dict[int, list[dict[str, object]]] = {}
 
     for horizon in range(1, horizons + 1):
         target_delta = rates.shift(-horizon) - rates
@@ -496,6 +801,25 @@ def build_forecast(
             )
             * 100
         )
+
+        evaluation_start = len(x) - evaluation_count
+        evaluation_records: list[dict[str, object]] = []
+        for offset, (predicted_delta, actual_delta) in enumerate(
+            zip(evaluation_predictions, evaluation_actual)
+        ):
+            origin_position = evaluation_start + offset
+            evaluation_records.append(
+                _evaluation_record(
+                    x.index[origin_position],
+                    rates.index[origin_position + horizon],
+                    horizon,
+                    float(rates.iloc[origin_position]),
+                    float(predicted_delta),
+                    float(actual_delta),
+                    interval_radius,
+                )
+            )
+        backtest_history[horizon] = evaluation_records
 
         final_model = clone(template)
         final_start = (
@@ -556,6 +880,10 @@ def build_forecast(
         "latest_date": rates.index[-1].date(),
         "forecasts": forecasts,
         "drivers": drivers_by_horizon,
+        "backtest_history": backtest_history,
+        "accuracy_definition": (
+            f"absolute percentage error <= {ACCURACY_TOLERANCE_PCT}%"
+        ),
         "factor_snapshot": _factor_snapshot(factor_path),
         "factor_count": len(factors.columns),
         "feature_count": len(features.columns),
@@ -569,6 +897,11 @@ if __name__ == "__main__":
     result = build_forecast(
         project_root / "data" / "vcb_aud_daily.csv",
         project_root / "data" / "market_factors.csv",
+    )
+    result["live_tracking"] = update_live_forecast_history(
+        project_root / "data" / "forecast_history.csv",
+        _load_rates(project_root / "data" / "vcb_aud_daily.csv"),
+        result["forecasts"],
     )
     output_path = project_root / "data" / "forecast_output.json"
     output_path.write_text(

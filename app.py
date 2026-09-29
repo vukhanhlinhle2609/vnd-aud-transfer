@@ -131,7 +131,7 @@ translations = {
         "no_budget": "No maximum budget is set. Turn on the option above to test a spending limit.",
         "deadline_warning": "Your deadline is close. Historical testing found no reliable advantage from waiting.",
         "forecast_title": "Short-term rate outlook",
-        "forecast_intro": "A direct multi-horizon model combines Vietcombank history with official RBA reference rates, AUD cross-rates, yield differentials, US-dollar strength, China, commodities and global risk signals. Each horizon is tested separately on later unseen dates.",
+        "forecast_intro": "A direct multi-horizon model combines Vietcombank history with official RBA reference rates, AUD cross-rates, yield differentials, GDP growth, inflation, US-dollar strength, China, commodities and global risk signals. Each horizon is tested separately on later unseen dates.",
         "point_forecast": "Next-day estimate",
         "seven_day_forecast": "7-day estimate",
         "forecast_cost": "Estimated transfer cost",
@@ -165,17 +165,38 @@ translations = {
         "range_caption": "Forecast interval: **{low:,.2f}–{high:,.2f} VND/AUD**. Its radius is the 80th percentile of the latest {count} absolute daily movements.",
         "accuracy_caption": "Across {count} recent walk-forward tests, the point forecast was within ±0.5% of the actual rate **{tolerance:.1f}%** of the time. The calibrated 80% interval contained the actual rate **{coverage:.1f}%** of the time. These are historical hit rates, not guaranteed future accuracy.",
         "mae_explanation": "**What MAE means:** Mean Absolute Error is the average size of a forecast miss, whether too high or too low. A next-day MAE of **{day_mae:,.2f} VND/AUD** means an average miss of roughly **{day_cost:,.0f} VND** on {amount:,.0f} AUD. The comparable repeat-current baseline MAE was **{baseline_mae:,.2f} VND/AUD**; lower is better. The 7-day model MAE was **{week_mae:,.2f} VND/AUD**.",
+        "live_scorecard": "Recorded forecast scorecard",
+        "live_score_intro": "These forecasts were saved before the actual rate was known, then scored automatically when the target date arrived.",
+        "tracking_pending": "Live forecast recording has started. There are {count} pending forecasts; the first result will be scored automatically when its target date arrives.",
+        "backtest_scorecard": "Recent walk-forward forecast record",
+        "backtest_intro": "The same forecasting process is replayed on recent historical dates using only information available at each time.",
+        "score_definition": "Accurate means the absolute forecast error was no more than ±0.5% of the actual rate. Direction correctness is measured separately.",
+        "accurate_forecasts": "Accurate forecasts",
+        "inaccurate_forecasts": "Inaccurate forecasts",
+        "accuracy_rate": "Accuracy rate",
+        "mean_pct_error": "Mean absolute % error",
+        "direction_accuracy": "Direction accuracy",
+        "issued_on": "Issued on",
+        "predicted_rate": "Predicted rate",
+        "actual_rate_result": "Actual rate",
+        "forecast_difference": "Predicted − actual",
+        "error_percent": "Error (%)",
+        "accuracy_result": "Result",
+        "accurate_label": "Accurate",
+        "inaccurate_label": "Inaccurate",
+        "correct_label": "Correct",
+        "incorrect_label": "Incorrect",
         "drivers_title": "What is moving the model",
         "drivers_intro": "Largest local influences on the 7-day estimate. Positive raises VND per AUD (unfavourable); negative lowers it (favourable). These are model contributions, not proof of causation.",
         "push_higher": "toward a higher rate",
         "push_lower": "toward a lower rate",
         "factor_snapshot_title": "Market inputs now used",
-        "factor_snapshot_intro": "Latest available official and market observations. The model uses publication-aware lags so future information cannot leak into its historical tests.",
-        "model_sources": "Model data: [RBA statistical tables F11.1, F1 and F2](https://www.rba.gov.au/statistics/tables/) and [Federal Reserve series via FRED](https://fred.stlouisfed.org/).",
+        "factor_snapshot_intro": "Latest official and market observations, including long-run GDP, inflation and long-term interest-rate context. Publication-aware lags prevent future information from leaking into historical tests.",
+        "model_sources": "Model data: [RBA statistical tables F11.1, F1 and F2](https://www.rba.gov.au/statistics/tables/) plus OECD, IMF and World Bank series distributed through [FRED](https://fred.stlouisfed.org/).",
         "five_day_change": "5-observation change",
         "factor_value": "Latest value",
         "method_title": "How the forecast is chosen",
-        "method_text": "For each of days 1–7, the system compares regularised linear, boosted-tree, non-linear ensemble and RBA fair-value models. It tunes on older time splits, then reports an expanding walk-forward test on the latest {count} forecast origins. The final model is refitted automatically after new data arrives.",
+        "method_text": "For each of days 1–7, the system compares regularised linear, boosted-tree, non-linear ensemble and RBA fair-value models. Around 30 years of slow macro data describe the current economic regime, while training uses only dates with a Vietcombank target rate. It tunes on older time splits, tests the latest {count} forecast origins, and retains macro inputs only when validation benefits. The final model is refitted automatically after new data arrives.",
         "direction_title": "Recent direction profile",
         "lower_next": "Lower",
         "unchanged_next": "Unchanged",
@@ -204,7 +225,7 @@ translations = {
         "regression_result": "Walk-forward regression MAE: **56.51 VND**, compared with **53.06 VND** for its baseline test. The regression model was discarded.",
         "strategy_result": "The tested 14-day timing strategy was **5.79 VND/AUD worse** than transferring immediately on average, so it was discarded.",
         "disclaimer": "Educational decision support only — not financial advice or a guaranteed forecast. Transfer fees and provider spreads are not included.",
-        "automatic_updates": "Automatic updates: Vietcombank and 15 external market series are refreshed every 6 hours; the models are revalidated and the dashboard updates without manual action.",
+        "automatic_updates": "Automatic updates: Vietcombank, daily market factors and long-run macro series are refreshed every 6 hours; forecasts are recorded, scored and revalidated without manual action.",
     },
     "Tiếng Việt": {
         "sidebar_settings": "Thiết lập chuyển tiền",
@@ -274,7 +295,7 @@ translations = {
         "no_budget": "Chưa đặt ngân sách tối đa. Bật tùy chọn phía trên để kiểm tra giới hạn chi tiêu.",
         "deadline_warning": "Thời hạn chuyển tiền đã gần. Kiểm tra lịch sử không cho thấy chờ đợi mang lại lợi thế đáng tin cậy.",
         "forecast_title": "Triển vọng tỷ giá ngắn hạn",
-        "forecast_intro": "Mô hình trực tiếp cho từng kỳ hạn kết hợp lịch sử Vietcombank với tỷ giá tham chiếu RBA, các tỷ giá chéo AUD, chênh lệch lợi suất, sức mạnh USD, Trung Quốc, hàng hóa và tín hiệu rủi ro toàn cầu. Mỗi kỳ hạn được kiểm tra riêng trên các ngày tương lai chưa dùng để huấn luyện.",
+        "forecast_intro": "Mô hình trực tiếp cho từng kỳ hạn kết hợp lịch sử Vietcombank với tỷ giá tham chiếu RBA, các tỷ giá chéo AUD, chênh lệch lợi suất, tăng trưởng GDP, lạm phát, sức mạnh USD, Trung Quốc, hàng hóa và tín hiệu rủi ro toàn cầu. Mỗi kỳ hạn được kiểm tra riêng trên các ngày tương lai chưa dùng để huấn luyện.",
         "point_forecast": "Ước tính ngày tiếp theo",
         "seven_day_forecast": "Ước tính sau 7 ngày",
         "forecast_cost": "Chi phí chuyển ước tính",
@@ -308,17 +329,38 @@ translations = {
         "range_caption": "Khoảng dự báo: **{low:,.2f}–{high:,.2f} VND/AUD**. Bán kính khoảng bằng phân vị thứ 80 của {count} biến động tuyệt đối hằng ngày gần nhất.",
         "accuracy_caption": "Trong {count} kiểm định cuốn chiếu gần đây, dự báo điểm nằm trong ±0,5% so với tỷ giá thực tế **{tolerance:.1f}%** số lần. Khoảng 80% đã hiệu chỉnh chứa tỷ giá thực tế **{coverage:.1f}%** số lần. Đây là tỷ lệ lịch sử, không bảo đảm độ chính xác tương lai.",
         "mae_explanation": "**MAE là gì:** Sai số tuyệt đối trung bình là độ lệch trung bình của dự báo, bất kể cao hay thấp hơn thực tế. MAE ngày tiếp theo **{day_mae:,.2f} VND/AUD** tương đương sai số trung bình khoảng **{day_cost:,.0f} VND** cho {amount:,.0f} AUD. MAE của mô hình lặp lại tỷ giá hiện tại là **{baseline_mae:,.2f} VND/AUD**; càng thấp càng tốt. MAE mô hình sau 7 ngày là **{week_mae:,.2f} VND/AUD**.",
+        "live_scorecard": "Bảng điểm dự báo đã ghi nhận",
+        "live_score_intro": "Các dự báo này được lưu trước khi biết tỷ giá thực, sau đó được chấm tự động khi đến ngày mục tiêu.",
+        "tracking_pending": "Hệ thống đã bắt đầu ghi dự báo thực tế. Có {count} dự báo đang chờ; kết quả đầu tiên sẽ được chấm tự động khi đến ngày mục tiêu.",
+        "backtest_scorecard": "Kết quả dự báo cuốn chiếu gần đây",
+        "backtest_intro": "Quy trình dự báo được chạy lại trên các ngày lịch sử gần đây và chỉ dùng thông tin đã có tại từng thời điểm.",
+        "score_definition": "Dự báo được tính là chính xác khi sai số tuyệt đối không quá ±0,5% so với tỷ giá thực. Độ đúng hướng biến động được tính riêng.",
+        "accurate_forecasts": "Dự báo chính xác",
+        "inaccurate_forecasts": "Dự báo chưa chính xác",
+        "accuracy_rate": "Tỷ lệ chính xác",
+        "mean_pct_error": "Sai số % tuyệt đối TB",
+        "direction_accuracy": "Độ đúng hướng",
+        "issued_on": "Ngày dự báo",
+        "predicted_rate": "Tỷ giá dự báo",
+        "actual_rate_result": "Tỷ giá thực",
+        "forecast_difference": "Dự báo − thực tế",
+        "error_percent": "Sai số (%)",
+        "accuracy_result": "Kết quả",
+        "accurate_label": "Chính xác",
+        "inaccurate_label": "Chưa chính xác",
+        "correct_label": "Đúng",
+        "incorrect_label": "Sai",
         "drivers_title": "Yếu tố đang tác động mô hình",
         "drivers_intro": "Các ảnh hưởng cục bộ lớn nhất lên ước tính 7 ngày. Số dương đẩy VND/AUD tăng (bất lợi); số âm đẩy giảm (có lợi). Đây là đóng góp trong mô hình, không chứng minh quan hệ nhân quả.",
         "push_higher": "đẩy tỷ giá cao hơn",
         "push_lower": "đẩy tỷ giá thấp hơn",
         "factor_snapshot_title": "Dữ liệu thị trường đang được sử dụng",
-        "factor_snapshot_intro": "Quan sát chính thức và thị trường mới nhất hiện có. Mô hình dùng độ trễ theo thời điểm công bố để tránh rò rỉ dữ liệu tương lai vào kiểm định lịch sử.",
-        "model_sources": "Dữ liệu mô hình: [các bảng thống kê RBA F11.1, F1 và F2](https://www.rba.gov.au/statistics/tables/) và [các chuỗi của Cục Dự trữ Liên bang qua FRED](https://fred.stlouisfed.org/).",
+        "factor_snapshot_intro": "Quan sát chính thức và thị trường mới nhất, gồm bối cảnh dài hạn về GDP, lạm phát và lãi suất dài hạn. Mô hình dùng độ trễ công bố để tránh rò rỉ dữ liệu tương lai vào kiểm định lịch sử.",
+        "model_sources": "Dữ liệu mô hình: [các bảng thống kê RBA F11.1, F1 và F2](https://www.rba.gov.au/statistics/tables/) cùng dữ liệu OECD, IMF và Ngân hàng Thế giới được phân phối qua [FRED](https://fred.stlouisfed.org/).",
         "five_day_change": "Thay đổi 5 quan sát",
         "factor_value": "Giá trị mới nhất",
         "method_title": "Cách chọn dự báo",
-        "method_text": "Cho từng ngày từ 1–7, hệ thống so sánh mô hình tuyến tính có điều chuẩn, cây tăng cường, tổ hợp phi tuyến và hội tụ giá trị hợp lý RBA. Mô hình được tinh chỉnh trên các lát thời gian cũ rồi báo cáo kiểm định cuốn chiếu mở rộng trên {count} thời điểm dự báo gần nhất. Mô hình cuối được huấn luyện lại tự động khi có dữ liệu mới.",
+        "method_text": "Cho từng ngày từ 1–7, hệ thống so sánh mô hình tuyến tính có điều chuẩn, cây tăng cường, tổ hợp phi tuyến và hội tụ giá trị hợp lý RBA. Khoảng 30 năm dữ liệu vĩ mô chậm mô tả chế độ kinh tế hiện tại, còn việc huấn luyện chỉ dùng các ngày có tỷ giá mục tiêu Vietcombank. Hệ thống tinh chỉnh trên dữ liệu cũ, kiểm định {count} thời điểm gần nhất và chỉ giữ yếu tố vĩ mô khi kiểm định có lợi. Mô hình cuối được huấn luyện lại tự động khi có dữ liệu mới.",
         "direction_title": "Phân bố hướng biến động gần đây",
         "lower_next": "Giảm",
         "unchanged_next": "Không đổi",
@@ -347,7 +389,7 @@ translations = {
         "regression_result": "MAE hồi quy cuốn chiếu là **56.51 VND**, so với **53.06 VND** của mô hình cơ sở trong cùng bài kiểm tra. Mô hình hồi quy đã bị loại.",
         "strategy_result": "Chiến lược chọn thời điểm trong 14 ngày tệ hơn trung bình **5.79 VND/AUD** so với chuyển ngay, nên đã bị loại.",
         "disclaimer": "Chỉ nhằm hỗ trợ quyết định và mục đích giáo dục — không phải tư vấn tài chính hay dự báo được bảo đảm. Chưa bao gồm phí chuyển và chênh lệch giá của nhà cung cấp.",
-        "automatic_updates": "Cập nhật tự động: Vietcombank và 15 chuỗi thị trường bên ngoài được làm mới mỗi 6 giờ; mô hình được kiểm định lại và bảng tự cập nhật—không cần thao tác thủ công.",
+        "automatic_updates": "Cập nhật tự động: Vietcombank, các yếu tố thị trường hằng ngày và chuỗi vĩ mô dài hạn được làm mới mỗi 6 giờ; dự báo được ghi nhận, chấm điểm và kiểm định lại mà không cần thao tác thủ công.",
     },
 }
 
@@ -1261,6 +1303,134 @@ with forecast_tab:
             week_mae=seven_day_mae,
         )
     )
+
+    st.subheader(t["live_scorecard"])
+    st.write(t["live_score_intro"])
+    st.caption(t["score_definition"])
+    live_tracking = forecast_result.get("live_tracking", {})
+    live_summary = live_tracking.get("summary_1d", {})
+    live_completed = live_tracking.get("recent_completed", [])
+    if live_summary.get("completed", 0):
+        live_1, live_2 = st.columns(2)
+        live_1.metric(
+            t["accurate_forecasts"],
+            f"{int(live_summary['accurate']):,}",
+            border=True,
+        )
+        live_2.metric(
+            t["inaccurate_forecasts"],
+            f"{int(live_summary['inaccurate']):,}",
+            border=True,
+        )
+        live_3, live_4 = st.columns(2)
+        live_3.metric(
+            t["accuracy_rate"],
+            f"{float(live_summary['accuracy_pct']):.1f}%",
+            border=True,
+        )
+        live_4.metric(
+            t["mean_pct_error"],
+            f"{float(live_summary['mape']):.3f}%",
+            border=True,
+        )
+        live_rows = []
+        for record in reversed(live_completed):
+            if int(record["horizon"]) not in (1, 7):
+                continue
+            live_rows.append(
+                {
+                    t["issued_on"]: record["origin_date"],
+                    t["forecast_day"]: int(record["horizon"]),
+                    t["date"]: record["target_date"],
+                    t["predicted_rate"]: f"{float(record['predicted_rate']):,.2f}",
+                    t["actual_rate_result"]: f"{float(record['actual_rate']):,.2f}",
+                    t["forecast_difference"]: f"{float(record['difference']):+,.2f}",
+                    t["error_percent"]: f"{float(record['error_pct']):+.3f}%",
+                    t["accuracy_result"]: (
+                        t["accurate_label"]
+                        if record["accurate"]
+                        else t["inaccurate_label"]
+                    ),
+                    t["direction_accuracy"]: (
+                        t["correct_label"]
+                        if record["direction_correct"]
+                        else t["incorrect_label"]
+                    ),
+                }
+            )
+            if len(live_rows) == 20:
+                break
+        st.dataframe(live_rows, hide_index=True, width="stretch")
+    else:
+        st.info(
+            t["tracking_pending"].format(
+                count=int(live_tracking.get("pending", 0))
+            )
+        )
+
+    backtest_records = forecast_result.get("backtest_history", {}).get(
+        "1", []
+    )
+    if backtest_records:
+        backtest_accurate = sum(
+            bool(record["accurate"]) for record in backtest_records
+        )
+        backtest_count = len(backtest_records)
+        backtest_mape = mean(
+            float(record["absolute_error_pct"])
+            for record in backtest_records
+        )
+        backtest_direction = sum(
+            bool(record["direction_correct"])
+            for record in backtest_records
+        ) / backtest_count * 100
+        with st.expander(t["backtest_scorecard"]):
+            st.write(t["backtest_intro"])
+            test_1, test_2 = st.columns(2)
+            test_1.metric(
+                t["accuracy_rate"],
+                f"{backtest_accurate / backtest_count * 100:.1f}%",
+                f"{backtest_accurate} / {backtest_count}",
+                border=True,
+            )
+            test_2.metric(
+                t["direction_accuracy"],
+                f"{backtest_direction:.1f}%",
+                border=True,
+            )
+            test_3, test_4 = st.columns(2)
+            test_3.metric(
+                t["accurate_forecasts"],
+                f"{backtest_accurate}",
+                border=True,
+            )
+            test_4.metric(
+                t["mean_pct_error"],
+                f"{backtest_mape:.3f}%",
+                border=True,
+            )
+            backtest_rows = []
+            for record in reversed(backtest_records[-20:]):
+                backtest_rows.append(
+                    {
+                        t["issued_on"]: record["origin_date"],
+                        t["date"]: record["target_date"],
+                        t["predicted_rate"]: f"{float(record['predicted_rate']):,.2f}",
+                        t["actual_rate_result"]: f"{float(record['actual_rate']):,.2f}",
+                        t["forecast_difference"]: f"{float(record['difference']):+,.2f}",
+                        t["error_percent"]: f"{float(record['error_pct']):+.3f}%",
+                        t["accuracy_result"]: (
+                            t["accurate_label"]
+                            if record["accurate"]
+                            else t["inaccurate_label"]
+                        ),
+                    }
+                )
+            st.dataframe(
+                backtest_rows,
+                hide_index=True,
+                width="stretch",
+            )
 
     st.subheader(t["direction_title"])
     direction_1, direction_2, direction_3 = st.columns(3)

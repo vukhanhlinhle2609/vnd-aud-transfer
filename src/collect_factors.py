@@ -8,6 +8,7 @@ unavailable, the previous values for that column are preserved.
 from __future__ import annotations
 
 import csv
+import json
 import subprocess
 from datetime import date, datetime
 from functools import lru_cache
@@ -18,6 +19,7 @@ import requests
 
 
 START_DATE = date(2024, 1, 1)
+MACRO_START_DATE = date(1996, 1, 1)
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_FILE = ROOT / "data" / "market_factors.csv"
 
@@ -29,6 +31,23 @@ FRED_SERIES = {
     "brent_oil": "DCOILBRENTEU",
     "us_10y": "DGS10",
     "sp500": "SP500",
+}
+
+# Slow-moving macro series are retained for roughly 30 years.  They provide
+# long-run economic-regime context, while the daily series above carry most of
+# the information for the one-to-seven-day forecast horizon.
+MACRO_FRED_SERIES = {
+    "au_real_gdp": "NGDPRSAXDCAUQ",
+    "au_inflation_yoy": "CPALTT01AUQ659N",
+    "vn_gdp_growth": "NYGDPMKTPKDZGVNM",
+    "vn_inflation_yoy": "FPCPITOTLZGVNM",
+    "au_10y_monthly": "IRLTLT01AUM156N",
+    "us_10y_monthly": "IRLTLT01USM156N",
+}
+
+WORLD_BANK_FALLBACKS = {
+    "vn_gdp_growth": ("VNM", "NY.GDP.MKTP.KD.ZG"),
+    "vn_inflation_yoy": ("VNM", "FP.CPI.TOTL.ZG"),
 }
 
 RBA_SERIES = {
@@ -97,10 +116,13 @@ def fetch_text(url: str) -> str:
         return response.text.lstrip("\ufeff")
 
 
-def fetch_fred(series_id: str) -> dict[str, float]:
+def fetch_fred(
+    series_id: str,
+    start_date: date = START_DATE,
+) -> dict[str, float]:
     url = (
         "https://fred.stlouisfed.org/graph/fredgraph.csv"
-        f"?id={series_id}&cosd={START_DATE.isoformat()}"
+        f"?id={series_id}&cosd={start_date.isoformat()}"
     )
     observations: dict[str, float] = {}
     for row in csv.DictReader(StringIO(fetch_text(url))):
@@ -129,8 +151,27 @@ def fetch_rba(url: str, series_id: str) -> dict[str, float]:
     return observations
 
 
+def fetch_world_bank(country: str, indicator: str) -> dict[str, float]:
+    url = (
+        "https://api.worldbank.org/v2/country/"
+        f"{country}/indicator/{indicator}?format=json&per_page=100"
+    )
+    payload = json.loads(fetch_text(url))
+    observations: dict[str, float] = {}
+    for row in payload[1]:
+        if row.get("value") is None:
+            continue
+        observation_date = date(int(row["date"]), 1, 1)
+        if observation_date >= MACRO_START_DATE:
+            observations[observation_date.isoformat()] = float(row["value"])
+    return observations
+
+
 def read_existing() -> dict[str, dict[str, float]]:
-    existing = {name: {} for name in (*FRED_SERIES, *RBA_SERIES)}
+    existing = {
+        name: {}
+        for name in (*FRED_SERIES, *MACRO_FRED_SERIES, *RBA_SERIES)
+    }
     if not OUTPUT_FILE.exists():
         return existing
     with OUTPUT_FILE.open(newline="", encoding="utf-8") as file:
@@ -158,6 +199,34 @@ def main() -> None:
             successful += 1
             print(f"Downloaded {len(downloaded):,} {name} observations")
 
+    for name, series_id in MACRO_FRED_SERIES.items():
+        try:
+            downloaded = fetch_fred(series_id, MACRO_START_DATE)
+        except requests.RequestException as error:
+            print(f"Keeping existing {name}: {error}")
+            continue
+        if downloaded:
+            series[name] = downloaded
+            successful += 1
+            print(
+                f"Downloaded {len(downloaded):,} long-run {name} observations"
+            )
+
+    for name, (country, indicator) in WORLD_BANK_FALLBACKS.items():
+        if series.get(name):
+            continue
+        try:
+            downloaded = fetch_world_bank(country, indicator)
+        except (requests.RequestException, json.JSONDecodeError, IndexError) as error:
+            print(f"Keeping existing {name}: {error}")
+            continue
+        if downloaded:
+            series[name] = downloaded
+            successful += 1
+            print(
+                f"Downloaded {len(downloaded):,} World Bank {name} observations"
+            )
+
     for name, (url, series_id) in RBA_SERIES.items():
         try:
             downloaded = fetch_rba(url, series_id)
@@ -182,7 +251,11 @@ def main() -> None:
     fieldnames = ["date", *series]
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     with OUTPUT_FILE.open("w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer = csv.DictWriter(
+            file,
+            fieldnames=fieldnames,
+            lineterminator="\n",
+        )
         writer.writeheader()
         for observation_date in all_dates:
             writer.writerow(

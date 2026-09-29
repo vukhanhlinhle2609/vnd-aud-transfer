@@ -9,6 +9,8 @@ The automated forecast pipeline combines the Vietcombank history with:
 
 - RBA AUD/VND, AUD/USD, AUD/CNY, AUD/JPY, AUD/EUR and trade-weighted rates;
 - Australian and US interest rates and 10-year yields;
+- roughly 30 years of Australian and Vietnamese GDP-growth, inflation and
+  long-term interest-rate history for economic-regime context;
 - broad US-dollar strength, VIX, Brent oil and the S&P 500; and
 - lagged rate trends, volatility, calendar effects and the gap between the
   Vietcombank quote and the RBA reference rate.
@@ -19,7 +21,13 @@ models are tuned on older time splits and checked using walk-forward tests.
 The dashboard always compares them with the repeat-current-rate baseline and
 shows when the additional complexity did not improve accuracy.
 
+Every published one-to-seven-day forecast is saved before the outcome is
+known. When the target date arrives, the workflow records the actual rate,
+signed VND/AUD difference, percentage error, ±0.5% accuracy result and
+direction result in `data/forecast_history.csv`. The dashboard separates this
+live record from historical walk-forward testing.
+
 The scheduled GitHub workflow refreshes the rate and market factors, reruns
-validation, and writes `data/forecast_output.json` every six hours. Streamlit
-only reads the precomputed result, so the public dashboard remains responsive
-on phones and laptops.
+validation, scores earlier forecasts, and writes `data/forecast_output.json`
+every six hours. Streamlit only reads the precomputed result, so the public
+dashboard remains responsive on phones and laptops.
