@@ -1,8 +1,15 @@
 origin_date,target_date,horizon,origin_rate,predicted_rate,predicted_change,model_name,actual_rate,difference,error_pct,absolute_error,absolute_error_pct,accurate,direction_correct,status
-2026-09-28,2026-09-29,1,18508.10000000,18508.58052324,0.48052324,RBA fair-value convergence model,,,,,,,,pending
+2026-09-28,2026-09-29,1,18508.10000000,18508.58052324,0.48052324,RBA fair-value convergence model,18502.03000000,6.55052324,0.03540435,6.55052324,0.03540435,true,false,completed
 2026-09-28,2026-09-30,2,18508.10000000,18508.82424736,0.72424736,RBA fair-value convergence model,,,,,,,,pending
 2026-09-28,2026-10-01,3,18508.10000000,18512.15860544,4.05860544,Robust boosted factor model,,,,,,,,pending
 2026-09-28,2026-10-02,4,18508.10000000,18510.63835069,2.53835069,RBA fair-value convergence model,,,,,,,,pending
 2026-09-28,2026-10-03,5,18508.10000000,18511.01019843,2.91019843,RBA fair-value convergence model,,,,,,,,pending
 2026-09-28,2026-10-04,6,18508.10000000,18507.91612229,-0.18387771,RBA fair-value convergence model,,,,,,,,pending
 2026-09-28,2026-10-05,7,18508.10000000,18508.29492971,0.19492971,RBA fair-value convergence model,,,,,,,,pending
+2026-09-29,2026-09-30,1,18502.03000000,18502.46243760,0.43243760,RBA fair-value convergence model,,,,,,,,pending
+2026-09-29,2026-10-01,2,18502.03000000,18502.55618814,0.52618814,Robust boosted factor model,,,,,,,,pending
+2026-09-29,2026-10-02,3,18502.03000000,18495.86049475,-6.16950525,Robust boosted factor model,,,,,,,,pending
+2026-09-29,2026-10-03,4,18502.03000000,18505.45175677,3.42175677,RBA fair-value convergence model,,,,,,,,pending
+2026-09-29,2026-10-04,5,18502.03000000,18505.16847931,3.13847931,RBA fair-value convergence model,,,,,,,,pending
+2026-09-29,2026-10-05,6,18502.03000000,18503.21145876,1.18145876,RBA fair-value convergence model,,,,,,,,pending
+2026-09-29,2026-10-06,7,18502.03000000,18503.69130041,1.66130041,RBA fair-value convergence model,,,,,,,,pending
