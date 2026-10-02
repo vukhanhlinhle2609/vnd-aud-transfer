@@ -28,11 +28,11 @@
     {
       "horizon": 2,
       "date": "2026-10-04",
-      "estimate": 18297.157152663563,
-      "change": -9.58284733643773,
-      "change_pct": -0.052346006642568416,
-      "low": 18195.014745850214,
-      "high": 18399.299559476913,
+      "estimate": 18300.385599151774,
+      "change": -6.354400848226979,
+      "change_pct": -0.034710717736893514,
+      "low": 18198.243192338425,
+      "high": 18402.528005965123,
       "mae": 56.61422603573413,
       "baseline_mae": 54.570666666666575,
       "improvement_pct": -3.744794582683411,
@@ -44,18 +44,18 @@
       "scale": 0.25,
       "tuning_mae": 66.66179269754716,
       "training_window": 180,
-      "probability_lower": 68.33333333333333,
-      "probability_higher": 31.666666666666664,
+      "probability_lower": 61.66666666666667,
+      "probability_higher": 38.333333333333336,
       "beats_baseline": false
     },
     {
       "horizon": 3,
       "date": "2026-10-05",
-      "estimate": 18295.687581096023,
-      "change": -11.052418903977026,
-      "change_pct": -0.06037349579431961,
-      "low": 18188.47590552937,
-      "high": 18402.899256662677,
+      "estimate": 18294.718196346857,
+      "change": -12.021803653143731,
+      "change_pct": -0.06566872994942699,
+      "low": 18187.506520780204,
+      "high": 18401.92987191351,
       "mae": 71.52924099906991,
       "baseline_mae": 70.02600000000021,
       "improvement_pct": -2.1466897996025747,
@@ -67,8 +67,8 @@
       "scale": 0.25,
       "tuning_mae": 85.96527826866625,
       "training_window": 180,
-      "probability_lower": 63.33333333333333,
-      "probability_higher": 36.666666666666664,
+      "probability_lower": 65.0,
+      "probability_higher": 35.0,
       "beats_baseline": false
     },
     {
@@ -169,7 +169,7 @@
       {
         "feature": "weekday_sin",
         "label": "Calendar pattern",
-        "impact": 6.9053075297801225
+        "impact": 6.892387535903475
       }
     ],
     "7": [
@@ -6102,9 +6102,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 16.34,
-      "change_5d": 7.641633728590258,
-      "date": "2026-09-30"
+      "value": 16.39,
+      "change_5d": 4.594767070835992,
+      "date": "2026-10-01"
     },
     {
       "key": "brent_oil",
@@ -6116,9 +6116,9 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 5.29,
-      "change_5d": 3.5225048923678948,
-      "date": "2026-09-30"
+      "value": 5.24,
+      "change_5d": 1.1583011583011782,
+      "date": "2026-10-01"
     },
     {
       "key": "sp500",
