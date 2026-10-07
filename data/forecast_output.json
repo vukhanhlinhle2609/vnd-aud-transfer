@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-08",
-      "estimate": 18420.847905685852,
-      "change": 3.2679056858518774,
-      "change_pct": 0.01774340432267365,
-      "low": 18354.449269168228,
-      "high": 18487.246542203477,
+      "estimate": 18416.62070628477,
+      "change": -0.9592937152308468,
+      "change_pct": -0.005208576345159607,
+      "low": 18350.222069767147,
+      "high": 18483.019342802396,
       "mae": 33.972607036278205,
       "baseline_mae": 33.40949999999994,
       "improvement_pct": -1.6854698103182302,
@@ -21,18 +21,18 @@
       "scale": 0.25,
       "tuning_mae": 45.72365249964073,
       "training_window": 180,
-      "probability_lower": 35.0,
-      "probability_higher": 65.0,
+      "probability_lower": 66.66666666666666,
+      "probability_higher": 33.33333333333333,
       "beats_baseline": false
     },
     {
       "horizon": 2,
       "date": "2026-10-09",
-      "estimate": 18411.962431661017,
-      "change": -5.617568338984582,
-      "change_pct": -0.03050112088007535,
-      "low": 18307.46241224142,
-      "high": 18516.462451080613,
+      "estimate": 18412.425464307078,
+      "change": -5.154535692924886,
+      "change_pct": -0.027987041147234788,
+      "low": 18307.92544488748,
+      "high": 18516.925483726674,
       "mae": 53.55017755873646,
       "baseline_mae": 53.28266666666647,
       "improvement_pct": -0.5020598795167657,
@@ -51,11 +51,11 @@
     {
       "horizon": 3,
       "date": "2026-10-10",
-      "estimate": 18402.398723291015,
-      "change": -15.181276708985376,
-      "change_pct": -0.0824281838818421,
-      "low": 18288.22677478838,
-      "high": 18516.57067179365,
+      "estimate": 18402.7430889319,
+      "change": -14.836911068102527,
+      "change_pct": -0.08055841792517,
+      "low": 18288.571140429267,
+      "high": 18516.915037434534,
       "mae": 71.08191854343924,
       "baseline_mae": 72.00016666666664,
       "improvement_pct": 1.275341663413835,
@@ -67,18 +67,18 @@
       "scale": 0.25,
       "tuning_mae": 81.96561480664835,
       "training_window": 180,
-      "probability_lower": 66.66666666666666,
-      "probability_higher": 33.33333333333333,
+      "probability_lower": 65.0,
+      "probability_higher": 35.0,
       "beats_baseline": true
     },
     {
       "horizon": 4,
       "date": "2026-10-11",
-      "estimate": 18415.80544350468,
-      "change": -1.7745564953234794,
-      "change_pct": -0.009635123047237907,
-      "low": 18281.11456207849,
-      "high": 18550.49632493087,
+      "estimate": 18415.767077142005,
+      "change": -1.8129228579978194,
+      "change_pct": -0.009843436857599202,
+      "low": 18281.076195715814,
+      "high": 18550.457958568197,
       "mae": 86.52339130754618,
       "baseline_mae": 85.92733333333338,
       "improvement_pct": -0.6936767976966552,
@@ -97,11 +97,11 @@
     {
       "horizon": 5,
       "date": "2026-10-12",
-      "estimate": 18414.009758879776,
-      "change": -3.5702411202239066,
-      "change_pct": -0.019384963280864836,
-      "low": 18212.50081204596,
-      "high": 18615.51870571359,
+      "estimate": 18413.67785903841,
+      "change": -3.9021409615922957,
+      "change_pct": -0.021187044995011808,
+      "low": 18212.168912204594,
+      "high": 18615.186805872225,
       "mae": 101.50064524678531,
       "baseline_mae": 100.43416666666671,
       "improvement_pct": -1.061868301907815,
@@ -120,11 +120,11 @@
     {
       "horizon": 6,
       "date": "2026-10-13",
-      "estimate": 18414.12401739873,
-      "change": -3.4559826012701396,
-      "change_pct": -0.018764585799383737,
-      "low": 18210.914752240125,
-      "high": 18617.333282557338,
+      "estimate": 18413.864214252128,
+      "change": -3.715785747874075,
+      "change_pct": -0.02017521166121757,
+      "low": 18210.65494909352,
+      "high": 18617.073479410734,
       "mae": 117.75385614463026,
       "baseline_mae": 117.28916666666676,
       "improvement_pct": -0.3961913032293431,
@@ -143,11 +143,11 @@
     {
       "horizon": 7,
       "date": "2026-10-14",
-      "estimate": 18413.944734796703,
-      "change": -3.6352652032975445,
-      "change_pct": -0.019738017716212142,
-      "low": 18173.324108881072,
-      "high": 18654.565360712335,
+      "estimate": 18413.686982717514,
+      "change": -3.8930172824862845,
+      "change_pct": -0.021137507112694957,
+      "low": 18173.066356801883,
+      "high": 18654.307608633146,
       "mae": 128.84090353240308,
       "baseline_mae": 128.50916666666666,
       "improvement_pct": -0.2581425701692489,
@@ -167,41 +167,41 @@
   "drivers": {
     "1": [
       {
-        "feature": "vix_zscore_20d",
-        "label": "Global market volatility (VIX)",
-        "impact": 2.170031497439916
+        "feature": "rate_change_1d",
+        "label": "Vietcombank rate trend",
+        "impact": -2.606164598612676
       },
       {
-        "feature": "rate_range_position_7d",
-        "label": "Vietcombank rate trend",
-        "impact": -1.7440467837816938
+        "feature": "rba_aud_jpy_change_1d",
+        "label": "RBA AUD/JPY reference rate",
+        "impact": -2.2066629797242405
+      },
+      {
+        "feature": "vix_zscore_20d",
+        "label": "Global market volatility (VIX)",
+        "impact": 2.1700314974399153
+      },
+      {
+        "feature": "rba_fair_value_gap_20d",
+        "label": "RBA AUD/VND fair-value gap",
+        "impact": -1.7343559790161862
       },
       {
         "feature": "rba_aud_cny_change_3d",
         "label": "RBA AUD/CNY reference rate",
-        "impact": -1.7337569312323389
-      },
-      {
-        "feature": "rba_fair_value_gap_5d",
-        "label": "RBA AUD/VND fair-value gap",
-        "impact": -1.4512538488150337
+        "impact": -1.7337569312323398
       },
       {
         "feature": "aud_usd_change_3d",
         "label": "AUD/USD market rate",
-        "impact": 1.4426971271450282
-      },
-      {
-        "feature": "yield_spread_change_3d",
-        "label": "Australia\u2013US 10-year yield spread",
-        "impact": 0.794821807397077
+        "impact": 1.442697127145029
       }
     ],
     "7": [
       {
         "feature": "rba_fair_value_gap_5d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": -1.1495742731817855
+        "impact": -1.4073263523705255
       }
     ]
   },
@@ -6170,43 +6170,43 @@
       "key": "rba_aud_usd",
       "label": "RBA AUD/USD reference rate",
       "value": 0.697,
-      "change_5d": -0.7546632493236616,
-      "date": "2026-10-06"
+      "change_5d": -0.24330900243308973,
+      "date": "2026-10-07"
     },
     {
       "key": "rba_aud_twi",
       "label": "RBA AUD trade-weighted index",
       "value": 64.8,
-      "change_5d": -0.613496932515345,
-      "date": "2026-10-06"
+      "change_5d": 0.0,
+      "date": "2026-10-07"
     },
     {
       "key": "rba_aud_cny",
       "label": "RBA AUD/CNY reference rate",
       "value": 4.6741,
-      "change_5d": -0.8464149342384486,
-      "date": "2026-10-06"
+      "change_5d": -0.2475617303711264,
+      "date": "2026-10-07"
     },
     {
       "key": "rba_aud_vnd",
       "label": "RBA AUD/VND reference rate",
-      "value": 18115.0,
-      "change_5d": -0.6526269606230151,
-      "date": "2026-10-06"
+      "value": 18111.0,
+      "change_5d": -0.17637656396406465,
+      "date": "2026-10-07"
     },
     {
       "key": "rba_aud_jpy",
       "label": "RBA AUD/JPY reference rate",
-      "value": 110.22,
-      "change_5d": -0.4785553047404023,
-      "date": "2026-10-06"
+      "value": 110.42,
+      "change_5d": 0.42746703046838697,
+      "date": "2026-10-07"
     },
     {
       "key": "rba_aud_eur",
       "label": "RBA AUD/EUR reference rate",
-      "value": 0.6213,
-      "change_5d": 0.6969205834683967,
-      "date": "2026-10-06"
+      "value": 0.6205,
+      "change_5d": 0.8451162034780024,
+      "date": "2026-10-07"
     },
     {
       "key": "au_gdp_yoy",
