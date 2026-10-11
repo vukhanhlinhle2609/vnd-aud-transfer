@@ -169,7 +169,7 @@
       {
         "feature": "is_weekend",
         "label": "Calendar pattern",
-        "impact": 1.6325845549245463
+        "impact": 1.6325845549245461
       },
       {
         "feature": "rba_aud_eur_level",
@@ -179,22 +179,22 @@
       {
         "feature": "au_10y_monthly_level",
         "label": "Australian 10-year yield",
-        "impact": -0.5855989136249579
+        "impact": -0.5855989136249576
       },
       {
         "feature": "rba_aud_vnd_level",
         "label": "RBA AUD/VND reference rate",
-        "impact": 0.2840377585377549
+        "impact": 0.28403775853775526
       },
       {
         "feature": "rate_volatility_30d",
         "label": "Vietcombank rate trend",
-        "impact": -0.25609827132295593
+        "impact": -0.2560982713229557
       },
       {
         "feature": "sp500_change_20d",
         "label": "Global equities (S&P 500)",
-        "impact": 0.21021908619929142
+        "impact": 0.2102190861992913
       }
     ],
     "7": []
