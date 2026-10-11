@@ -6,8 +6,8 @@
       "horizon": 1,
       "date": "2026-10-12",
       "estimate": 18358.22780929602,
-      "change": 0.9678092960193404,
-      "change_pct": 0.0052720792537630365,
+      "change": 0.9678092960193407,
+      "change_pct": 0.005272079253763039,
       "low": 18284.69818306423,
       "high": 18431.75743552781,
       "mae": 35.45000288133818,
@@ -29,8 +29,8 @@
       "horizon": 2,
       "date": "2026-10-13",
       "estimate": 18362.07210794899,
-      "change": 4.812107948989248,
-      "change_pct": 0.02621365034318438,
+      "change": 4.81210794898925,
+      "change_pct": 0.02621365034318439,
       "low": 18257.58240864046,
       "high": 18466.561807257516,
       "mae": 55.20977292091634,
@@ -52,13 +52,13 @@
       "horizon": 3,
       "date": "2026-10-14",
       "estimate": 18372.679306858892,
-      "change": 15.41930685889404,
-      "change_pct": 0.08399568813044016,
+      "change": 15.419306858894009,
+      "change_pct": 0.08399568813044,
       "low": 18261.298338169978,
       "high": 18484.060275547807,
-      "mae": 72.26812984243975,
+      "mae": 72.26812984243973,
       "baseline_mae": 72.38249999999995,
-      "improvement_pct": 0.15800802343135756,
+      "improvement_pct": 0.15800802343137718,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 65.0,
       "backtest_count": 60,
@@ -75,8 +75,8 @@
       "horizon": 4,
       "date": "2026-10-15",
       "estimate": 18377.650029478817,
-      "change": 20.39002947881726,
-      "change_pct": 0.11107338175096536,
+      "change": 20.390029478817244,
+      "change_pct": 0.11107338175096526,
       "low": 18241.81575187849,
       "high": 18513.484307079143,
       "mae": 86.26396774590964,
@@ -179,22 +179,22 @@
       {
         "feature": "au_10y_monthly_level",
         "label": "Australian 10-year yield",
-        "impact": -0.5855989136249576
+        "impact": -0.5855989136249579
       },
       {
         "feature": "rba_aud_vnd_level",
         "label": "RBA AUD/VND reference rate",
-        "impact": 0.28403775853775526
+        "impact": 0.28403775853775504
       },
       {
         "feature": "rate_volatility_30d",
         "label": "Vietcombank rate trend",
-        "impact": -0.2560982713229557
+        "impact": -0.25609827132295615
       },
       {
         "feature": "sp500_change_20d",
         "label": "Global equities (S&P 500)",
-        "impact": 0.2102190861992913
+        "impact": 0.2102190861992912
       }
     ],
     "7": []
