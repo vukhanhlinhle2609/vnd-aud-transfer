@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-15",
-      "estimate": 18440.2107303169,
-      "change": -4.889269683099919,
-      "change_pct": -0.026507146521840056,
-      "low": 18366.68110408511,
-      "high": 18513.74035654869,
+      "estimate": 18440.376770677078,
+      "change": -4.7232293229199795,
+      "change_pct": -0.025606959696179363,
+      "low": 18366.847144445288,
+      "high": 18513.906396908867,
       "mae": 35.00418414428501,
       "baseline_mae": 33.79283333333327,
       "improvement_pct": -3.584638195332575,
@@ -19,20 +19,20 @@
       "model_id": "extra_trees",
       "model_name": "Non-linear factor ensemble",
       "scale": 0.25,
-      "tuning_mae": 46.4129461351759,
+      "tuning_mae": 46.41294613517589,
       "training_window": 180,
-      "probability_lower": 65.0,
-      "probability_higher": 35.0,
+      "probability_lower": 63.33333333333333,
+      "probability_higher": 36.666666666666664,
       "beats_baseline": false
     },
     {
       "horizon": 2,
       "date": "2026-10-16",
-      "estimate": 18433.433171614517,
-      "change": -11.666828385480109,
-      "change_pct": -0.06325164073645635,
-      "low": 18328.771458703723,
-      "high": 18538.09488452531,
+      "estimate": 18434.520294851856,
+      "change": -10.579705148143553,
+      "change_pct": -0.05735780856782318,
+      "low": 18329.858581941062,
+      "high": 18539.18200776265,
       "mae": 55.16014893816571,
       "baseline_mae": 53.86899999999981,
       "improvement_pct": -2.3968310868327025,
@@ -44,18 +44,18 @@
       "scale": 0.25,
       "tuning_mae": 65.02758606257007,
       "training_window": 180,
-      "probability_lower": 71.66666666666667,
-      "probability_higher": 28.333333333333332,
+      "probability_lower": 70.0,
+      "probability_higher": 30.0,
       "beats_baseline": false
     },
     {
       "horizon": 3,
       "date": "2026-10-17",
-      "estimate": 18434.404380201882,
-      "change": -10.695619798114844,
-      "change_pct": -0.057986239153568396,
-      "low": 18323.023411512968,
-      "high": 18545.785348890797,
+      "estimate": 18437.049066685737,
+      "change": -8.05093331426216,
+      "change_pct": -0.0436480871031448,
+      "low": 18325.668097996822,
+      "high": 18548.43003537465,
       "mae": 71.06087103977569,
       "baseline_mae": 71.36949999999997,
       "improvement_pct": 0.43243817068114954,
@@ -67,18 +67,18 @@
       "scale": 0.25,
       "tuning_mae": 81.45117735224122,
       "training_window": null,
-      "probability_lower": 65.0,
-      "probability_higher": 35.0,
+      "probability_lower": 63.33333333333333,
+      "probability_higher": 36.666666666666664,
       "beats_baseline": true
     },
     {
       "horizon": 4,
       "date": "2026-10-18",
-      "estimate": 18432.906437808004,
-      "change": -12.193562191993188,
-      "change_pct": -0.06610732493720928,
-      "low": 18296.893221959617,
-      "high": 18568.91965365639,
+      "estimate": 18434.981006169204,
+      "change": -10.118993830794917,
+      "change_pct": -0.054860064899593476,
+      "low": 18298.967790320818,
+      "high": 18570.99422201759,
       "mae": 87.38547284264601,
       "baseline_mae": 87.27000000000014,
       "improvement_pct": -0.1323167670973663,
@@ -88,10 +88,10 @@
       "model_id": "elastic",
       "model_name": "Sparse multi-factor trend",
       "scale": 0.25,
-      "tuning_mae": 91.86571124174694,
+      "tuning_mae": 91.86571124174692,
       "training_window": null,
-      "probability_lower": 61.66666666666667,
-      "probability_higher": 38.333333333333336,
+      "probability_lower": 60.0,
+      "probability_higher": 40.0,
       "beats_baseline": false
     },
     {
@@ -169,32 +169,32 @@
       {
         "feature": "rate_range_position_7d",
         "label": "Vietcombank rate trend",
-        "impact": -1.6078188920213248
+        "impact": -1.4983409609246445
       },
       {
         "feature": "weekday_sin",
         "label": "Calendar pattern",
-        "impact": -1.0358079067814914
+        "impact": -1.03580790678149
       },
       {
         "feature": "us_10y_zscore_20d",
         "label": "US 10-year yield",
-        "impact": 0.4338473008858452
+        "impact": 0.5027471926607383
       },
       {
         "feature": "yield_spread_zscore_20d",
         "label": "Australia\u2013US 10-year yield spread",
-        "impact": 0.3685932484567891
+        "impact": 0.36859324845679176
       },
       {
         "feature": "rba_aud_twi_change_1d",
         "label": "RBA AUD trade-weighted index",
-        "impact": 0.35955203373016253
+        "impact": 0.3595520337301634
       },
       {
         "feature": "rba_aud_usd_change_1d",
         "label": "RBA AUD/USD reference rate",
-        "impact": 0.2740194612486313
+        "impact": 0.2740194612486322
       }
     ],
     "7": [
@@ -6141,9 +6141,9 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 5.24,
-      "change_5d": -0.7575757575757569,
-      "date": "2026-10-09"
+      "value": 5.21,
+      "change_5d": -1.883239171374762,
+      "date": "2026-10-13"
     },
     {
       "key": "sp500",
