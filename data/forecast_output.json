@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-16",
-      "estimate": 18221.007635433896,
-      "change": -0.4023645661022413,
-      "change_pct": -0.0022081966549363707,
-      "low": 18147.200629406863,
-      "high": 18294.81464146093,
+      "estimate": 18222.17499571214,
+      "change": 0.7649957121399243,
+      "change_pct": 0.004198334333840929,
+      "low": 18148.367989685106,
+      "high": 18295.982001739172,
       "mae": 37.737085934759214,
       "baseline_mae": 37.520999999999916,
       "improvement_pct": -0.5759066516332172,
@@ -21,18 +21,18 @@
       "scale": 0.25,
       "tuning_mae": 46.17119806166678,
       "training_window": 180,
-      "probability_lower": 65.0,
-      "probability_higher": 35.0,
+      "probability_lower": 38.333333333333336,
+      "probability_higher": 61.66666666666667,
       "beats_baseline": false
     },
     {
       "horizon": 2,
       "date": "2026-10-17",
-      "estimate": 18218.661460982767,
-      "change": -2.748539017235077,
-      "change_pct": -0.01508411817326473,
-      "low": 18112.348070367356,
-      "high": 18324.974851598177,
+      "estimate": 18218.66337488923,
+      "change": -2.746625110768901,
+      "change_pct": -0.015073614559844167,
+      "low": 18112.34998427382,
+      "high": 18324.97676550464,
       "mae": 55.81268339705334,
       "baseline_mae": 54.474499999999836,
       "improvement_pct": -2.4565317663374784,
@@ -51,11 +51,11 @@
     {
       "horizon": 3,
       "date": "2026-10-18",
-      "estimate": 18225.10495535564,
-      "change": 3.694955355639602,
-      "change_pct": 0.020278097883970572,
-      "low": 18112.507859353504,
-      "high": 18337.702051357777,
+      "estimate": 18222.36471372739,
+      "change": 0.954713727392239,
+      "change_pct": 0.005239516192173048,
+      "low": 18109.767617725254,
+      "high": 18334.961809729528,
       "mae": 72.20247278253522,
       "baseline_mae": 72.45033333333335,
       "improvement_pct": 0.342110987478488,
@@ -67,18 +67,18 @@
       "scale": 0.25,
       "tuning_mae": 81.90853400766933,
       "training_window": null,
-      "probability_lower": 50.0,
-      "probability_higher": 50.0,
+      "probability_lower": 51.66666666666667,
+      "probability_higher": 48.333333333333336,
       "beats_baseline": true
     },
     {
       "horizon": 4,
       "date": "2026-10-19",
-      "estimate": 18228.52627171831,
-      "change": 7.116271718311858,
-      "change_pct": 0.039054451430003814,
-      "low": 18089.10932085886,
-      "high": 18367.94322257776,
+      "estimate": 18225.657922321632,
+      "change": 4.247922321632266,
+      "change_pct": 0.023312807963995465,
+      "low": 18086.240971462183,
+      "high": 18365.07487318108,
       "mae": 89.0349240611392,
       "baseline_mae": 88.66250000000012,
       "improvement_pct": -0.4200468756679213,
@@ -169,32 +169,32 @@
       {
         "feature": "weekday_cos",
         "label": "Calendar pattern",
-        "impact": 2.096606563655798
+        "impact": 1.7633659788313962
       },
       {
         "feature": "sp500_zscore_20d",
         "label": "Global equities (S&P 500)",
-        "impact": -1.4202528166095998
+        "impact": -1.4202528166096005
       },
       {
         "feature": "rba_aud_jpy_change_5d",
         "label": "RBA AUD/JPY reference rate",
-        "impact": -1.376771646370829
+        "impact": -1.239129552125303
       },
       {
         "feature": "vix_zscore_20d",
         "label": "Global market volatility (VIX)",
-        "impact": 1.1767136721232434
+        "impact": 1.173121964951311
       },
       {
         "feature": "rate_vs_ma_7d",
         "label": "Vietcombank rate trend",
-        "impact": -0.8907638442672561
+        "impact": -0.8907638442672553
       },
       {
         "feature": "rba_fair_value_gap_20d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 0.866512291327499
+        "impact": 0.8665122913274987
       }
     ],
     "7": [
@@ -6127,9 +6127,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 15.27,
-      "change_5d": 1.7321785476348994,
-      "date": "2026-10-13"
+      "value": 16.87,
+      "change_5d": 11.870026525198952,
+      "date": "2026-10-14"
     },
     {
       "key": "brent_oil",
