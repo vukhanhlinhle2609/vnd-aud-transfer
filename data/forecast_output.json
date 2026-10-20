@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-21",
-      "estimate": 18360.3437714121,
-      "change": 2.283771412099136,
-      "change_pct": 0.012440156596607351,
-      "low": 18288.868518915886,
-      "high": 18431.819023908312,
+      "estimate": 18362.17473519526,
+      "change": 4.114735195260494,
+      "change_pct": 0.02241378007948821,
+      "low": 18290.69948269905,
+      "high": 18433.649987691475,
       "mae": 35.440107644374365,
       "baseline_mae": 35.14849999999988,
       "improvement_pct": -0.8296446345490933,
@@ -21,16 +21,16 @@
       "scale": 0.25,
       "tuning_mae": 47.284824530200744,
       "training_window": 180,
-      "probability_lower": 35.0,
-      "probability_higher": 65.0,
+      "probability_lower": 31.666666666666664,
+      "probability_higher": 68.33333333333333,
       "beats_baseline": false
     },
     {
       "horizon": 2,
       "date": "2026-10-22",
       "estimate": 18356.630934134904,
-      "change": -1.4290658650961974,
-      "change_pct": -0.00778440567846601,
+      "change": -1.4290658650961965,
+      "change_pct": -0.007784405678466006,
       "low": 18250.87386962432,
       "high": 18462.38799864549,
       "mae": 55.50410448904808,
@@ -51,11 +51,11 @@
     {
       "horizon": 3,
       "date": "2026-10-23",
-      "estimate": 18353.453993606978,
-      "change": -4.606006393024474,
-      "change_pct": -0.025089831894135182,
-      "low": 18233.719091605937,
-      "high": 18473.18889560802,
+      "estimate": 18351.7614468238,
+      "change": -6.29855317620242,
+      "change_pct": -0.034309470478919996,
+      "low": 18232.02654482276,
+      "high": 18471.49634882484,
       "mae": 72.71771849453977,
       "baseline_mae": 72.11866666666658,
       "improvement_pct": -0.8306473976314732,
@@ -75,8 +75,8 @@
       "horizon": 4,
       "date": "2026-10-24",
       "estimate": 18356.753502924417,
-      "change": -1.3064970755827772,
-      "change_pct": -0.007116749131350355,
+      "change": -1.3064970755827763,
+      "change_pct": -0.00711674913135035,
       "low": 18222.403206174356,
       "high": 18491.103799674478,
       "mae": 87.00846388500534,
@@ -144,8 +144,8 @@
       "horizon": 7,
       "date": "2026-10-27",
       "estimate": 18352.22265353854,
-      "change": -5.83734646146026,
-      "change_pct": -0.03179718587617788,
+      "change": -5.837346461460259,
+      "change_pct": -0.031797185876177865,
       "low": 18111.60202762291,
       "high": 18592.843279454173,
       "mae": 119.58967650700747,
@@ -169,39 +169,39 @@
       {
         "feature": "rba_aud_jpy_change_1d",
         "label": "RBA AUD/JPY reference rate",
-        "impact": -2.651158104231861
+        "impact": -2.6511581042318593
       },
       {
         "feature": "rba_fair_value_gap_20d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 2.28773551211592
+        "impact": 2.2877355121159226
+      },
+      {
+        "feature": "yield_spread_change_3d",
+        "label": "Australia\u2013US 10-year yield spread",
+        "impact": 1.758170358417308
       },
       {
         "feature": "au_10y_monthly_level",
         "label": "Australian 10-year yield",
-        "impact": -1.7001866819157403
-      },
-      {
-        "feature": "yield_spread_change_5d",
-        "label": "Australia\u2013US 10-year yield spread",
-        "impact": 1.3311675872104576
+        "impact": -1.6706180364669034
       },
       {
         "feature": "sp500_zscore_20d",
         "label": "Global equities (S&P 500)",
-        "impact": -1.3140964811277005
+        "impact": -1.4217237291040092
       },
       {
         "feature": "rba_aud_cny_change_3d",
         "label": "RBA AUD/CNY reference rate",
-        "impact": -1.2139543934774961
+        "impact": -1.2139543934774917
       }
     ],
     "7": [
       {
         "feature": "rba_fair_value_gap_5d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 2.2617632303682225
+        "impact": 2.2617632303682242
       }
     ]
   },
@@ -6141,9 +6141,9 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 5.09,
-      "change_5d": -2.490421455938696,
-      "date": "2026-10-16"
+      "value": 5.15,
+      "change_5d": -1.717557251908397,
+      "date": "2026-10-19"
     },
     {
       "key": "sp500",
