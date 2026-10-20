@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-21",
-      "estimate": 18363.817866895584,
-      "change": 5.757866895583709,
-      "change_pct": 0.03136424489071127,
-      "low": 18292.34261439937,
-      "high": 18435.293119391798,
+      "estimate": 18360.552539201915,
+      "change": 2.4925392019123302,
+      "change_pct": 0.013577356223437172,
+      "low": 18289.077286705702,
+      "high": 18432.02779169813,
       "mae": 35.440107644374365,
       "baseline_mae": 35.14849999999988,
       "improvement_pct": -0.8296446345490933,
@@ -21,8 +21,8 @@
       "scale": 0.25,
       "tuning_mae": 47.284824530200744,
       "training_window": 180,
-      "probability_lower": 30.0,
-      "probability_higher": 70.0,
+      "probability_lower": 35.0,
+      "probability_higher": 65.0,
       "beats_baseline": false
     },
     {
@@ -51,11 +51,11 @@
     {
       "horizon": 3,
       "date": "2026-10-23",
-      "estimate": 18355.313816099137,
-      "change": -2.746183900864634,
-      "change_pct": -0.014959009290004682,
-      "low": 18235.578914098096,
-      "high": 18475.048718100177,
+      "estimate": 18353.164700870086,
+      "change": -4.895299129914795,
+      "change_pct": -0.026665666905516132,
+      "low": 18233.429798869045,
+      "high": 18472.899602871126,
       "mae": 72.71771849453977,
       "baseline_mae": 72.11866666666658,
       "improvement_pct": -0.8306473976314732,
@@ -67,8 +67,8 @@
       "scale": 0.25,
       "tuning_mae": 84.24873483338092,
       "training_window": 180,
-      "probability_lower": 65.0,
-      "probability_higher": 35.0,
+      "probability_lower": 66.66666666666666,
+      "probability_higher": 33.33333333333333,
       "beats_baseline": false
     },
     {
@@ -167,9 +167,14 @@
   "drivers": {
     "1": [
       {
+        "feature": "rba_aud_jpy_change_1d",
+        "label": "RBA AUD/JPY reference rate",
+        "impact": -2.651158104231861
+      },
+      {
         "feature": "rba_fair_value_gap_20d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 2.287735512115919
+        "impact": 2.2877355121159195
       },
       {
         "feature": "au_10y_monthly_level",
@@ -179,7 +184,7 @@
       {
         "feature": "yield_spread_change_5d",
         "label": "Australia\u2013US 10-year yield spread",
-        "impact": 1.3311675872104551
+        "impact": 1.331167587210457
       },
       {
         "feature": "sp500_zscore_20d",
@@ -187,14 +192,9 @@
         "impact": -1.3140964811277005
       },
       {
-        "feature": "us_10y_change_5d",
-        "label": "US 10-year yield",
-        "impact": 1.101488144261781
-      },
-      {
-        "feature": "rate_range_position_7d",
-        "label": "Vietcombank rate trend",
-        "impact": -1.0418554687499935
+        "feature": "rba_aud_cny_change_3d",
+        "label": "RBA AUD/CNY reference rate",
+        "impact": -1.2139543934774961
       }
     ],
     "7": [
@@ -6169,44 +6169,44 @@
     {
       "key": "rba_aud_usd",
       "label": "RBA AUD/USD reference rate",
-      "value": 0.6975,
-      "change_5d": -0.057314801547492245,
-      "date": "2026-10-19"
+      "value": 0.6984,
+      "change_5d": 0.33041229708374864,
+      "date": "2026-10-20"
     },
     {
       "key": "rba_aud_twi",
       "label": "RBA AUD trade-weighted index",
       "value": 64.7,
-      "change_5d": -0.15432098765431057,
-      "date": "2026-10-19"
+      "change_5d": 0.0,
+      "date": "2026-10-20"
     },
     {
       "key": "rba_aud_cny",
       "label": "RBA AUD/CNY reference rate",
-      "value": 4.6607,
-      "change_5d": -0.21410067013509781,
-      "date": "2026-10-19"
+      "value": 4.6647,
+      "change_5d": 0.07938210684403924,
+      "date": "2026-10-20"
     },
     {
       "key": "rba_aud_vnd",
       "label": "RBA AUD/VND reference rate",
       "value": 18076.0,
-      "change_5d": -0.016593838154765894,
-      "date": "2026-10-19"
+      "change_5d": 0.2162222099018729,
+      "date": "2026-10-20"
     },
     {
       "key": "rba_aud_jpy",
       "label": "RBA AUD/JPY reference rate",
-      "value": 110.27,
-      "change_5d": -0.21717491629718033,
-      "date": "2026-10-19"
+      "value": 110.49,
+      "change_5d": 0.29046019787599686,
+      "date": "2026-10-20"
     },
     {
       "key": "rba_aud_eur",
       "label": "RBA AUD/EUR reference rate",
-      "value": 0.621,
-      "change_5d": -0.27300465713827604,
-      "date": "2026-10-19"
+      "value": 0.6217,
+      "change_5d": -0.2246830364307395,
+      "date": "2026-10-20"
     },
     {
       "key": "au_gdp_yoy",
