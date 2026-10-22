@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-23",
-      "estimate": 18423.605070445883,
-      "change": 6.20507044588056,
-      "change_pct": 0.03369134864791208,
-      "low": 18352.12981794967,
-      "high": 18495.080322942096,
+      "estimate": 18423.586039799407,
+      "change": 6.186039799404248,
+      "change_pct": 0.033588018935377675,
+      "low": 18352.110787303194,
+      "high": 18495.06129229562,
       "mae": 35.190595887600715,
       "baseline_mae": 35.12683333333316,
       "improvement_pct": -0.18152092920669965,
@@ -169,12 +169,12 @@
       {
         "feature": "weekday_cos",
         "label": "Calendar pattern",
-        "impact": -4.127679399873665
+        "impact": -4.1276793998736645
       },
       {
         "feature": "rate_range_position_7d",
         "label": "Vietcombank rate trend",
-        "impact": -2.7925907894987194
+        "impact": -2.7925907894987185
       },
       {
         "feature": "rba_fair_value_gap_20d",
@@ -6127,9 +6127,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 17.31,
-      "change_5d": 13.359528487229856,
-      "date": "2026-10-20"
+      "value": 16.68,
+      "change_5d": -1.126259632483706,
+      "date": "2026-10-21"
     },
     {
       "key": "brent_oil",
