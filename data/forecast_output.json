@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-23",
-      "estimate": 18423.586039799407,
-      "change": 6.186039799404248,
-      "change_pct": 0.033588018935377675,
-      "low": 18352.110787303194,
-      "high": 18495.06129229562,
+      "estimate": 18423.736616232258,
+      "change": 6.3366162322577795,
+      "change_pct": 0.034405595970428936,
+      "low": 18352.261363736045,
+      "high": 18495.21186872847,
       "mae": 35.190595887600715,
       "baseline_mae": 35.12683333333316,
       "improvement_pct": -0.18152092920669965,
@@ -51,11 +51,11 @@
     {
       "horizon": 3,
       "date": "2026-10-25",
-      "estimate": 18420.627387885055,
-      "change": 3.227387885054424,
-      "change_pct": 0.017523580337368054,
-      "low": 18300.892485884015,
-      "high": 18540.362289886096,
+      "estimate": 18420.74499497075,
+      "change": 3.3449949707517765,
+      "change_pct": 0.018162145420915963,
+      "low": 18301.01009296971,
+      "high": 18540.479896971792,
       "mae": 72.01107550535234,
       "baseline_mae": 71.25466666666658,
       "improvement_pct": -1.0615569113869856,
@@ -169,17 +169,17 @@
       {
         "feature": "weekday_cos",
         "label": "Calendar pattern",
-        "impact": -4.1276793998736645
+        "impact": -4.127679399873666
       },
       {
         "feature": "rate_range_position_7d",
         "label": "Vietcombank rate trend",
-        "impact": -2.7925907894987185
+        "impact": -2.7925907894987203
       },
       {
         "feature": "rba_fair_value_gap_20d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 1.4120311403037213
+        "impact": 1.4120311403037196
       },
       {
         "feature": "vix_zscore_20d",
@@ -187,14 +187,14 @@
         "impact": 1.287970766723765
       },
       {
+        "feature": "yield_spread_change_3d",
+        "label": "Australia\u2013US 10-year yield spread",
+        "impact": 0.9921633532869478
+      },
+      {
         "feature": "brent_oil_change_3d",
         "label": "Brent oil",
         "impact": -0.9124580441163284
-      },
-      {
-        "feature": "yield_spread_change_3d",
-        "label": "Australia\u2013US 10-year yield spread",
-        "impact": 0.7973867954835843
       }
     ],
     "7": [
@@ -6141,9 +6141,9 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 5.12,
-      "change_5d": -1.7274472168905874,
-      "date": "2026-10-20"
+      "value": 5.13,
+      "change_5d": -1.1560693641618602,
+      "date": "2026-10-21"
     },
     {
       "key": "sp500",
