@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-30",
-      "estimate": 18475.964269394157,
-      "change": 1.9642693941566012,
-      "change_pct": 0.010632615536194658,
-      "low": 18408.512037905723,
-      "high": 18543.41650088259,
+      "estimate": 18475.558068851235,
+      "change": 1.5580688512349015,
+      "change_pct": 0.00843384676428982,
+      "low": 18408.1058373628,
+      "high": 18543.01030033967,
       "mae": 34.527528137808616,
       "baseline_mae": 34.41249999999982,
       "improvement_pct": -0.3342626598148935,
@@ -167,34 +167,34 @@
   "drivers": {
     "1": [
       {
-        "feature": "aud_usd_change_3d",
-        "label": "AUD/USD market rate",
-        "impact": 1.6422617497591718
-      },
-      {
         "feature": "sp500_change_10d",
         "label": "Global equities (S&P 500)",
-        "impact": -1.085402680161519
+        "impact": -1.0854026801615178
+      },
+      {
+        "feature": "aud_usd_change_3d",
+        "label": "AUD/USD market rate",
+        "impact": 1.0131867386663829
       },
       {
         "feature": "rba_fair_value_gap_20d",
         "label": "RBA AUD/VND fair-value gap",
-        "impact": 0.9284377042597436
+        "impact": 0.9284377042597431
       },
       {
         "feature": "rba_aud_jpy_change_1d",
         "label": "RBA AUD/JPY reference rate",
-        "impact": 0.6885747120285459
+        "impact": 0.6985614695055695
       },
       {
         "feature": "rate_range_position_7d",
         "label": "Vietcombank rate trend",
-        "impact": -0.6099170825351246
+        "impact": -0.609917082535125
       },
       {
-        "feature": "brent_oil_change_3d",
-        "label": "Brent oil",
-        "impact": -0.6004514828182466
+        "feature": "weekday_cos",
+        "label": "Calendar pattern",
+        "impact": 0.6064039360179415
       }
     ],
     "7": [
@@ -6127,9 +6127,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 17.52,
-      "change_5d": 1.2131715771230622,
-      "date": "2026-10-27"
+      "value": 16.91,
+      "change_5d": 1.3788968824940184,
+      "date": "2026-10-28"
     },
     {
       "key": "brent_oil",
@@ -6141,9 +6141,9 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 4.99,
-      "change_5d": -2.5390625,
-      "date": "2026-10-27"
+      "value": 5.05,
+      "change_5d": -1.5594541910331383,
+      "date": "2026-10-28"
     },
     {
       "key": "sp500",
@@ -6157,7 +6157,7 @@
       "label": "RBA cash rate",
       "value": 4.6,
       "change_5d": 0.0,
-      "date": "2026-10-28"
+      "date": "2026-10-29"
     },
     {
       "key": "au_10y",
