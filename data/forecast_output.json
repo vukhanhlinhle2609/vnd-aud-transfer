@@ -5,11 +5,11 @@
     {
       "horizon": 1,
       "date": "2026-10-31",
-      "estimate": 18428.955837253434,
-      "change": -0.01416274656841685,
-      "change_pct": -7.685045104754553e-05,
-      "low": 18362.19775105326,
-      "high": 18495.713923453608,
+      "estimate": 18428.9856145592,
+      "change": 0.015614559195586674,
+      "change_pct": 8.472833368108295e-05,
+      "low": 18362.227528359024,
+      "high": 18495.743700759373,
       "mae": 35.2806280574242,
       "baseline_mae": 35.1629999999998,
       "improvement_pct": -0.3345222461803751,
@@ -21,8 +21,8 @@
       "scale": 0.25,
       "tuning_mae": 43.88027273142551,
       "training_window": 180,
-      "probability_lower": 63.33333333333333,
-      "probability_higher": 36.666666666666664,
+      "probability_lower": 53.333333333333336,
+      "probability_higher": 46.666666666666664,
       "beats_baseline": false
     },
     {
@@ -169,12 +169,12 @@
       {
         "feature": "weekday_cos",
         "label": "Calendar pattern",
-        "impact": -5.208551781798841
+        "impact": -4.293329376674523
       },
       {
-        "feature": "rba_aud_jpy_change_20d",
+        "feature": "rba_aud_jpy_change_5d",
         "label": "RBA AUD/JPY reference rate",
-        "impact": -0.0685187731387718
+        "impact": -0.05743116843070775
       },
       {
         "feature": "sp500_change_5d",
@@ -184,17 +184,17 @@
       {
         "feature": "aud_usd_change_10d",
         "label": "AUD/USD market rate",
-        "impact": -0.025160938263106745
+        "impact": -0.025160938263106752
       },
       {
         "feature": "rba_aud_usd_change_5d",
         "label": "RBA AUD/USD reference rate",
-        "impact": -0.021280956221581025
+        "impact": -0.02128095622158102
       },
       {
-        "feature": "us_10y_change_3d",
+        "feature": "us_10y_zscore_20d",
         "label": "US 10-year yield",
-        "impact": -0.02075552414591409
+        "impact": 0.017820344419845997
       }
     ],
     "7": [
@@ -6127,9 +6127,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 16.91,
-      "change_5d": 1.3788968824940184,
-      "date": "2026-10-28"
+      "value": 17.2,
+      "change_5d": -9.616395165528125,
+      "date": "2026-10-29"
     },
     {
       "key": "brent_oil",
@@ -6141,9 +6141,9 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 5.05,
-      "change_5d": -1.5594541910331383,
-      "date": "2026-10-28"
+      "value": 4.98,
+      "change_5d": 0.40322580645162365,
+      "date": "2026-10-29"
     },
     {
       "key": "sp500",
