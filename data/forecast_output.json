@@ -6102,9 +6102,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 19.42,
-      "change_5d": -0.15424164524420192,
-      "date": "2026-10-30"
+      "value": 21.15,
+      "change_5d": 15.00815660685153,
+      "date": "2026-11-02"
     },
     {
       "key": "brent_oil",
@@ -6116,23 +6116,23 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 4.94,
-      "change_5d": -1.19999999999999,
-      "date": "2026-10-30"
+      "value": 4.91,
+      "change_5d": -1.8000000000000016,
+      "date": "2026-11-02"
     },
     {
       "key": "sp500",
       "label": "Global equities (S&P 500)",
-      "value": 7580.07,
-      "change_5d": -0.5720334536601812,
-      "date": "2026-10-30"
+      "value": 7541.4,
+      "change_5d": -1.7633718347690563,
+      "date": "2026-11-02"
     },
     {
       "key": "rba_cash_rate",
       "label": "RBA cash rate",
       "value": 4.6,
       "change_5d": 0.0,
-      "date": "2026-11-02"
+      "date": "2026-11-03"
     },
     {
       "key": "au_10y",
