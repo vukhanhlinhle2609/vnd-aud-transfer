@@ -51,14 +51,14 @@
     {
       "horizon": 3,
       "date": "2026-11-13",
-      "estimate": 17977.563584805583,
-      "change": -9.606415194417105,
-      "change_pct": -0.05340704065407235,
-      "low": 17843.046066315375,
-      "high": 18112.08110329579,
-      "mae": 91.35673991407303,
+      "estimate": 17977.870599294052,
+      "change": -9.29940070594501,
+      "change_pct": -0.05170018800036365,
+      "low": 17843.353080803845,
+      "high": 18112.38811778426,
+      "mae": 91.35498476906774,
       "baseline_mae": 92.65216666666637,
-      "improvement_pct": 1.3981613158102228,
+      "improvement_pct": 1.4000556535990032,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 60.0,
       "backtest_count": 60,
@@ -2696,12 +2696,12 @@
         "origin_date": "2026-11-07",
         "target_date": "2026-11-10",
         "horizon": 3,
-        "predicted_rate": 17864.002769011935,
+        "predicted_rate": 17864.10807771225,
         "actual_rate": 17987.17,
-        "difference": -123.16723098806324,
-        "error_pct": -0.6847504692959663,
-        "absolute_error": 123.16723098806324,
-        "absolute_error_pct": 0.6847504692959663,
+        "difference": -123.06192228774671,
+        "error_pct": -0.6841650036539751,
+        "absolute_error": 123.06192228774671,
+        "absolute_error_pct": 0.6841650036539751,
         "accurate": false,
         "direction_correct": false,
         "inside_interval": true
@@ -6102,9 +6102,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 25.64,
-      "change_5d": 32.028836251287316,
-      "date": "2026-11-06"
+      "value": 19.92,
+      "change_5d": -5.815602836879419,
+      "date": "2026-11-09"
     },
     {
       "key": "brent_oil",
@@ -6116,23 +6116,23 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 4.86,
-      "change_5d": -1.619433198380571,
-      "date": "2026-11-06"
+      "value": 4.88,
+      "change_5d": -0.6109979633401319,
+      "date": "2026-11-09"
     },
     {
       "key": "sp500",
       "label": "Global equities (S&P 500)",
-      "value": 7353.73,
-      "change_5d": -4.74924194244074,
-      "date": "2026-11-05"
+      "value": 7549.94,
+      "change_5d": 0.11324157318268746,
+      "date": "2026-11-09"
     },
     {
       "key": "rba_cash_rate",
       "label": "RBA cash rate",
       "value": 4.85,
       "change_5d": 5.434782608695654,
-      "date": "2026-11-09"
+      "date": "2026-11-10"
     },
     {
       "key": "au_10y",
