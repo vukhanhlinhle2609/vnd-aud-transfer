@@ -5,14 +5,14 @@
     {
       "horizon": 1,
       "date": "2026-11-13",
-      "estimate": 17792.905426340323,
-      "change": -7.8445736596774225,
-      "change_pct": -0.04406878170682372,
-      "low": 17710.33541569261,
-      "high": 17875.475436988036,
-      "mae": 47.8923827085334,
+      "estimate": 17799.375240719433,
+      "change": -1.3747592805665327,
+      "change_pct": -0.007723041335710758,
+      "low": 17716.80523007172,
+      "high": 17881.945251367146,
+      "mae": 47.92839605003207,
       "baseline_mae": 47.59166666666643,
-      "improvement_pct": -0.6318670114522249,
+      "improvement_pct": -0.7075385397281981,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 83.33333333333334,
       "backtest_count": 60,
@@ -21,8 +21,8 @@
       "scale": 0.25,
       "tuning_mae": 41.719628775561226,
       "training_window": 180,
-      "probability_lower": 75.0,
-      "probability_higher": 25.0,
+      "probability_lower": 73.33333333333333,
+      "probability_higher": 26.666666666666668,
       "beats_baseline": false
     },
     {
@@ -169,32 +169,32 @@
       {
         "feature": "rba_aud_jpy_change_1d",
         "label": "RBA AUD/JPY reference rate",
-        "impact": -2.757261107064549
-      },
-      {
-        "feature": "vix_change_5d",
-        "label": "Global market volatility (VIX)",
-        "impact": -2.709049123001436
-      },
-      {
-        "feature": "rba_aud_vnd_change_1d",
-        "label": "RBA AUD/VND reference rate",
-        "impact": 1.0405373479345759
+        "impact": -2.3108937091287887
       },
       {
         "feature": "weekday_cos",
         "label": "Calendar pattern",
-        "impact": 1.0287162939246866
+        "impact": 2.1195324122272643
       },
       {
-        "feature": "sp500_change_10d",
-        "label": "Global equities (S&P 500)",
-        "impact": -0.6764495961229766
+        "feature": "yield_spread_change_3d",
+        "label": "Australia\u2013US 10-year yield spread",
+        "impact": 1.9923487433416658
       },
       {
-        "feature": "rba_fair_value_gap_20d",
-        "label": "RBA AUD/VND fair-value gap",
-        "impact": 0.4643307642123471
+        "feature": "vix_change_5d",
+        "label": "Global market volatility (VIX)",
+        "impact": -1.2599379945800069
+      },
+      {
+        "feature": "aud_usd_level",
+        "label": "AUD/USD market rate",
+        "impact": 0.9064273912005869
+      },
+      {
+        "feature": "rba_aud_vnd_change_1d",
+        "label": "RBA AUD/VND reference rate",
+        "impact": 0.7763008001231957
       }
     ],
     "7": [
@@ -1037,14 +1037,14 @@
         "origin_date": "2026-11-11",
         "target_date": "2026-11-12",
         "horizon": 1,
-        "predicted_rate": 17908.90073788714,
+        "predicted_rate": 17911.06153837706,
         "actual_rate": 17800.75,
-        "difference": 108.15073788713926,
-        "error_pct": 0.6075628155394535,
-        "absolute_error": 108.15073788713926,
-        "absolute_error_pct": 0.6075628155394535,
+        "difference": 110.31153837706006,
+        "error_pct": 0.6197016326675002,
+        "absolute_error": 110.31153837706006,
+        "absolute_error_pct": 0.6197016326675002,
         "accurate": false,
-        "direction_correct": true,
+        "direction_correct": false,
         "inside_interval": false
       }
     ],
@@ -6141,9 +6141,9 @@
     {
       "key": "us_10y",
       "label": "US 10-year yield",
-      "value": 4.88,
-      "change_5d": -0.6109979633401319,
-      "date": "2026-11-09"
+      "value": 4.98,
+      "change_5d": 0.60606060606061,
+      "date": "2026-11-10"
     },
     {
       "key": "sp500",
@@ -6157,7 +6157,7 @@
       "label": "RBA cash rate",
       "value": 4.85,
       "change_5d": 0.0,
-      "date": "2026-11-11"
+      "date": "2026-11-12"
     },
     {
       "key": "au_10y",
