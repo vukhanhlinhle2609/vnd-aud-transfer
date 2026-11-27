@@ -10,9 +10,9 @@
       "change_pct": 0.0,
       "low": 17387.494218740852,
       "high": 17558.965781259147,
-      "mae": 50.484056792790405,
+      "mae": 50.48963831083321,
       "baseline_mae": 51.1281666666664,
-      "improvement_pct": 1.259794582652095,
+      "improvement_pct": 1.248877864125511,
       "interval_coverage": 80.0,
       "tolerance_accuracy": 81.66666666666667,
       "backtest_count": 60,
@@ -169,7 +169,7 @@
       {
         "feature": "weekday_sin",
         "label": "Calendar pattern",
-        "impact": -12.313672956968876
+        "impact": -10.56205124206107
       }
     ],
     "7": [
@@ -1012,12 +1012,12 @@
         "origin_date": "2026-11-26",
         "target_date": "2026-11-27",
         "horizon": 1,
-        "predicted_rate": 17396.005120581183,
+        "predicted_rate": 17395.670229498617,
         "actual_rate": 17473.23,
-        "difference": -77.22487941881627,
-        "error_pct": -0.44196109945794954,
-        "absolute_error": 77.22487941881627,
-        "absolute_error_pct": 0.44196109945794954,
+        "difference": -77.55977050138245,
+        "error_pct": -0.44387769462991356,
+        "absolute_error": 77.55977050138245,
+        "absolute_error_pct": 0.44387769462991356,
         "accurate": true,
         "direction_correct": true,
         "inside_interval": true
@@ -6102,9 +6102,9 @@
     {
       "key": "vix",
       "label": "Global market volatility (VIX)",
-      "value": 26.36,
-      "change_5d": 3.5349567949725103,
-      "date": "2026-11-24"
+      "value": 26.8,
+      "change_5d": -5.766526019690577,
+      "date": "2026-11-26"
     },
     {
       "key": "brent_oil",
@@ -6123,9 +6123,9 @@
     {
       "key": "sp500",
       "label": "Global equities (S&P 500)",
-      "value": 7201.09,
-      "change_5d": -1.8995903565546257,
-      "date": "2026-11-24"
+      "value": 7182.78,
+      "change_5d": -1.9232265966467543,
+      "date": "2026-11-25"
     },
     {
       "key": "rba_cash_rate",
